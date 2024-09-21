@@ -1,0 +1,203 @@
+[{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c3"
+  },
+  "id": 6,
+  "crop_id": 1,
+  "place_id": 2,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c4"
+  },
+  "id": 7,
+  "crop_id": 1,
+  "place_id": 7,
+  "price": 36385,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c5"
+  },
+  "id": 8,
+  "crop_id": 1,
+  "place_id": 23,
+  "price": 40815,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c6"
+  },
+  "id": 9,
+  "crop_id": 1,
+  "place_id": 11,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c7"
+  },
+  "id": 11,
+  "crop_id": 1,
+  "place_id": 14,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c8"
+  },
+  "id": 12,
+  "crop_id": 1,
+  "place_id": 27,
+  "price": 37447,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037c9"
+  },
+  "id": 13,
+  "crop_id": 1,
+  "place_id": 16,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037ca"
+  },
+  "id": 14,
+  "crop_id": 1,
+  "place_id": 17,
+  "price": 33134,
+  "month_year": "September 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037cb"
+  },
+  "id": 15,
+  "crop_id": 1,
+  "place_id": 20,
+  "price": 43027,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037cc"
+  },
+  "id": 16,
+  "crop_id": 1,
+  "place_id": 21,
+  "price": 24876,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037cd"
+  },
+  "id": 17,
+  "crop_id": 1,
+  "place_id": 22,
+  "price": 32182,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037ce"
+  },
+  "id": 20,
+  "crop_id": 1,
+  "place_id": 29,
+  "price": 33068,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037cf"
+  },
+  "id": 21,
+  "crop_id": 2,
+  "place_id": 17,
+  "price": 17080,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037d0"
+  },
+  "id": 25,
+  "crop_id": 4,
+  "place_id": 7,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037d1"
+  },
+  "id": 26,
+  "crop_id": 2,
+  "place_id": 2,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037d2"
+  },
+  "id": 27,
+  "crop_id": 2,
+  "place_id": 18,
+  "price": 0,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ebf344080b5c8906d037d3"
+  },
+  "id": 28,
+  "crop_id": 4,
+  "place_id": 17,
+  "price": 10.01,
+  "month_year": "July 2024"
+},
+{
+  "_id": {
+    "$oid": "66ec3a733b31112adc2ca9fb"
+  },
+  "place_id": 1,
+  "crop_id": 1,
+  "price": 0,
+  "month_year": "September 2024",
+  "__v": 0,
+  "id": 29
+},
+{
+  "_id": {
+    "$oid": "66ec6f422e1acae909cc6d22"
+  },
+  "place_id": 17,
+  "crop_id": 3,
+  "price": 0,
+  "month_year": "September 2024",
+  "__v": 0,
+  "id": 30
+},
+{
+  "_id": {
+    "$oid": "66ec7015dbb18116a5b999de"
+  },
+  "id": 31,
+  "place_id": 17,
+  "crop_id": 5,
+  "price": 0,
+  "month_year": "September 2024",
+  "__v": 0
+}]

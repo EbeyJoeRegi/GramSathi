@@ -1,0 +1,102 @@
+[{
+  "_id": {
+    "$oid": "66eaef6ab4ae03588e228fbe"
+  },
+  "id": 7,
+  "title": "Heavy Rainfall",
+  "content": "Heavy rainfall affected Mangalore Rural, leading to significant flooding in several villages. The local authorities are working to manage the situation and provide assistance to the affected residents.",
+  "created_at": {
+    "$date": "2024-07-16T17:34:53.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66eaef6ab4ae03588e228fbf"
+  },
+  "id": 15,
+  "title": "PEPPER PRICES MAY INCREASE",
+  "content": "The cold climate has led to an increase in pepper consumption. As a result, the current prices for pepper in Cochin are at Rs. 580-585 per kilogram, while the best quality is being traded at Rs. 680-700 per kilogram.",
+  "created_at": {
+    "$date": "2024-07-22T12:22:40.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66eaef6ab4ae03588e228fc0"
+  },
+  "id": 19,
+  "title": "Illegally imported arecanut seized",
+  "content": "The price of arecanut beginning to fall, CAMPCO, Mangaluru, wrote to Prime Minister Modi seeking his intervention to ensure the seized arecanut’s auction floor price is maintained.",
+  "created_at": {
+    "$date": "2024-07-22T12:57:43.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66eaef6ab4ae03588e228fc1"
+  },
+  "id": 22,
+  "title": "Weather update",
+  "content": "Expected rain around 9.00 a.m⛈",
+  "created_at": {
+    "$date": "2024-07-30T00:49:40.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66eaef6ab4ae03588e228fc2"
+  },
+  "id": 23,
+  "title": "Power Outage",
+  "content": "Scheduled maintenance outage from 11:00 AM to 5:00 PM. Affected areas: Hampankatta, B B Alabi Road, MG Road, Falnir First Cross, Kadri, Bendoorwell, Bejai, Kankanady.",
+  "created_at": {
+    "$date": "2024-07-30T00:52:48.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66eaef6ab4ae03588e228fc3"
+  },
+  "id": 24,
+  "title": "Test",
+  "content": "test announcemnts",
+  "created_at": {
+    "$date": "2024-07-30T04:17:30.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66ebd5ad86ae358a62000c6b"
+  },
+  "id": 10,
+  "title": "dsggds",
+  "content": "test",
+  "created_at": {
+    "$date": "2024-09-19T07:41:33.813Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ebd893d798c4ab39bb6437"
+  },
+  "id": 27,
+  "title": "testing on wednesday",
+  "content": "test 1",
+  "created_at": {
+    "$date": "2024-09-19T07:53:55.747Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec221a0479206675453361"
+  },
+  "id": 28,
+  "title": "പേര്",
+  "content": "എബി ജോ റെജി",
+  "created_at": {
+    "$date": "2024-09-19T13:07:38.125Z"
+  },
+  "__v": 0
+}]

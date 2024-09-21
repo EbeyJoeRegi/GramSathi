@@ -9,7 +9,7 @@ const port = 3000;
 const saltRounds = 10;
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/village_app')
+mongoose.connect('mongodb://localhost:27017/village_app') 
   .then(() => {
     console.log('Connected to MongoDB');
   })

@@ -1,0 +1,167 @@
+[{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fe6"
+  },
+  "username": "alexander",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Alexander",
+  "phone": "9874563210",
+  "address": "Village Home",
+  "job_title": "President",
+  "activation": 1,
+  "email": "president@villageapp.com",
+  "id": 1
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fe7"
+  },
+  "username": "aju",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "user",
+  "name": "Aju Thomas",
+  "phone": "9874563210",
+  "address": "Mary Hill",
+  "job_title": "Student",
+  "activation": 1,
+  "email": "aju@gmail.com",
+  "id": 2
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fe9"
+  },
+  "username": "user",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "user",
+  "name": "User Home",
+  "phone": "1234567891",
+  "address": "User Word",
+  "job_title": "User Work",
+  "activation": 1,
+  "email": "user@user.co.in",
+  "id": 4
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fea"
+  },
+  "username": "admin",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Admin Name",
+  "phone": "123-456-7890",
+  "address": "Admin Address",
+  "job_title": "Administrator",
+  "activation": 1,
+  "email": "admin@example.com",
+  "id": 5
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228feb"
+  },
+  "username": "ebeyjoeregi",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "user",
+  "name": "Ebey Joe Regi",
+  "phone": "9497698743",
+  "address": "Kannur",
+  "job_title": "Farmer",
+  "activation": 1,
+  "email": "ebeyjoeregi@gmail.co",
+  "id": 6
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fec"
+  },
+  "username": "anjalita",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "user",
+  "name": "Anjalita",
+  "phone": "987456321",
+  "address": "Surathkal",
+  "job_title": "Farmer",
+  "activation": 0,
+  "email": "anjalita@sjec.ac.in",
+  "id": 7
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fed"
+  },
+  "username": "veena",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Veena Vijayan",
+  "phone": "9874563210",
+  "address": "Thenguparambil House",
+  "job_title": "Secretary",
+  "activation": 1,
+  "email": "secretary@villageapp.com",
+  "id": 8
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fee"
+  },
+  "username": "sara",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Sara Blonda",
+  "phone": "9874563210",
+  "address": "Village House",
+  "job_title": "Treasurer",
+  "activation": 1,
+  "email": "treasurer@villageapp.com",
+  "id": 9
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fef"
+  },
+  "username": "edwin",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "user",
+  "name": "Edwin Regi",
+  "phone": "9874563210",
+  "address": "Kannur",
+  "job_title": "Student",
+  "activation": 0,
+  "email": "edwinregi@gmail.com",
+  "id": 10
+},
+{
+  "_id": {
+    "$oid": "66eb114ca823c0f114d1d68d"
+  },
+  "username": "Chinmayee",
+  "name": "Chinmayee N",
+  "phone": "7889654123",
+  "address": "asdf1973",
+  "job_title": "Student",
+  "email": "chinmayee@sjec.ac.in",
+  "password": "$2b$10$Pak3ELin5RJfJHW2NYgYfuGV.Te2TsItlMBblL/EI6ypK4rmUtQdS",
+  "activation": 1,
+  "user_type": "user",
+  "__v": 0,
+  "id": 11
+},
+{
+  "_id": {
+    "$oid": "66ebdaf82c407d36bec3facf"
+  },
+  "id": 12,
+  "username": "mebin",
+  "name": "Mebin Regi",
+  "phone": "9874563210",
+  "address": "Kannur",
+  "job_title": "Student",
+  "email": "mebin@village.in",
+  "password": "$2b$10$voiHLPyjKcczMAWVVpHEY.D/bIohjhGHeoBOYZNwsWpdKt8xLcH02",
+  "activation": 0,
+  "user_type": "user",
+  "__v": 0
+}]
