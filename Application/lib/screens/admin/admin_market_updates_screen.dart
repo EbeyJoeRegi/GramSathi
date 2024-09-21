@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
+import '/config.dart';
 
 class MarketUpdatesScreen extends StatefulWidget {
   @override
@@ -30,8 +31,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     });
 
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.5.1:3000/places'));
+      final response = await http.get(Uri.parse('${AppConfig.baseUrl}/places'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -61,7 +61,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
 
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.5.1:3000/crops/$placeId'));
+          await http.get(Uri.parse('${AppConfig.baseUrl}/crops/$placeId'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -85,7 +85,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   Future<void> _fetchAllCrops() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.5.1:3000/all-crops'));
+          await http.get(Uri.parse('${AppConfig.baseUrl}/all-crops'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -136,7 +136,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
 
   Future<void> _updateCropPrice(int cropId, double newPrice) async {
     final response = await http.post(
-      Uri.parse('http://192.168.5.1:3000/update-price'),
+      Uri.parse('${AppConfig.baseUrl}/update-price'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -250,7 +250,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   Future<void> _addCropPrice(int cropId, int placeId, double price) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.5.1:3000/add-price'),
+        Uri.parse('${AppConfig.baseUrl}/add-price'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -415,7 +415,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
 
   Future<void> _updateAveragePrice(int cropId, double averagePrice) async {
     final response = await http.post(
-      Uri.parse('http://192.168.5.1:3000/update-average-price'),
+      Uri.parse('${AppConfig.baseUrl}/update-average-price'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -496,7 +496,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   Future<void> _addNewCrop(String cropName, double averagePrice) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.5.1:3000/add-crop'),
+        Uri.parse('${AppConfig.baseUrl}/add-crop'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
