@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
-import '/config.dart';
 
 class MarketUpdatesScreen extends StatefulWidget {
   @override
@@ -31,7 +30,8 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     });
 
     try {
-      final response = await http.get(Uri.parse('${AppConfig.baseUrl}/places'));
+      final response =
+          await http.get(Uri.parse('http://192.168.5.1:3000/places'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -56,39 +56,27 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   Future<void> _fetchCropsByPlace(int placeId) async {
     setState(() {
       _isLoading = true;
-      _errorMessage = ''; // Clear previous error messages
+      _errorMessage = '';
     });
 
     try {
       final response =
-          await http.get(Uri.parse('${AppConfig.baseUrl}/crops/$placeId'));
-
+          await http.get(Uri.parse('http://192.168.5.1:3000/crops/$placeId'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
           _crops = List<Map<String, dynamic>>.from(data);
-
-          // If crops list is empty, show a specific message
-          if (_crops.isEmpty) {
-            _errorMessage = 'No crops currently available for this place.';
-          } else {
-            _errorMessage = ''; // No error if crops are available
-          }
-
           _isLoading = false;
         });
       } else {
-        // Handle non-200 HTTP responses
         setState(() {
-          _errorMessage = 'Failed to load crops. Please try again later.';
+          _errorMessage = 'Failed to load crops';
           _isLoading = false;
         });
       }
     } catch (e) {
-      // Handle network or parsing errors
       setState(() {
-        _errorMessage =
-            'An error occurred. Please check your connection and try again.';
+        _errorMessage = 'An error occurred. Please try again later.';
         _isLoading = false;
       });
     }
@@ -97,7 +85,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   Future<void> _fetchAllCrops() async {
     try {
       final response =
-          await http.get(Uri.parse('${AppConfig.baseUrl}/all-crops'));
+          await http.get(Uri.parse('http://192.168.5.1:3000/all-crops'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -146,23 +134,23 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     );
   }
 
-  Future<void> _updateCropPrice(int Id, double newPrice) async {
+  Future<void> _updateCropPrice(int cropId, double newPrice) async {
     final response = await http.post(
-      Uri.parse('${AppConfig.baseUrl}/update-price'),
+      Uri.parse('http://192.168.5.1:3000/update-price'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'id': Id, // This should match the field name used in backend
+        'crop_id': cropId,
         'price': newPrice,
         'month_year': DateFormat('MMMM yyyy').format(DateTime.now()),
       }),
     );
+
     if (response.statusCode == 200) {
       _fetchCropsByPlace(_selectedPlaceId);
     } else {
-      print('Failed to update crop price: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('Failed to update crop price');
     }
   }
 
@@ -259,15 +247,15 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     );
   }
 
-  Future<void> _addCropPrice(int Id, int placeId, double price) async {
+  Future<void> _addCropPrice(int cropId, int placeId, double price) async {
     try {
       final response = await http.post(
-        Uri.parse('${AppConfig.baseUrl}/add-price'),
+        Uri.parse('http://192.168.5.1:3000/add-price'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
-          'crop_id': Id,
+          'crop_id': cropId,
           'place_id': placeId,
           'price': price,
           'month_year': DateFormat('MMMM yyyy').format(DateTime.now()),
@@ -425,17 +413,18 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     );
   }
 
-  Future<void> _updateAveragePrice(int Id, double averagePrice) async {
+  Future<void> _updateAveragePrice(int cropId, double averagePrice) async {
     final response = await http.post(
-      Uri.parse('${AppConfig.baseUrl}/update-average-price'),
+      Uri.parse('http://192.168.5.1:3000/update-average-price'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'crop_id': Id,
+        'crop_id': cropId,
         'average_price': averagePrice,
       }),
     );
+
     if (response.statusCode == 200) {
       _fetchCropsByPlace(_selectedPlaceId);
     } else {
@@ -507,15 +496,16 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   Future<void> _addNewCrop(String cropName, double averagePrice) async {
     try {
       final response = await http.post(
-        Uri.parse('${AppConfig.baseUrl}/add-crop'),
+        Uri.parse('http://192.168.5.1:3000/add-crop'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
           'crop_name': cropName,
-          'avg_price': averagePrice,
+          'average_price': averagePrice,
         }),
       );
+
       if (response.statusCode == 200) {
         _fetchAllCrops();
       } else if (response.statusCode == 400) {
@@ -548,78 +538,81 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
         ),
         child: _isLoading
             ? Center(child: CircularProgressIndicator())
-            : Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButtonFormField<int>(
-                      value: _selectedPlaceId,
-                      hint: Text('Select Location'),
-                      items: _places.map<DropdownMenuItem<int>>((place) {
-                        return DropdownMenuItem<int>(
-                          value: place['id'],
-                          child: Text(place['place_name']),
-                        );
-                      }).toList(),
-                      onChanged: (int? newValue) {
-                        setState(() {
-                          _selectedPlaceId = newValue!;
-                          _fetchCropsByPlace(_selectedPlaceId);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white.withOpacity(0.8),
-                        border: OutlineInputBorder(),
+            : _errorMessage.isNotEmpty
+                ? Center(child: Text(_errorMessage))
+                : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField<int>(
+                          value: _selectedPlaceId,
+                          hint: Text('Select Location'),
+                          items: _places.map<DropdownMenuItem<int>>((place) {
+                            return DropdownMenuItem<int>(
+                              value: place['id'],
+                              child: Text(place['place_name']),
+                            );
+                          }).toList(),
+                          onChanged: (int? newValue) {
+                            setState(() {
+                              _selectedPlaceId = newValue!;
+                              _fetchCropsByPlace(_selectedPlaceId);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.8),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: _errorMessage.isNotEmpty
-                        ? Center(
-                            child: Text(
-                              _errorMessage, // Message is either 'No crops...' or 'Failed to load...'
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: const Color.fromARGB(255, 0, 0, 0)),
-                            ),
-                          )
-                        : _crops.isEmpty
-                            ? Center(
-                                child: Text(
-                                  'No crops currently available for this place',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            : ListView.builder(
-                                itemCount: _crops.length,
-                                itemBuilder: (context, index) {
-                                  final crop = _crops[index];
-                                  return Container(
-                                    margin: EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.8),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      border: Border.all(
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          width: 1.0),
-                                    ),
-                                    child: ListTile(
-                                      title: Text(crop['crop_name']),
-                                      subtitle: Text(
-                                          'Price: ${crop['price']}\nAverage Price: ${crop['avg_price']}'),
-                                      trailing: Icon(Icons.edit),
-                                      onTap: () => _showEditPriceDialog(crop),
-                                    ),
-                                  );
-                                },
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: _crops.length,
+                          itemBuilder: (context, index) {
+                            final crop = _crops[index];
+                            return Container(
+                              margin: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    width: 1.0),
                               ),
+                              child: ListTile(
+                                title: Text(crop['crop_name']),
+                                subtitle: Text(
+                                    'Price: ${crop['price']}\nAverage Price: ${crop['avg_price']}'),
+                                trailing: IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () {
+                                    _showEditPriceDialog(crop);
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: 'updateAverage',
+            onPressed: _showPopupMenu,
+            child: Icon(Icons.more_vert),
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            heroTag: 'addCropPrice',
+            onPressed: _showAddPriceDialog,
+            child: Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
