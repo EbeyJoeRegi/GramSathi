@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 import 'admin_announcements_screen.dart';
 import 'admin_enquiry_screen.dart';
@@ -33,7 +34,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.5.1:3000/pending-users'), // Replace with your IP address
+            '${AppConfig.baseUrl}/pending-users'), // Replace with your IP address
       );
 
       if (response.statusCode == 200) {
@@ -61,7 +62,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.5.1:3000/$endpoint'), // Replace with your IP address
+            '${AppConfig.baseUrl}/$endpoint'), // Replace with your IP address
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

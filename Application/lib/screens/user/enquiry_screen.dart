@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import '/config.dart';
 
 class EnquiryScreen extends StatefulWidget {
   final String username;
@@ -27,8 +28,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
   Future<void> _fetchEnquiries() async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.5.1:3000/queries?username=${widget.username}'),
+        Uri.parse('${AppConfig.baseUrl}/queries?username=${widget.username}'),
       );
 
       if (response.statusCode == 200) {

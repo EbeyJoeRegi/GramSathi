@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 class AdminManagementPage extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
 
   Future<void> _fetchAdmins() async {
     final response =
-        await http.get(Uri.parse('http://192.168.5.1:3000/admin/users'));
+        await http.get(Uri.parse('${AppConfig.baseUrl}/admin/users'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -39,7 +40,7 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
 
   Future<void> _removeAdmin(int userId) async {
     final response = await http.post(
-      Uri.parse('http://192.168.5.1:3000/remove-admin'),
+      Uri.parse('${AppConfig.baseUrl}/remove-admin'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -58,7 +59,7 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
 
   Future<void> _addAdmin() async {
     final response = await http.post(
-      Uri.parse('http://192.168.5.1:3000/add-admin'),
+      Uri.parse('${AppConfig.baseUrl}/add-admin'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

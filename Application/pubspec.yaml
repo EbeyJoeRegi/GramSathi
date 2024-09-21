@@ -26,6 +26,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
   # The following line prevents the `flutter pub get` command from
   # automatically running `flutter packages get` and `flutter pub get`

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import '/config.dart';
 
 class AdminEnquiryScreen extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
   Future<void> _fetchQueries() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.5.1:3000/admin/queries'));
+          await http.get(Uri.parse('${AppConfig.baseUrl}/admin/queries'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -42,7 +43,7 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
 
     try {
       final res = await http.put(
-        Uri.parse('http://192.168.5.1:3000/admin/respondQuery/$id'),
+        Uri.parse('${AppConfig.baseUrl}/admin/respondQuery/$id'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

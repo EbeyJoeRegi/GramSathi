@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -124,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen>
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.5.1:3000/signup'), // Replace with your IP address
+            '${AppConfig.baseUrl}/signup'), // Replace with your IP address
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

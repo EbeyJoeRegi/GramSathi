@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-
+import '/config.dart';
 import 'market_updates_screen.dart';
 import 'enquiry_screen.dart';
 import 'important_contacts_screen.dart';
@@ -34,7 +34,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   Future<void> _fetchAnnouncements() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.5.1:3000/announcements'),
+        Uri.parse('${AppConfig.baseUrl}/announcements'),
       );
 
       print('Response status: ${response.statusCode}');

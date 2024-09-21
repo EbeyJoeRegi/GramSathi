@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'admin/admin_home_screen.dart';
 import 'user/user_home_screen.dart';
-import 'signup_screen.dart'; // Import the signup screen
+import 'signup_screen.dart';
+import '/config.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -54,8 +55,7 @@ class _LoginScreenState extends State<LoginScreen>
 
     try {
       final response = await http.post(
-        Uri.parse(
-            'http://192.168.5.1:3000/login'), // Replace with your IP address
+        Uri.parse('${AppConfig.baseUrl}/login'), // Replace with your IP address
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

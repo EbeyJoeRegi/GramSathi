@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import '/config.dart';
 
 class AdminAnnouncementPage extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.5.1:3000/announcements'), // Replace with your IP address
+            '${AppConfig.baseUrl}/announcements'), // Replace with your IP address
       );
 
       if (response.statusCode == 200) {
@@ -52,7 +53,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.5.1:3000/createAnnouncement'), // Replace with your IP address
+            '${AppConfig.baseUrl}/createAnnouncement'), // Replace with your IP address
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -85,7 +86,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
     try {
       final response = await http.delete(
         Uri.parse(
-            'http://192.168.5.1:3000/deleteAnnouncement/$id'), // Replace with your IP address
+            '${AppConfig.baseUrl}/deleteAnnouncement/$id'), // Replace with your IP address
       );
 
       if (response.statusCode == 200) {
@@ -109,7 +110,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://192.168.5.1:3000/updateAnnouncement/$id'), // Replace with your IP address
+            '${AppConfig.baseUrl}/updateAnnouncement/$id'), // Replace with your IP address
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

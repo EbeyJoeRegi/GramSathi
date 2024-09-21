@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 class UserProfilePage extends StatefulWidget {
   final String username;
@@ -74,7 +75,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Future<void> _updateUserData() async {
     try {
       final response = await http.put(
-        Uri.parse('http://192.168.5.1:3000/user/profile/update'),
+        Uri.parse('${AppConfig.baseUrl}/user/profile/update'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

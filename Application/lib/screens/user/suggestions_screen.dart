@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For formatting date
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 class SuggestionsScreen extends StatefulWidget {
   final String username;
@@ -27,7 +28,7 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.5.1:3000/suggestions'), // Replace with your API URL
+            '${AppConfig.baseUrl}/suggestions'), // Replace with your API URL
       );
 
       if (response.statusCode == 200) {
@@ -52,7 +53,7 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.5.1:3000/createSuggestion'), // Replace with your API URL
+            '${AppConfig.baseUrl}/createSuggestion'), // Replace with your API URL
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

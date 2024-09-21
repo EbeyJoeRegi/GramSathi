@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 class UserManagementPage extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<void> _fetchUsers() async {
-    final response = await http.get(Uri.parse('http://192.168.5.1:3000/users'));
+    final response = await http.get(Uri.parse('${AppConfig.baseUrl}/users'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -31,7 +32,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
   Future<void> _removeUser(int userId) async {
     final response = await http.post(
-      Uri.parse('http://192.168.5.1:3000/remove-user'),
+      Uri.parse('${AppConfig.baseUrl}/remove-user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
