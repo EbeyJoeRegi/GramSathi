@@ -10,19 +10,20 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen>
     with TickerProviderStateMixin {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _rationCardController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _jobTitleController = TextEditingController();
 
   bool _isLoading = false;
-  String? _usernameError;
+  String? _rationCardError;
   String? _phoneError;
   String? _passwordError;
   String? _emailError;
+  List<String> _locations = [];
+  String? _selectedLocation;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -41,23 +42,42 @@ class _SignupScreenState extends State<SignupScreen>
     );
 
     _animationController.forward();
+    _fetchLocations(); // Fetch locations on initialization
+  }
+
+  Future<void> _fetchLocations() async {
+    try {
+      final response =
+          await http.get(Uri.parse('${AppConfig.baseUrl}/locations'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> locationsData = json.decode(response.body);
+        setState(() {
+          _locations = locationsData
+              .map((location) => location['place_name'] as String)
+              .toList();
+        });
+      } else {
+        throw Exception('Failed to load locations');
+      }
+    } catch (e) {
+      print('Error fetching locations: $e');
+    }
   }
 
   bool _validateFields() {
     bool isValid = true;
 
-    // Validate Username
-    final username = _usernameController.text;
-    final usernameRegExp = RegExp(r'^[a-zA-Z_]+$');
-    if (!usernameRegExp.hasMatch(username)) {
+    // Validate Ration Card Number
+    final rationCard = _rationCardController.text;
+    if (rationCard.isEmpty) {
       setState(() {
-        _usernameError =
-            'Username must contain only alphabets and underscores.';
+        _rationCardError = 'Ration Card Number is required.';
       });
       isValid = false;
     } else {
       setState(() {
-        _usernameError = null;
+        _rationCardError = null;
       });
     }
 
@@ -110,12 +130,11 @@ class _SignupScreenState extends State<SignupScreen>
       return;
     }
 
-    final username = _usernameController.text;
+    final rationCard = _rationCardController.text;
     final password = _passwordController.text;
     final name = _nameController.text;
     final phone = _phoneController.text;
     final email = _emailController.text;
-    final address = _addressController.text;
     final jobTitle = _jobTitleController.text;
 
     setState(() {
@@ -124,17 +143,16 @@ class _SignupScreenState extends State<SignupScreen>
 
     try {
       final response = await http.post(
-        Uri.parse(
-            '${AppConfig.baseUrl}/signup'), // Replace with your IP address
+        Uri.parse('${AppConfig.baseUrl}/signup'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'username': username,
+          'raID': rationCard,
           'name': name,
           'phone': phone,
           'email': email,
-          'address': address,
+          'address': _selectedLocation ?? '', // Send selected location
           'jobTitle': jobTitle,
           'password': password,
         }),
@@ -201,12 +219,11 @@ class _SignupScreenState extends State<SignupScreen>
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _rationCardController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
-    _addressController.dispose();
     _jobTitleController.dispose();
     _animationController.dispose();
     super.dispose();
@@ -229,20 +246,17 @@ class _SignupScreenState extends State<SignupScreen>
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: Colors
-                .transparent, // Use transparent color to let the image show through
+            color: Colors.transparent,
           ),
           Padding(
             padding: EdgeInsets.only(
               left: 24.0,
-              top: 48.0, // Adjust this value for top padding
+              top: 48.0,
               right: 24.0,
             ),
             child: SingleChildScrollView(
               padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context)
-                      .viewInsets
-                      .bottom), // Ensures padding when keyboard is visible
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -261,10 +275,10 @@ class _SignupScreenState extends State<SignupScreen>
                         ),
                         SizedBox(height: 24),
                         TextField(
-                          controller: _usernameController,
+                          controller: _rationCardController,
                           decoration: InputDecoration(
-                            hintText: 'Username',
-                            errorText: _usernameError,
+                            hintText: 'Ration Card Number',
+                            errorText: _rationCardError,
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Color(0xFF57636C),
@@ -338,7 +352,7 @@ class _SignupScreenState extends State<SignupScreen>
                         TextField(
                           controller: _nameController,
                           decoration: InputDecoration(
-                            hintText: 'Name',
+                            hintText: 'Full Name',
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Color(0xFF57636C),
@@ -373,7 +387,6 @@ class _SignupScreenState extends State<SignupScreen>
                         SizedBox(height: 16),
                         TextField(
                           controller: _phoneController,
-                          keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             hintText: 'Phone Number',
                             errorText: _phoneError,
@@ -411,9 +424,8 @@ class _SignupScreenState extends State<SignupScreen>
                         SizedBox(height: 16),
                         TextField(
                           controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            hintText: 'Email Address',
+                            hintText: 'Email',
                             errorText: _emailError,
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -447,10 +459,15 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         ),
                         SizedBox(height: 16),
-                        TextField(
-                          controller: _addressController,
+                        DropdownButtonFormField<String>(
+                          value: _selectedLocation,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedLocation = newValue!;
+                            });
+                          },
                           decoration: InputDecoration(
-                            hintText: 'Address',
+                            hintText: 'Select Address',
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Color(0xFF57636C),
@@ -473,14 +490,13 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(24),
                           ),
-                          style: TextStyle(
-                            fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF101213),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          items: _locations.map((String location) {
+                            return DropdownMenuItem<String>(
+                              value: location,
+                              child: Text(location),
+                            );
+                          }).toList(),
                         ),
                         SizedBox(height: 16),
                         TextField(
@@ -519,42 +535,25 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         ),
                         SizedBox(height: 24),
-                        _isLoading
-                            ? CircularProgressIndicator()
-                            : ElevatedButton(
-                                onPressed: _signup,
-                                child: Text('Sign Up'),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF4B39EF),
-                                  foregroundColor: Colors.white,
-                                  textStyle: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 16,
-                                    horizontal: 32,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  elevation: 3,
-                                ),
-                              ),
-                        SizedBox(height: 24),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context); // Go back to the login page
-                          },
-                          child: Text(
-                            'Already have an account? Login',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                        ElevatedButton(
+                          onPressed: _isLoading ? null : _signup,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF4B39EF),
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40),
                             ),
                           ),
+                          child: _isLoading
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ],
                     ),

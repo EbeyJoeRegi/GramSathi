@@ -35,7 +35,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       print('Fetching data for username: ${widget.username}');
       final response = await http.get(
         Uri.parse(
-            'http://192.168.5.1:3000/user/profile?username=${widget.username}'),
+            '${AppConfig.baseUrl}/user/profile?username=${widget.username}'),
       );
 
       print('Response status: ${response.statusCode}');

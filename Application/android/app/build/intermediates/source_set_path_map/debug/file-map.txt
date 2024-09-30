@@ -1,0 +1,31 @@
+com.example.village_app-lifecycle-livedata-core-2.6.2-0 C:\Users\ebeyj\.gradle\caches\transforms-3\0153c5737100b82145406b86e4ef994e\transformed\lifecycle-livedata-core-2.6.2\res
+com.example.village_app-jetified-window-1.0.0-beta04-1 C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\res
+com.example.village_app-jetified-window-java-1.0.0-beta04-2 C:\Users\ebeyj\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.village_app-core-runtime-2.2.0-3 C:\Users\ebeyj\.gradle\caches\transforms-3\3d3a17a299379e3d54a62db038deb3a7\transformed\core-runtime-2.2.0\res
+com.example.village_app-jetified-savedstate-1.2.1-4 C:\Users\ebeyj\.gradle\caches\transforms-3\526bb5512d8d3f2d15bcce29fe0c92ba\transformed\jetified-savedstate-1.2.1\res
+com.example.village_app-jetified-lifecycle-viewmodel-savedstate-2.6.2-5 C:\Users\ebeyj\.gradle\caches\transforms-3\545777a4083296e1c6ca842ea6fe72ce\transformed\jetified-lifecycle-viewmodel-savedstate-2.6.2\res
+com.example.village_app-jetified-core-ktx-1.13.0-6 C:\Users\ebeyj\.gradle\caches\transforms-3\5c79ca57e5b651463d57f10ad0191e01\transformed\jetified-core-ktx-1.13.0\res
+com.example.village_app-jetified-activity-1.7.2-7 C:\Users\ebeyj\.gradle\caches\transforms-3\7e30f4b09ad63b0fe951adc42de2658a\transformed\jetified-activity-1.7.2\res
+com.example.village_app-jetified-annotation-experimental-1.4.0-8 C:\Users\ebeyj\.gradle\caches\transforms-3\8dc7232cddb8efda109560fa16c4ae0e\transformed\jetified-annotation-experimental-1.4.0\res
+com.example.village_app-jetified-profileinstaller-1.3.0-9 C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\res
+com.example.village_app-browser-1.5.0-10 C:\Users\ebeyj\.gradle\caches\transforms-3\a3fbb37dd5ef93c98bc80ddf0289d0af\transformed\browser-1.5.0\res
+com.example.village_app-core-1.13.0-11 C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\res
+com.example.village_app-jetified-play-services-basement-18.3.0-12 C:\Users\ebeyj\.gradle\caches\transforms-3\c3e05c9fbf3e6c63974105ad6d97e1f5\transformed\jetified-play-services-basement-18.3.0\res
+com.example.village_app-lifecycle-viewmodel-2.6.2-13 C:\Users\ebeyj\.gradle\caches\transforms-3\d12f1d469fe801b5b8082d7a451d6302\transformed\lifecycle-viewmodel-2.6.2\res
+com.example.village_app-lifecycle-livedata-2.6.2-14 C:\Users\ebeyj\.gradle\caches\transforms-3\ee4b47cff759fde662474a98478a9c94\transformed\lifecycle-livedata-2.6.2\res
+com.example.village_app-jetified-play-services-base-18.3.0-15 C:\Users\ebeyj\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\res
+com.example.village_app-lifecycle-runtime-2.6.2-16 C:\Users\ebeyj\.gradle\caches\transforms-3\f530314e540fd09a3cbc96e5c6d4e417\transformed\lifecycle-runtime-2.6.2\res
+com.example.village_app-jetified-startup-runtime-1.1.1-17 C:\Users\ebeyj\.gradle\caches\transforms-3\f5fcd9d21efbf86a0ac70e1d2cc111ed\transformed\jetified-startup-runtime-1.1.1\res
+com.example.village_app-packaged_res-18 C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.19\android\build\intermediates\packaged_res\debug
+com.example.village_app-packaged_res-19 C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-4.6.1\android\build\intermediates\packaged_res\debug
+com.example.village_app-packaged_res-20 C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\packaged_res\debug
+com.example.village_app-packaged_res-21 C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.4\android\build\intermediates\packaged_res\debug
+com.example.village_app-packaged_res-22 C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\packaged_res\debug
+com.example.village_app-pngs-23 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\build\generated\res\pngs\debug
+com.example.village_app-resValues-24 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\build\generated\res\resValues\debug
+com.example.village_app-rs-25 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\build\generated\res\rs\debug
+com.example.village_app-mergeDebugResources-26 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.village_app-mergeDebugResources-27 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.village_app-merged_res-28 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\build\intermediates\merged_res\debug
+com.example.village_app-debug-29 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\debug\res
+com.example.village_app-main-30 E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\res

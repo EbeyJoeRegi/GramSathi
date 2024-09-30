@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart'; // For making phone calls
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/config.dart';
 
 class ImportantContactsScreen extends StatefulWidget {
   @override
@@ -38,8 +39,7 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
 
   Future<void> _fetchAdminContacts() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.5.1:3000/admins'));
+      final response = await http.get(Uri.parse('${AppConfig.baseUrl}/admins'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
