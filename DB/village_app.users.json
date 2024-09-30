@@ -11,7 +11,8 @@
   "job_title": "President",
   "activation": 1,
   "email": "president@villageapp.com",
-  "id": 1
+  "id": 1,
+  "raID": "mglr8520"
 },
 {
   "_id": {
@@ -26,7 +27,8 @@
   "job_title": "Student",
   "activation": 1,
   "email": "aju@gmail.com",
-  "id": 2
+  "id": 2,
+  "raID": "mglr9874"
 },
 {
   "_id": {
@@ -41,7 +43,8 @@
   "job_title": "User Work",
   "activation": 1,
   "email": "user@user.co.in",
-  "id": 4
+  "id": 4,
+  "raID": "mglr7410"
 },
 {
   "_id": {
@@ -56,7 +59,8 @@
   "job_title": "Administrator",
   "activation": 1,
   "email": "admin@example.com",
-  "id": 5
+  "id": 5,
+  "raID": "mglr7309"
 },
 {
   "_id": {
@@ -71,7 +75,8 @@
   "job_title": "Farmer",
   "activation": 1,
   "email": "ebeyjoeregi@gmail.co",
-  "id": 6
+  "id": 6,
+  "raID": "mglr1234"
 },
 {
   "_id": {
@@ -86,7 +91,8 @@
   "job_title": "Farmer",
   "activation": 0,
   "email": "anjalita@sjec.ac.in",
-  "id": 7
+  "id": 7,
+  "raID": "mglr1245"
 },
 {
   "_id": {
@@ -101,7 +107,8 @@
   "job_title": "Secretary",
   "activation": 1,
   "email": "secretary@villageapp.com",
-  "id": 8
+  "id": 8,
+  "raID": "mglr6541"
 },
 {
   "_id": {
@@ -116,7 +123,8 @@
   "job_title": "Treasurer",
   "activation": 1,
   "email": "treasurer@villageapp.com",
-  "id": 9
+  "id": 9,
+  "raID": "mglr6001"
 },
 {
   "_id": {
@@ -131,7 +139,8 @@
   "job_title": "Student",
   "activation": 0,
   "email": "edwinregi@gmail.com",
-  "id": 10
+  "id": 10,
+  "raID": "mglr8650"
 },
 {
   "_id": {
@@ -147,7 +156,8 @@
   "activation": 1,
   "user_type": "user",
   "__v": 0,
-  "id": 11
+  "id": 11,
+  "raID": "mglr6915"
 },
 {
   "_id": {
@@ -163,5 +173,40 @@
   "password": "$2b$10$voiHLPyjKcczMAWVVpHEY.D/bIohjhGHeoBOYZNwsWpdKt8xLcH02",
   "activation": 0,
   "user_type": "user",
+  "__v": 0,
+  "raID": "mglr5624"
+},
+{
+  "_id": {
+    "$oid": "66facf4c18206ea4e1d1d3ee"
+  },
+  "id": 17,
+  "username": "suryakumar",
+  "name": "Surya Kumar",
+  "phone": "9874563210",
+  "address": "Mangalore (Dakshin Kannada)",
+  "job_title": "Farmer",
+  "email": "suryakumar@gmail.com",
+  "password": "$2b$10$Xod30hGSOqB/wlmDDEaL.O9aIHOARoMrAAGamjRCItfXmMPd.6wRm",
+  "activation": 0,
+  "user_type": "user",
+  "raID": "mglr8513",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fad00a18206ea4e1d1d3f8"
+  },
+  "id": 18,
+  "username": "aju18",
+  "name": "Aju",
+  "phone": "9874563201",
+  "address": "Mangalore (Dakshin Kannada)",
+  "job_title": "Student",
+  "email": "aju@mail.com",
+  "password": "$2b$10$VP7EYkjc3Aw1pv4LjU7BMucCPgq8g31JCDdLOp5f5G71up7IRORf.",
+  "activation": 0,
+  "user_type": "user",
+  "raID": "mglr9870",
   "__v": 0
 }]
