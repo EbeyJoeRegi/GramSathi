@@ -5,8 +5,8 @@
     android:versionName="1.0.0" >
 
     <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="33" />
+        android:minSdkVersion="23"
+        android:targetSdkVersion="34" />
     <!--
          The INTERNET permission is required for development. Specifically,
          the Flutter tool needs it to communicate with the running application
@@ -43,6 +43,7 @@
         android:name="android.app.Application"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
+        android:extractNativeLibs="false"
         android:icon="@mipmap/ic_launcher"
         android:label="village_app" >
         <activity
@@ -78,12 +79,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <service
-            android:name="com.baseflow.geolocator.GeolocatorLocationService"
-            android:enabled="true"
-            android:exported="false"
-            android:foregroundServiceType="location" />
-
         <provider
             android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
             android:authorities="com.example.village_app.flutter.image_provider"
@@ -118,19 +113,13 @@
             android:name="androidx.window.sidecar"
             android:required="false" />
 
-        <activity
-            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="com.example.village_app.androidx-startup"
             android:exported="false" >
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
             <meta-data
                 android:name="androidx.profileinstaller.ProfileInstallerInitializer"
                 android:value="androidx.startup" />

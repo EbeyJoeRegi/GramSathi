@@ -21,6 +21,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.0
   animated_text_kit: ^4.2.1
   weather_icons: ^3.0.0
+  fluttertoast: ^8.2.8
 
   # Add other dependencies here if needed
 
@@ -42,8 +43,9 @@ flutter:
     - assets\images\bg1.png
     - assets\images\bg2.png
     - assets\images\bg.jpg
-    - assets\images\admin.png
-    - assets\images\user.png
+    - assets\images\admin.png    
+    - assets\images\bgleaf.jpg
+
   fonts:
     - family: Plus Jakarta Sans
       fonts:

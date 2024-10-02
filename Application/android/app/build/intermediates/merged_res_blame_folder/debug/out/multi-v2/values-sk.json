@@ -1,61 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.village_app-mergeDebugResources-26:/values-sk/values-sk.xml",
+            "outputFile": "com.example.village_app-mergeDebugResources-28:/values-sk/values-sk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ebeyj\\.gradle\\caches\\transforms-3\\c3e05c9fbf3e6c63974105ad6d97e1f5\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-sk\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "134",
-                        "endOffsets": "329"
-                    },
-                    "to": {
-                        "startLines": "17",
-                        "startColumns": "4",
-                        "startOffsets": "1791",
-                        "endColumns": "138",
-                        "endOffsets": "1925"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ebeyj\\.gradle\\caches\\transforms-3\\f08303a2cca72b52177966597c670619\\transformed\\jetified-play-services-base-18.3.0\\res\\values-sk\\values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "193,295,451,571,677,829,953,1062,1160,1325,1432,1598,1724,1883,2043,2107,2170",
-                        "endColumns": "101,155,119,105,151,123,108,97,164,106,165,125,158,159,63,62,82",
-                        "endOffsets": "294,450,570,676,828,952,1061,1159,1324,1431,1597,1723,1882,2042,2106,2169,2252"
-                    },
-                    "to": {
-                        "startLines": "9,10,11,12,13,14,15,16,18,19,20,21,22,23,24,25,26",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "792,898,1058,1182,1292,1448,1576,1689,1930,2099,2210,2380,2510,2673,2837,2905,2972",
-                        "endColumns": "105,159,123,109,155,127,112,101,168,110,169,129,162,163,67,66,86",
-                        "endOffsets": "893,1053,1177,1287,1443,1571,1684,1786,2094,2205,2375,2505,2668,2832,2900,2967,3054"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ebeyj\\.gradle\\caches\\transforms-3\\b4a1450a92ec65716995253228c042d3\\transformed\\core-1.13.0\\res\\values-sk\\values-sk.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,151,253,354,452,562,670,792",
-                        "endColumns": "95,101,100,97,109,107,121,100",
-                        "endOffsets": "146,248,349,447,557,665,787,888"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,31",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,151,253,354,452,562,670,3486",
-                        "endColumns": "95,101,100,97,109,107,121,100",
-                        "endOffsets": "146,248,349,447,557,665,787,3582"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ebeyj\\.gradle\\caches\\transforms-3\\a3fbb37dd5ef93c98bc80ddf0289d0af\\transformed\\browser-1.5.0\\res\\values-sk\\values-sk.xml",
+                    "source": "C:\\Users\\ebeyj\\.gradle\\caches\\transforms-3\\edfa30ece12f1bdc87d1e30bcbf4ffea\\transformed\\browser-1.5.0\\res\\values-sk\\values-sk.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -64,11 +13,28 @@
                         "endOffsets": "157,260,375,477"
                     },
                     "to": {
-                        "startLines": "27,28,29,30",
+                        "startLines": "9,10,11,12",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "3059,3166,3269,3384",
+                        "startOffsets": "792,899,1002,1117",
                         "endColumns": "106,102,114,101",
-                        "endOffsets": "3161,3264,3379,3481"
+                        "endOffsets": "894,997,1112,1214"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ebeyj\\.gradle\\caches\\transforms-3\\54a4cfbaad86b9ab2273ca8263e4a153\\transformed\\core-1.13.1\\res\\values-sk\\values-sk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,253,354,452,562,670,792",
+                        "endColumns": "95,101,100,97,109,107,121,100",
+                        "endOffsets": "146,248,349,447,557,665,787,888"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,13",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,253,354,452,562,670,1219",
+                        "endColumns": "95,101,100,97,109,107,121,100",
+                        "endOffsets": "146,248,349,447,557,665,787,1315"
                     }
                 }
             ]

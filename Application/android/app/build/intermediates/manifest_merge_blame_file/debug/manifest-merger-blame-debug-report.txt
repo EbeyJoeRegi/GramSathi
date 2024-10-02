@@ -5,8 +5,8 @@
 5    android:versionName="1.0.0" >
 6
 7    <uses-sdk
-8        android:minSdkVersion="19"
-9        android:targetSdkVersion="33" />
+8        android:minSdkVersion="23"
+9        android:targetSdkVersion="34" />
 10    <!--
 11         The INTERNET permission is required for development. Specifically,
 12         the Flutter tool needs it to communicate with the running application
@@ -25,10 +25,10 @@
 18-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:4:5-64
 18-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:4:22-62
 19    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-19-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:5:5-79
+19-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:5:5-78
 19-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:5:22-76
 20    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-20-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:6:5-81
+20-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:6:5-80
 20-->E:\Downloads\Brave\Mini Project\Flutter\Rural Nexus\Application\android\app\src\main\AndroidManifest.xml:6:22-78
 21    <!--
 22 Required to query activities that can process text, see:
@@ -52,198 +52,178 @@
 34    </queries>
 35
 36    <permission
-36-->[androidx.core:core:1.13.0] C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
+36-->[androidx.core:core:1.13.1] C:\Users\ebeyj\.gradle\caches\transforms-3\54a4cfbaad86b9ab2273ca8263e4a153\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
 37        android:name="com.example.village_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-37-->[androidx.core:core:1.13.0] C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
+37-->[androidx.core:core:1.13.1] C:\Users\ebeyj\.gradle\caches\transforms-3\54a4cfbaad86b9ab2273ca8263e4a153\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
 38        android:protectionLevel="signature" />
-38-->[androidx.core:core:1.13.0] C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
+38-->[androidx.core:core:1.13.1] C:\Users\ebeyj\.gradle\caches\transforms-3\54a4cfbaad86b9ab2273ca8263e4a153\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
 39
 40    <uses-permission android:name="com.example.village_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-40-->[androidx.core:core:1.13.0] C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
-40-->[androidx.core:core:1.13.0] C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
+40-->[androidx.core:core:1.13.1] C:\Users\ebeyj\.gradle\caches\transforms-3\54a4cfbaad86b9ab2273ca8263e4a153\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+40-->[androidx.core:core:1.13.1] C:\Users\ebeyj\.gradle\caches\transforms-3\54a4cfbaad86b9ab2273ca8263e4a153\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
 41
 42    <application
 43        android:name="android.app.Application"
 44        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-44-->[androidx.core:core:1.13.0] C:\Users\ebeyj\.gradle\caches\transforms-3\b4a1450a92ec65716995253228c042d3\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
+44-->[androidx.core:core:1.13.1] C:\Users\ebeyj\.gradle\caches\transforms-3\54a4cfbaad86b9ab2273ca8263e4a153\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
 45        android:debuggable="true"
-46        android:icon="@mipmap/ic_launcher"
-47        android:label="village_app" >
-48        <activity
-49            android:name="com.example.village_app.MainActivity"
-50            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-51            android:exported="true"
-52            android:hardwareAccelerated="true"
-53            android:launchMode="singleTop"
-54            android:theme="@style/LaunchTheme"
-55            android:windowSoftInputMode="adjustResize" >
-56
-57            <!--
-58                 Specifies an Android theme to apply to this Activity as soon as
-59                 the Android process has started. This theme is visible to the user
-60                 while the Flutter UI initializes. After that, this theme continues
-61                 to determine the Window background behind the Flutter UI.
-62            -->
-63            <meta-data
-64                android:name="io.flutter.embedding.android.NormalTheme"
-65                android:resource="@style/NormalTheme" />
-66
-67            <intent-filter>
-68                <action android:name="android.intent.action.MAIN" />
-69
-70                <category android:name="android.intent.category.LAUNCHER" />
-71            </intent-filter>
-72        </activity>
-73        <!--
-74             Don't delete the meta-data below.
-75             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-76        -->
-77        <meta-data
-78            android:name="flutterEmbedding"
-79            android:value="2" />
-80
-81        <service
-81-->[:geolocator_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-4.6.1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-14:56
-82            android:name="com.baseflow.geolocator.GeolocatorLocationService"
-82-->[:geolocator_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-4.6.1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-77
-83            android:enabled="true"
-83-->[:geolocator_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-4.6.1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-35
-84            android:exported="false"
-84-->[:geolocator_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-4.6.1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
-85            android:foregroundServiceType="location" />
-85-->[:geolocator_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-4.6.1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-53
-86
-87        <provider
-87-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-19:20
-88            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-88-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-82
-89            android:authorities="com.example.village_app.flutter.image_provider"
-89-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-74
-90            android:exported="false"
-90-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-37
-91            android:grantUriPermissions="true" >
-91-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-47
-92            <meta-data
-92-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-18:75
-93                android:name="android.support.FILE_PROVIDER_PATHS"
-93-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-67
-94                android:resource="@xml/flutter_image_picker_file_paths" />
-94-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:17-72
-95        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
-96        <service
-96-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33:19
-97            android:name="com.google.android.gms.metadata.ModuleDependencies"
-97-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-78
-98            android:enabled="false"
-98-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-36
-99            android:exported="false" >
-99-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
-100            <intent-filter>
-100-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-28:29
-101                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
-101-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:17-94
-101-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:25-91
-102            </intent-filter>
+46        android:extractNativeLibs="false"
+47        android:icon="@mipmap/ic_launcher"
+48        android:label="village_app" >
+49        <activity
+50            android:name="com.example.village_app.MainActivity"
+51            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+52            android:exported="true"
+53            android:hardwareAccelerated="true"
+54            android:launchMode="singleTop"
+55            android:theme="@style/LaunchTheme"
+56            android:windowSoftInputMode="adjustResize" >
+57
+58            <!--
+59                 Specifies an Android theme to apply to this Activity as soon as
+60                 the Android process has started. This theme is visible to the user
+61                 while the Flutter UI initializes. After that, this theme continues
+62                 to determine the Window background behind the Flutter UI.
+63            -->
+64            <meta-data
+65                android:name="io.flutter.embedding.android.NormalTheme"
+66                android:resource="@style/NormalTheme" />
+67
+68            <intent-filter>
+69                <action android:name="android.intent.action.MAIN" />
+70
+71                <category android:name="android.intent.category.LAUNCHER" />
+72            </intent-filter>
+73        </activity>
+74        <!--
+75             Don't delete the meta-data below.
+76             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+77        -->
+78        <meta-data
+79            android:name="flutterEmbedding"
+80            android:value="2" />
+81
+82        <provider
+82-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-19:20
+83            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+83-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-82
+84            android:authorities="com.example.village_app.flutter.image_provider"
+84-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-74
+85            android:exported="false"
+85-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-37
+86            android:grantUriPermissions="true" >
+86-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-47
+87            <meta-data
+87-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-18:75
+88                android:name="android.support.FILE_PROVIDER_PATHS"
+88-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-67
+89                android:resource="@xml/flutter_image_picker_file_paths" />
+89-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:17-72
+90        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
+91        <service
+91-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33:19
+92            android:name="com.google.android.gms.metadata.ModuleDependencies"
+92-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-78
+93            android:enabled="false"
+93-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-36
+94            android:exported="false" >
+94-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
+95            <intent-filter>
+95-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-28:29
+96                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+96-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:17-94
+96-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:25-91
+97            </intent-filter>
+98
+99            <meta-data
+99-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-32:36
+100                android:name="photopicker_activity:0:required"
+100-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:31:17-63
+101                android:value="" />
+101-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:32:17-33
+102        </service>
 103
-104            <meta-data
-104-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-32:36
-105                android:name="photopicker_activity:0:required"
-105-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:31:17-63
-106                android:value="" />
-106-->[:image_picker_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.12+1\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:32:17-33
-107        </service>
+104        <activity
+104-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-13:74
+105            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+105-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
+106            android:exported="false"
+106-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
+107            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+107-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-71
 108
-109        <activity
-109-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-13:74
-110            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-110-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
-111            android:exported="false"
-111-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
-112            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-112-->[:url_launcher_android] C:\Users\ebeyj\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.2\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-71
-113
-114        <uses-library
-114-->[androidx.window:window:1.0.0-beta04] C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
-115            android:name="androidx.window.extensions"
-115-->[androidx.window:window:1.0.0-beta04] C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
-116            android:required="false" />
-116-->[androidx.window:window:1.0.0-beta04] C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
-117        <uses-library
-117-->[androidx.window:window:1.0.0-beta04] C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
-118            android:name="androidx.window.sidecar"
-118-->[androidx.window:window:1.0.0-beta04] C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
-119            android:required="false" />
-119-->[androidx.window:window:1.0.0-beta04] C:\Users\ebeyj\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
-120
-121        <activity
-121-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:9-22:45
-122            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-122-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:19-85
-123            android:exported="false"
-123-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:22:19-43
-124            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-124-->[com.google.android.gms:play-services-base:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:21:19-78
-125
-126        <meta-data
-126-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\c3e05c9fbf3e6c63974105ad6d97e1f5\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
-127            android:name="com.google.android.gms.version"
-127-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\c3e05c9fbf3e6c63974105ad6d97e1f5\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
-128            android:value="@integer/google_play_services_version" />
-128-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\c3e05c9fbf3e6c63974105ad6d97e1f5\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
-129
-130        <provider
-130-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:24:9-32:20
-131            android:name="androidx.startup.InitializationProvider"
-131-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:25:13-67
-132            android:authorities="com.example.village_app.androidx-startup"
-132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:26:13-68
-133            android:exported="false" >
-133-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:27:13-37
-134            <meta-data
-134-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-135                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-135-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-136                android:value="androidx.startup" />
-136-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-137        </provider>
-138
-139        <receiver
-139-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-140            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-140-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-141            android:directBootAware="false"
-141-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-142            android:enabled="true"
-142-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-143            android:exported="true"
-143-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-144            android:permission="android.permission.DUMP" >
-144-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-145            <intent-filter>
-145-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-146                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-146-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-146-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-147            </intent-filter>
-148            <intent-filter>
-148-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-149                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-149-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-149-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-150            </intent-filter>
-151            <intent-filter>
-151-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-152                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-152-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-152-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-153            </intent-filter>
-154            <intent-filter>
-154-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-155                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-155-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-155-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ebeyj\.gradle\caches\transforms-3\a0ecce03964d1d4dc26ffab32b08b16e\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-156            </intent-filter>
-157        </receiver>
-158    </application>
-159
-160</manifest>
+109        <uses-library
+109-->[androidx.window:window:1.2.0] C:\Users\ebeyj\.gradle\caches\transforms-3\ac5ea9a8b6fd31385d98c2d53414b07d\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+110            android:name="androidx.window.extensions"
+110-->[androidx.window:window:1.2.0] C:\Users\ebeyj\.gradle\caches\transforms-3\ac5ea9a8b6fd31385d98c2d53414b07d\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+111            android:required="false" />
+111-->[androidx.window:window:1.2.0] C:\Users\ebeyj\.gradle\caches\transforms-3\ac5ea9a8b6fd31385d98c2d53414b07d\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+112        <uses-library
+112-->[androidx.window:window:1.2.0] C:\Users\ebeyj\.gradle\caches\transforms-3\ac5ea9a8b6fd31385d98c2d53414b07d\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+113            android:name="androidx.window.sidecar"
+113-->[androidx.window:window:1.2.0] C:\Users\ebeyj\.gradle\caches\transforms-3\ac5ea9a8b6fd31385d98c2d53414b07d\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+114            android:required="false" />
+114-->[androidx.window:window:1.2.0] C:\Users\ebeyj\.gradle\caches\transforms-3\ac5ea9a8b6fd31385d98c2d53414b07d\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+115
+116        <provider
+116-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+117            android:name="androidx.startup.InitializationProvider"
+117-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+118            android:authorities="com.example.village_app.androidx-startup"
+118-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+119            android:exported="false" >
+119-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+120            <meta-data
+120-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+121                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+121-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+122                android:value="androidx.startup" />
+122-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\ebeyj\.gradle\caches\transforms-3\f278e58515e8cfd3d9ddee03ef955ede\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+123            <meta-data
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+124                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+125                android:value="androidx.startup" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+126        </provider>
+127
+128        <receiver
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+129            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+130            android:directBootAware="false"
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+131            android:enabled="true"
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+132            android:exported="true"
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+133            android:permission="android.permission.DUMP" >
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+134            <intent-filter>
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+135                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+136            </intent-filter>
+137            <intent-filter>
+137-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+138                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+139            </intent-filter>
+140            <intent-filter>
+140-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+141                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+142            </intent-filter>
+143            <intent-filter>
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+144                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\ebeyj\.gradle\caches\transforms-3\6ea3fe485a2777491d24973851e37227\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+145            </intent-filter>
+146        </receiver>
+147    </application>
+148
+149</manifest>
