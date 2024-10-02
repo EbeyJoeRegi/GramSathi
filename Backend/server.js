@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const twilio = require('twilio');
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+
+dotenv.config();
 const app = express();
 const port = 3000;
 const {  User, Announcement,Suggestion, Query, Place, Crop, Price, Counter} = require('./models');
@@ -44,6 +49,112 @@ const getNextSequenceValue = async (sequenceName) => {
         throw new Error('Failed to increment sequence value');
     }
 };
+
+// Function to generate a random 6-digit OTP
+const generateOTP = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
+};
+const otpStore = {};
+
+const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+// Send OTP endpoint
+app.post('/send-otp', async (req, res) => {
+    const { phoneNumber } = req.body;
+    const otp = generateOTP(); 
+    otpStore[phoneNumber] = otp;
+    
+    // Store OTP in memory (consider using a database in production)
+    otpStore[phoneNumber] = otp;
+
+    try {
+        // Send OTP via SMS
+        await twilioClient.messages.create({
+            body: `Your OTP is: ${otp}`,
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: phoneNumber,
+        });
+
+        res.status(200).json({ message: 'OTP sent successfully.' });
+    } catch (error) {
+        console.error('Error sending OTP:', error);
+        res.status(500).json({ error: 'Failed to send OTP.' });
+    }
+});
+
+// Verify OTP endpoint
+app.post('/verify-otp', (req, res) => {
+    const { phoneNumber, otp } = req.body;
+
+    // Check if the OTP is valid
+    if (otpStore[phoneNumber] === otp) {
+        // OTP is valid, clear the stored OTP
+        delete otpStore[phoneNumber];
+        return res.status(200).json({ message: 'OTP verified successfully.' });
+    } else {
+        return res.status(400).json({ error: 'Invalid OTP.' });
+    }
+});
+
+// Send Email OTP
+app.post('/send-email-otp', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required.' });
+  }
+
+  const otp = generateOTP();
+  otpStore[email] = otp; // Store the OTP for this email
+  
+  // Create a transporter object using SMTP
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // Use your email service provider
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  // Send OTP email
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your OTP Code',
+      text: `Your OTP code is ${otp}. It is valid for 10 minutes.`,
+    });
+
+    return res.status(200).json({ message: 'OTP sent successfully.' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return res.status(500).json({ message: 'Failed to send OTP. Please try again.' });
+  }
+});
+
+// Verify Email OTP
+app.post('/verify-email-otp', (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({ message: 'Email and OTP are required.' });
+  }
+
+  const storedOtp = otpStore[email];
+
+  if (!storedOtp) {
+    return res.status(400).json({ message: 'No OTP sent to this email.' });
+  }
+
+  if (storedOtp !== otp) {
+    return res.status(400).json({ message: 'Invalid OTP.' });
+  }
+
+  // Optionally, remove the OTP from the store after verification
+  delete otpStore[email];
+
+  return res.status(200).json({ message: 'OTP verified successfully.' });
+});
 
 // Login endpoint
 app.post('/login', async (req, res) => {
