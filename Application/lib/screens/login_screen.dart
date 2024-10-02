@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen>
   String _errorMessage = '';
 
   late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
+  late Animation<double> _fadeAnimation; // Opacity animation
 
   bool _isLoading = false;
 
@@ -27,9 +27,9 @@ class _LoginScreenState extends State<LoginScreen>
     super.initState();
 
     _animationController = AnimationController(
+      duration: Duration(seconds: 5),
       vsync: this,
-      duration: Duration(seconds: 1),
-    );
+    )..repeat(reverse: true);
 
     _fadeAnimation = CurvedAnimation(
       parent: _animationController,
@@ -132,7 +132,6 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset:
@@ -142,106 +141,79 @@ class _LoginScreenState extends State<LoginScreen>
         children: [
           // Top curved background with image
           Container(
-            height: MediaQuery.of(context).size.height * 0.50,
+            height: MediaQuery.of(context).size.height * 0.45,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/bgvillage3.png'),
+                image: AssetImage('assets/images/bgvillage9.jpeg'),
                 fit: BoxFit.cover,
               ),
-              // borderRadius: BorderRadius.only(
-              //   bottomLeft: Radius.circular(80),
-              //   bottomRight: Radius.circular(80),
-              // ),
             ),
           ),
           // Semi-transparent overlay
           Container(
             decoration: BoxDecoration(
-              //color: Colors.black.withOpacity(0.5),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(80),
-                bottomRight: Radius.circular(80),
-              ),
+              color: Colors.black.withOpacity(0.3),
             ),
           ),
           // Overlay text on background image
           Positioned(
-            top: 140,
+            top: 110,
             left: 20,
             right: 20,
             child: Column(
               children: [
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Text(
-                    'Welcome to',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 5.0,
-                          color: Colors.black,
-                          offset: Offset(2.0, 2.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8),
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Column(
-                    children: [
-                      Text(
-                        'GramSathi',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 5.0,
-                              color: Colors.black,
-                              offset: Offset(2.0, 2.0),
-                            ),
-                          ],
-                        ),
+                Column(
+                  children: [
+                    Text(
+                      'GramSathi',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 37,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 5.0,
+                            color: Colors.black,
+                            offset: Offset(2.0, 2.0),
+                          ),
+                        ],
                       ),
-                      Text(
+                    ),
+                    SizedBox(height: 2),
+                    // Tagline with only opacity animation
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: Text(
                         'Bridging communities with technology',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 17,
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                              blurRadius: 5.0,
+                              blurRadius: 2.0,
                               color: Colors.black,
-                              offset: Offset(2.0, 2.0),
+                              offset: Offset(1.0, 1.0),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           // White background for the input fields
           SingleChildScrollView(
-            // Add scrolling functionality to prevent overflow
             child: Container(
-              height: 500,
+              height: 450,
               margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.45,
+                top: MediaQuery.of(context).size.height * 0.52,
               ),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.5),
-                //color: Colors.white,
+                color: Colors.white.withOpacity(0.68),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
               ),
               padding: EdgeInsets.all(20.0),
@@ -252,14 +224,14 @@ class _LoginScreenState extends State<LoginScreen>
                     controller: _usernameController,
                     decoration: InputDecoration(
                       hintText: 'Email',
-                      prefixIcon: Icon(Icons.person, color: Colors.teal),
+                      prefixIcon: Icon(Icons.person, color: Color(0xff015F3E)),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xFFE0E3E7), width: 2),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.teal, width: 2),
+                        borderSide: BorderSide(color: Colors.green, width: 2),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       filled: true,
@@ -273,14 +245,14 @@ class _LoginScreenState extends State<LoginScreen>
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
-                      prefixIcon: Icon(Icons.lock, color: Colors.teal),
+                      prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xFFE0E3E7), width: 2),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.teal, width: 2),
+                        borderSide: BorderSide(color: Colors.green, width: 2),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       filled: true,
@@ -293,22 +265,30 @@ class _LoginScreenState extends State<LoginScreen>
                       ? CircularProgressIndicator()
                       : ElevatedButton(
                           onPressed: _login,
-                          child: Text('Login'),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
+                            backgroundColor:
+                                Color(0xff015F3E), // Background color
                             padding: EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 32),
+                                horizontal: 50, vertical: 15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40),
                             ),
                           ),
                         ),
-                  if (_errorMessage.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(_errorMessage,
-                          style: TextStyle(color: Colors.red)),
+                  if (_errorMessage.isNotEmpty) ...[
+                    SizedBox(height: 20),
+                    Text(
+                      _errorMessage,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                      ),
                     ),
+                  ],
                   SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
@@ -318,8 +298,12 @@ class _LoginScreenState extends State<LoginScreen>
                       );
                     },
                     child: Text(
-                      'Don\'t have an account? Sign Up',
-                      style: TextStyle(color: Colors.teal, fontSize: 16),
+                      "Don't have an account? Sign up here",
+                      style: TextStyle(
+                        color: Color(0xff015F3E),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
