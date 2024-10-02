@@ -48,6 +48,8 @@ const getNextSequenceValue = async (sequenceName) => {
 // Login endpoint
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    console.log(username);
+    console.log(password);
   
     try {
       const user = await User.findOne({ username });

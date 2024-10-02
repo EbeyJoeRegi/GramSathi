@@ -6,7 +6,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=3.1.5 <4.0.0"
+
 
 dependencies:
   flutter:
@@ -44,6 +45,11 @@ flutter:
     - assets\images\bg.jpg
     - assets\images\admin.png
     - assets\images\user.png
+    - assets/images/bgleaf.jpg
+    - assets/images/bgvillage.webp
+    - assets/images/bgvillage2.avif
+    - assets/images/bgvillage3.png
+    - assets/images/bgvillage7.jpg
   fonts:
     - family: Plus Jakarta Sans
       fonts:

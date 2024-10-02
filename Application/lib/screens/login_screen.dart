@@ -30,19 +30,13 @@ class _LoginScreenState extends State<LoginScreen>
       vsync: this,
       duration: Duration(seconds: 1),
     );
+
     _fadeAnimation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeIn,
     );
 
     _animationController.forward();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Preload the background image
-    precacheImage(AssetImage('assets/images/bg1.png'), context);
   }
 
   Future<void> _login() async {
@@ -55,18 +49,16 @@ class _LoginScreenState extends State<LoginScreen>
 
     try {
       final response = await http.post(
-        Uri.parse('${AppConfig.baseUrl}/login'), // Replace with your IP address
+        Uri.parse('${AppConfig.baseUrl}/login'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json; charset=UTF-8'
         },
-        body: jsonEncode(<String, String>{
-          'username': username,
-          'password': password,
-        }),
+        body: jsonEncode(
+            <String, String>{'username': username, 'password': password}),
       );
 
       final responseBody = json.decode(response.body);
-      print('Response: $responseBody'); // Debugging line
+      print('Response: $responseBody');
 
       if (response.statusCode == 200) {
         if (responseBody['success']) {
@@ -140,177 +132,198 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          true, // Prevent bottom overflow when keyboard appears
       body: Stack(
         fit: StackFit.expand,
         children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              Color.fromARGB(255, 75, 103, 93)
-                  .withOpacity(0.3), // Adjust opacity here
-              BlendMode.darken,
-            ),
-            child: Image.asset(
-              'assets/images/bg1.png',
-              fit: BoxFit.cover,
+          // Top curved background with image
+          Container(
+            height: MediaQuery.of(context).size.height * 0.50,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bgvillage3.png'),
+                fit: BoxFit.cover,
+              ),
+              // borderRadius: BorderRadius.only(
+              //   bottomLeft: Radius.circular(80),
+              //   bottomRight: Radius.circular(80),
+              // ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(24.0),
+          // Semi-transparent overlay
+          Container(
+            decoration: BoxDecoration(
+              //color: Colors.black.withOpacity(0.5),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(80),
+                bottomRight: Radius.circular(80),
+              ),
+            ),
+          ),
+          // Overlay text on background image
+          Positioned(
+            top: 140,
+            left: 20,
+            right: 20,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Text(
+                    'Welcome to',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Colors.black,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: Column(
                     children: [
                       Text(
-                        'Welcome !!',
+                        'GramSathi',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 5.0,
+                              color: Colors.black,
+                              offset: Offset(2.0, 2.0),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 24),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          hintText: 'Username',
-                          hintStyle: TextStyle(
-                            fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF57636C),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.teal, // Teal color for the icon
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFFE0E3E7),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.teal,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.all(24),
-                        ),
+                      Text(
+                        'Bridging communities with technology',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          color: Color(0xFF101213),
                           fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF57636C),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Colors.teal, // Teal color for the icon
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFFE0E3E7),
-                              width: 2,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 5.0,
+                              color: Colors.black,
+                              offset: Offset(2.0, 2.0),
                             ),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.teal,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.all(24),
-                        ),
-                        style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          color: Color(0xFF101213),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      _isLoading
-                          ? CircularProgressIndicator()
-                          : ElevatedButton(
-                              onPressed: _login,
-                              child: Text('Login'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 76, 197, 183),
-                                foregroundColor:
-                                    Color.fromARGB(255, 249, 249, 249),
-                                textStyle: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 16,
-                                  horizontal: 32,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                elevation: 3,
-                              ),
-                            ),
-                      if (_errorMessage.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            _errorMessage,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      SizedBox(height: 24),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignupScreen()),
-                          );
-                        },
-                        child: Text(
-                          'Don\'t have an account? Sign Up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
               ],
+            ),
+          ),
+          // White background for the input fields
+          SingleChildScrollView(
+            // Add scrolling functionality to prevent overflow
+            child: Container(
+              height: 500,
+              margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.45,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.5),
+                //color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+              ),
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      prefixIcon: Icon(Icons.person, color: Colors.teal),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xFFE0E3E7), width: 2),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal, width: 2),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.all(24),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      prefixIcon: Icon(Icons.lock, color: Colors.teal),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xFFE0E3E7), width: 2),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal, width: 2),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.all(24),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: _login,
+                          child: Text('Login'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.teal,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 32),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                          ),
+                        ),
+                  if (_errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(_errorMessage,
+                          style: TextStyle(color: Colors.red)),
+                    ),
+                  SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignupScreen()),
+                      );
+                    },
+                    child: Text(
+                      'Don\'t have an account? Sign Up',
+                      style: TextStyle(color: Colors.teal, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
