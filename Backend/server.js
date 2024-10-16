@@ -60,40 +60,60 @@ const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_A
 
 // Send OTP endpoint
 app.post('/send-otp', async (req, res) => {
-    const { phoneNumber } = req.body;
-    const otp = generateOTP(); 
-    otpStore[phoneNumber] = otp;
-    
-    // Store OTP in memory (consider using a database in production)
-    otpStore[phoneNumber] = otp;
+  let { phoneNumber } = req.body;
 
-    try {
-        // Send OTP via SMS
-        await twilioClient.messages.create({
-            body: `Your OTP is: ${otp}`,
-            from: process.env.TWILIO_PHONE_NUMBER,
-            to: phoneNumber,
-        });
+  // Check if the phone number starts with the country code +91
+  if (!phoneNumber.startsWith('+91')) { 
+      phoneNumber = `+91${phoneNumber}`;
+  }
 
-        res.status(200).json({ message: 'OTP sent successfully.' });
-    } catch (error) {
-        console.error('Error sending OTP:', error);
-        res.status(500).json({ error: 'Failed to send OTP.' });
-    }
+  const otp = generateOTP();
+  otpStore[phoneNumber] = otp;
+
+  // Log the OTP for testing purposes
+  console.log(`Generated OTP for phone ${phoneNumber}: ${otp}`);
+
+  try {
+      // Send OTP via SMS
+      await twilioClient.messages.create({
+          body: `Your OTP is: ${otp}`,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: phoneNumber,
+      });
+
+      res.status(200).json({ message: 'OTP sent successfully.' });
+  } catch (error) {
+      console.error('Error sending OTP:', error);
+
+      // Check if the error is due to an unverified number
+      if (error.code === 21608) {
+          console.error(`Failed to send OTP to unverified number ${phoneNumber}. OTP: ${otp}`);
+          // Return a success message instead of an error
+          return res.status(200).json({ message: 'OTP generation successful, but number is unverified.' });
+      }
+
+      // Handle other types of errors
+      res.status(500).json({ error: 'Failed to send OTP.' });
+  }
 });
 
 // Verify OTP endpoint
 app.post('/verify-otp', (req, res) => {
-    const { phoneNumber, otp } = req.body;
+  let { phoneNumber, otp } = req.body;
 
-    // Check if the OTP is valid
-    if (otpStore[phoneNumber] === otp) {
-        // OTP is valid, clear the stored OTP
-        delete otpStore[phoneNumber];
-        return res.status(200).json({ message: 'OTP verified successfully.' });
-    } else {
-        return res.status(400).json({ error: 'Invalid OTP.' });
-    }
+  // Ensure the phone number is in the correct format
+  if (!phoneNumber.startsWith('+91')) {
+      phoneNumber = `+91${phoneNumber}`;
+  }
+
+  // Check if the OTP is valid
+  if (otpStore[phoneNumber] === otp) {
+      // OTP is valid, clear the stored OTP
+      delete otpStore[phoneNumber];
+      return res.status(200).json({ message: 'OTP verified successfully.' });
+  } else {
+      return res.status(400).json({ error: 'Invalid OTP.' });
+  }
 });
 
 // Send Email OTP
@@ -106,6 +126,9 @@ app.post('/send-email-otp', async (req, res) => {
 
   const otp = generateOTP();
   otpStore[email] = otp; // Store the OTP for this email
+
+  // Log the OTP for testing purposes
+  console.log(`Generated OTP for email ${email}: ${otp}`);
   
   // Create a transporter object using SMTP
   const transporter = nodemailer.createTransport({
@@ -159,9 +182,6 @@ app.post('/verify-email-otp', (req, res) => {
 // Login endpoint
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    console.log(username);
-    console.log(password);
-  
     try {
       const user = await User.findOne({ username });
   
