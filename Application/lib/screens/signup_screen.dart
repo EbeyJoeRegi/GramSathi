@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:village_app/screens/login_screen.dart';
 import 'dart:convert';
 import '/config.dart'; // Assume this contains API base URLs
 
@@ -440,12 +441,18 @@ class _SignupScreenState extends State<SignupScreen>
       body: Stack(
         children: [
           Positioned.fill(
-            child: Opacity(
-              opacity: 0.7,
-              child: Image.asset(
-                'assets/images/bg1.png', // Replace with your image path
-                fit: BoxFit.cover,
-              ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/images/bgvillage9.jpeg', // Replace with your image path
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.black
+                      .withOpacity(0.3), // Apply black color with opacity
+                ),
+              ],
             ),
           ),
           Container(
@@ -456,7 +463,7 @@ class _SignupScreenState extends State<SignupScreen>
           Padding(
             padding: EdgeInsets.only(
               left: 24.0,
-              top: 48.0,
+              top: 55.0,
               right: 24.0,
             ),
             child: SingleChildScrollView(
@@ -493,21 +500,25 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFFE0E3E7),
+                                color: Color(
+                                    0xFFE0E3E7), // Border color when not focused
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(
+                                    0xff015F3E), // Border color when focused
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(24),
+                            filled: true, // Ensure background color is applied
+                            fillColor: Colors.white.withOpacity(
+                                0.7), // Slightly transparent background
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
                           ),
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
@@ -516,6 +527,7 @@ class _SignupScreenState extends State<SignupScreen>
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+
                         SizedBox(height: 16),
 
                         // Email Field with Send OTP Button
@@ -542,14 +554,19 @@ class _SignupScreenState extends State<SignupScreen>
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xFF4B39EF),
+                                      color: Color(0xff015F3E),
                                       width: 2,
                                     ),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.all(24),
+                                  fillColor: Colors.white.withOpacity(0.7),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 19,
+                                      horizontal:
+                                          20), // Reduce vertical padding to decrease height
+                                  isDense:
+                                      true, // Makes the input field more compact vertically
                                 ),
                                 style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
@@ -567,6 +584,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                           ],
                         ),
+
                         SizedBox(height: 16),
 
 // OTP Verification TextField for Email (Visible after sending OTP)
@@ -592,7 +610,7 @@ class _SignupScreenState extends State<SignupScreen>
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xFF4B39EF),
+                                      color: Color(0xff015F3EF),
                                       width: 2,
                                     ),
                                     borderRadius: BorderRadius.circular(40),
@@ -656,7 +674,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
@@ -695,7 +713,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
@@ -733,7 +751,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
@@ -775,7 +793,7 @@ class _SignupScreenState extends State<SignupScreen>
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xFF4B39EF),
+                                      color: Color(0xff015F3E),
                                       width: 2,
                                     ),
                                     borderRadius: BorderRadius.circular(40),
@@ -823,7 +841,7 @@ class _SignupScreenState extends State<SignupScreen>
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFF4B39EF),
+                                  color: Color(0xff015F3E),
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(40),
@@ -864,7 +882,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
@@ -889,13 +907,51 @@ class _SignupScreenState extends State<SignupScreen>
                         SizedBox(height: 24),
 
                         // Sign Up Button (Submit form here)
-                        ElevatedButton(
-                          onPressed: _isLoading ? null : _signup,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                          ),
-                          child: Text('Sign Up'),
-                        ),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _isLoading ? null : _signup,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff015F3E),
+                                minimumSize: Size(150,
+                                    50), // Set specific width (150) and height (50)
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16), // Optional: Custom padding
+                              ),
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                                height:
+                                    20), // Adjust the space between the button and the text
+
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to the login screen
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen(), // Replace with your login screen widget
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Already have an account? Go to login page',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
