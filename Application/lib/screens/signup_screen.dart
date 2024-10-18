@@ -925,7 +925,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             SizedBox(width: 10),
                             ElevatedButton(
-                              onPressed: _isLoading ? null : _sendEmailOTP,
+                              onPressed: _isLoading ? null : _sendOTP,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.greenAccent.withOpacity(
                                     0.8), // Set button background with opacity
