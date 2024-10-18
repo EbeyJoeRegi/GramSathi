@@ -116,6 +116,7 @@ app.post('/verify-otp', (req, res) => {
   }
 });
 
+
 // Send Email OTP
 app.post('/send-email-otp', async (req, res) => {
   const { email } = req.body;
