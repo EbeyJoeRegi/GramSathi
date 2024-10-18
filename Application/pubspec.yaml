@@ -49,12 +49,13 @@ flutter:
     - assets\images\user.png
     - assets\images\admin.png    
     - assets/images/bgleaf.jpg
+    - assets/images/bgvillage.webp
+    - assets/images/bgvillage2.avif
     - assets/images/bgvillage3.png
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage8.jpg
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage9.jpeg
-    - assets/images/bgvillage10.jpeg
 
   fonts:
     - family: Plus Jakarta Sans
