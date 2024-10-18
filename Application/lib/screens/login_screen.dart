@@ -206,107 +206,114 @@ class _LoginScreenState extends State<LoginScreen>
             ),
           ),
           // White background for the input fields
-          SingleChildScrollView(
-            child: Container(
-              height: 450,
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.52,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.68),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-              ),
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      prefixIcon: Icon(Icons.person, color: Color(0xff015F3E)),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFE0E3E7), width: 2),
-                        borderRadius: BorderRadius.circular(40),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SingleChildScrollView(
+              reverse: true, // ensures scroll adjusts when keyboard opens
+              child: Container(
+                height: 420,
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.45,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.68),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+                ),
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        prefixIcon:
+                            Icon(Icons.person, color: Color(0xff015F3E)),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFFE0E3E7), width: 2),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green, width: 2),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.all(24),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.all(24),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFE0E3E7), width: 2),
-                        borderRadius: BorderRadius.circular(40),
+                    SizedBox(height: 16),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFFE0E3E7), width: 2),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green, width: 2),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.all(24),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.all(24),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  _isLoading
-                      ? CircularProgressIndicator()
-                      : ElevatedButton(
-                          onPressed: _login,
-                          child: Text(
-                            'Login',
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Color(0xff015F3E), // Background color
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40),
+                    SizedBox(height: 18),
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : ElevatedButton(
+                            onPressed: _login,
+                            child: Text(
+                              'Login',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color(0xff015F3E), // Background color
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
                             ),
                           ),
+                    if (_errorMessage.isNotEmpty) ...[
+                      SizedBox(height: 18),
+                      Text(
+                        _errorMessage,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
                         ),
-                  if (_errorMessage.isNotEmpty) ...[
+                      ),
+                    ],
                     SizedBox(height: 20),
-                    Text(
-                      _errorMessage,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupScreen()),
+                        );
+                      },
+                      child: Text(
+                        "Don't have an account? Sign up here",
+                        style: TextStyle(
+                          color: Color(0xff015F3E),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
-                  SizedBox(height: 20),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignupScreen()),
-                      );
-                    },
-                    child: Text(
-                      "Don't have an account? Sign up here",
-                      style: TextStyle(
-                        color: Color(0xff015F3E),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

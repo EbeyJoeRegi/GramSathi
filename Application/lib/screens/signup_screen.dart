@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:village_app/screens/login_screen.dart';
 import 'dart:convert';
-import '/config.dart'; // Assume this contains API base URLs
+import '/config.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -20,6 +22,8 @@ class _SignupScreenState extends State<SignupScreen>
       TextEditingController(); // For OTP
   final TextEditingController _otpEmailController =
       TextEditingController(); // For OTP
+  final List<TextEditingController> _otpEmailControllers =
+      List.generate(6, (_) => TextEditingController());
 
   bool _isLoading = false;
   bool _isEmailOTPFieldVisible = false;
@@ -33,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen>
   String? _emailVerificationStatus; // To store verification status messages
   bool _isPhoneVerified = false;
   bool _isEmailVerified = false;
+  //bool _isLoading = false;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -224,7 +229,8 @@ class _SignupScreenState extends State<SignupScreen>
 
   // Function to verify email OTP
   Future<void> _verifyEmailOTP() async {
-    final otp = _otpEmailController.text.trim();
+    String otp =
+        _otpEmailControllers.map((controller) => controller.text).join();
     final email = _emailController.text.trim();
 
     if (otp.isEmpty || otp.length != 6) {
@@ -242,7 +248,15 @@ class _SignupScreenState extends State<SignupScreen>
       );
 
       if (response.statusCode == 200) {
-        _isEmailVerified = true;
+        // OTP is verified successfully, update the state
+        setState(() {
+          _isEmailVerified = true; // Mark email as verified
+          _isEmailOTPFieldVisible = false; // Hide OTP fields
+          _emailVerificationStatus =
+              'Email Verified Successfully'; // Update status
+        });
+
+        // Show the verification successful dialog
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -250,7 +264,10 @@ class _SignupScreenState extends State<SignupScreen>
             content: Text('Email verified successfully.'),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pop(context);
+                  // Optionally, you can reset the fields or perform further actions here
+                },
                 child: Text('OK'),
               ),
             ],
@@ -260,11 +277,14 @@ class _SignupScreenState extends State<SignupScreen>
         setState(() {
           _emailError = 'Invalid OTP. Please try again.';
         });
+        // Log response details for debugging
+        print('Error details: ${response.body}');
       }
     } catch (e) {
       setState(() {
-        _emailError = 'Error verifying email OTP.';
+        _emailError = 'Error verifying email OTP: $e';
       });
+      print('Error: $e'); // Log error message
     }
   }
 
@@ -431,6 +451,9 @@ class _SignupScreenState extends State<SignupScreen>
     _otpController.dispose();
     _otpEmailController.dispose(); // Dispose OTP controller
     _animationController.dispose();
+    for (var controller in _otpEmailControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -440,12 +463,18 @@ class _SignupScreenState extends State<SignupScreen>
       body: Stack(
         children: [
           Positioned.fill(
-            child: Opacity(
-              opacity: 0.7,
-              child: Image.asset(
-                'assets/images/bg1.png', // Replace with your image path
-                fit: BoxFit.cover,
-              ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/images/bgvillage9.jpeg', // Replace with your image path
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.black
+                      .withOpacity(0.45), // Apply black color with opacity
+                ),
+              ],
             ),
           ),
           Container(
@@ -456,7 +485,7 @@ class _SignupScreenState extends State<SignupScreen>
           Padding(
             padding: EdgeInsets.only(
               left: 24.0,
-              top: 48.0,
+              top: 55.0,
               right: 24.0,
             ),
             child: SingleChildScrollView(
@@ -471,13 +500,13 @@ class _SignupScreenState extends State<SignupScreen>
                       children: [
                         Text(
                           'Sign Up',
-                          style: TextStyle(
-                            fontFamily: 'Plus Jakarta Sans',
+                          style: GoogleFonts.roboto(
                             color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
+
                         SizedBox(height: 24),
 
                         // Name Text Field
@@ -493,21 +522,25 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFFE0E3E7),
+                                color: Color(
+                                    0xFFE0E3E7), // Border color when not focused
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(
+                                    0xff015F3E), // Border color when focused
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(24),
+                            filled: true, // Ensure background color is applied
+                            fillColor: Colors.white.withOpacity(
+                                0.7), // Slightly transparent background
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
                           ),
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
@@ -516,115 +549,188 @@ class _SignupScreenState extends State<SignupScreen>
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 16),
+
+                        SizedBox(height: 18),
 
                         // Email Field with Send OTP Button
                         Row(
                           children: [
                             Expanded(
-                              child: TextField(
-                                controller: _emailController,
-                                decoration: InputDecoration(
-                                  hintText: 'Email Address',
-                                  errorText: _emailError,
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Color(0xFF57636C),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFE0E3E7),
-                                      width: 2,
+                              child: Stack(
+                                children: [
+                                  TextField(
+                                    controller: _emailController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Email Address',
+                                      errorText: _emailError,
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Color(0xFF57636C),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xff015F3E),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white.withOpacity(0.7),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 19, horizontal: 20),
+                                      isDense: true,
+                                      suffixIcon: _isEmailVerified
+                                          ? Icon(
+                                              Icons.check_circle,
+                                              color: Colors
+                                                  .green, // Show green checkmark when verified
+                                              size: 24,
+                                            )
+                                          : null, // No icon when not verified
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF4B39EF),
-                                      width: 2,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      color: Color(0xFF101213),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
+                                    keyboardType: TextInputType.emailAddress,
+                                    onChanged: (email) {
+                                      setState(() {
+                                        _emailError =
+                                            ''; // Reset error if user types a new email
+                                        _isEmailVerified =
+                                            false; // Reset email verification status
+                                      });
+                                    },
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.all(24),
-                                ),
-                                style: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF101213),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.emailAddress,
+
+                                  // Positioned "Verify" button when email is not yet verified
+                                  if (!_isEmailVerified)
+                                    Positioned(
+                                      right: 10,
+                                      top: 10,
+                                      child: ElevatedButton(
+                                        onPressed: _isLoading
+                                            ? null
+                                            : _sendEmailOTP, // Send OTP when the button is clicked
+                                        style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 15),
+                                          backgroundColor: Colors.greenAccent
+                                              .withOpacity(0.8),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Verify',
+                                          style: TextStyle(
+                                            color: Color(0xff015F3E),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: _isLoading ? null : _sendEmailOTP,
-                              child: Text('Send Email OTP'),
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+
+                        SizedBox(height: 18),
 
 // OTP Verification TextField for Email (Visible after sending OTP)
+                        // OTP Verification TextField for Email (Visible after sending OTP)
                         if (_isEmailOTPFieldVisible)
                           Column(
                             children: [
-                              TextField(
-                                controller: _otpEmailController,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter Email OTP',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Color(0xFF57636C),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFE0E3E7),
-                                      width: 2,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Bring OTP boxes closer
+                                children: List.generate(6, (index) {
+                                  return Container(
+                                    width: 50, // Reduced width for closer boxes
+                                    height: 50, // Height of each OTP box
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 4), // Margin between boxes
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: Color(0xFFE0E3E7), width: 2),
+                                      color: Colors.white.withOpacity(
+                                          0.5), // Reduced transparency
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF4B39EF),
-                                      width: 2,
+                                    child: TextField(
+                                      controller: _otpEmailControllers[index],
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText:
+                                            '0', // Placeholder for each box
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: Color(0xFF57636C),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Color(0xFF101213),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      maxLength:
+                                          1, // Limiting to one character per box
+                                      onChanged: (value) {
+                                        // Logic for auto-focusing next box after entering a digit
+                                        if (value.isNotEmpty) {
+                                          if (index < 5) {
+                                            FocusScope.of(context).nextFocus();
+                                          } else {
+                                            // If it's the last box, remove focus
+                                            FocusScope.of(context).unfocus();
+                                          }
+                                        }
+                                      },
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
+                                  );
+                                }),
+                              ),
+                              SizedBox(height: 10),
+
+                              // Only show the Verify OTP button if email is NOT verified
+                              if (!_isEmailVerified)
+                                ElevatedButton(
+                                  onPressed: _verifyEmailOTP,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.greenAccent,
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.all(24),
+                                  child: Text(
+                                    'Verify Email OTP',
+                                    style: TextStyle(color: Color(0xff015F3E)),
+                                  ),
                                 ),
-                                style: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF101213),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.number,
-                              ),
-                              SizedBox(height: 16),
-                              ElevatedButton(
-                                onPressed: _verifyEmailOTP,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.greenAccent,
-                                ),
-                                child: Text('Verify Email OTP'),
-                              ),
+
+                              // Display verification status
                               if (_emailVerificationStatus != null)
                                 Padding(
                                   padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     _emailVerificationStatus!,
                                     style: TextStyle(
-                                      color: _emailVerificationStatus ==
-                                              'Email verified successfully'
+                                      color: _isEmailVerified
                                           ? Colors.green
                                           : Colors.red,
                                       fontWeight: FontWeight.bold,
@@ -633,6 +739,10 @@ class _SignupScreenState extends State<SignupScreen>
                                 ),
                             ],
                           ),
+
+                        SizedBox(
+                          height: 15,
+                        ),
 
                         // Password Text Field
                         TextField(
@@ -643,7 +753,8 @@ class _SignupScreenState extends State<SignupScreen>
                             errorText: _passwordError,
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF57636C),
+                              color: Color(0xFF57636C)
+                                  .withOpacity(0.7), // Opacity for hint text
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -656,23 +767,28 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(24),
+                            fillColor: Colors.white
+                                .withOpacity(0.7), // Opacity for the background
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 19, horizontal: 20),
                           ),
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF101213),
-                            fontSize: 16,
+                            color: Color(0xFF101213)
+                                .withOpacity(0.7), // Opacity for the input text
+                            fontSize:
+                                14, // Reduce font size for a more compact height
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 16),
+
+                        SizedBox(height: 18),
 
                         // Ration Card Number Text Field
                         TextField(
@@ -682,7 +798,8 @@ class _SignupScreenState extends State<SignupScreen>
                             errorText: _rationCardError,
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF57636C),
+                              color: Color(0xFF57636C)
+                                  .withOpacity(0.7), // Hint text opacity
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -695,23 +812,27 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(24),
+                            fillColor: Colors.white
+                                .withOpacity(0.7), // Background opacity
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 19, horizontal: 20),
                           ),
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF101213),
+                            color: Color(0xFF101213)
+                                .withOpacity(0.7), // Text opacity
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 16),
+
+                        SizedBox(height: 18),
 
                         // Job Title Text Field
                         TextField(
@@ -720,7 +841,8 @@ class _SignupScreenState extends State<SignupScreen>
                             hintText: 'Job Title',
                             hintStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF57636C),
+                              color: Color(0xFF57636C)
+                                  .withOpacity(0.7), // Hint text opacity
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -733,23 +855,27 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(24),
+                            fillColor: Colors.white
+                                .withOpacity(0.7), // Background opacity
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 19, horizontal: 20),
                           ),
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF101213),
+                            color: Color(0xFF101213)
+                                .withOpacity(0.7), // Text opacity
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 16),
+
+                        SizedBox(height: 18),
 
                         // Phone Number Field with Send OTP Button
                         Row(
@@ -762,7 +888,8 @@ class _SignupScreenState extends State<SignupScreen>
                                   errorText: _phoneError,
                                   hintStyle: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
-                                    color: Color(0xFF57636C),
+                                    color: Color(0xFF57636C)
+                                        .withOpacity(0.7), // Hint text opacity
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -775,18 +902,21 @@ class _SignupScreenState extends State<SignupScreen>
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xFF4B39EF),
+                                      color: Color(0xff015F3E),
                                       width: 2,
                                     ),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.all(24),
+                                  fillColor: Colors.white
+                                      .withOpacity(0.7), // Background opacity
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 19, horizontal: 20),
                                 ),
                                 style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF101213),
+                                  color: Color(0xFF101213)
+                                      .withOpacity(0.7), // Input text opacity
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -795,12 +925,20 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             SizedBox(width: 10),
                             ElevatedButton(
-                              onPressed: _isLoading ? null : _sendOTP,
-                              child: Text('Send OTP'),
+                              onPressed: _isLoading ? null : _sendEmailOTP,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.greenAccent.withOpacity(
+                                    0.8), // Set button background with opacity
+                              ),
+                              child: Text(
+                                'Send OTP',
+                                style: TextStyle(color: Color(0xff015F3E)),
+                              ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+
+                        SizedBox(height: 18),
 
                         // OTP Verification TextField (Visible after sending OTP)
                         if (_isOTPFieldVisible)
@@ -823,14 +961,15 @@ class _SignupScreenState extends State<SignupScreen>
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFF4B39EF),
+                                  color: Color(0xff015F3E),
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(40),
                               ),
                               filled: true,
                               fillColor: Colors.white,
-                              contentPadding: EdgeInsets.all(24),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 19, horizontal: 20),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -847,14 +986,16 @@ class _SignupScreenState extends State<SignupScreen>
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.greenAccent,
                             ),
-                            child: Text('Verify OTP'),
+                            child: Text('Verify OTP',
+                                style: TextStyle(color: Color(0xff015F3E))),
                           ),
 
                         // Location Dropdown Field
                         DropdownButtonFormField<String>(
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Colors.white
+                                .withOpacity(0.7), // Background opacity
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFE0E3E7),
@@ -864,7 +1005,7 @@ class _SignupScreenState extends State<SignupScreen>
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF4B39EF),
+                                color: Color(0xff015F3E),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(40),
@@ -872,7 +1013,13 @@ class _SignupScreenState extends State<SignupScreen>
                             contentPadding: EdgeInsets.all(24),
                           ),
                           value: _selectedLocation,
-                          hint: Text('Select Location'),
+                          hint: Text(
+                            'Select Location',
+                            style: TextStyle(
+                              color: Color(0xFF57636C)
+                                  .withOpacity(0.7), // Hint text opacity
+                            ),
+                          ),
                           onChanged: (String? newValue) {
                             setState(() {
                               _selectedLocation = newValue;
@@ -882,20 +1029,65 @@ class _SignupScreenState extends State<SignupScreen>
                               .map<DropdownMenuItem<String>>((String location) {
                             return DropdownMenuItem<String>(
                               value: location,
-                              child: Text(location),
+                              child: Text(
+                                location,
+                                style: TextStyle(
+                                  color: Color(0xFF101213).withOpacity(
+                                      0.7), // Dropdown item text opacity
+                                ),
+                              ),
                             );
                           }).toList(),
                         ),
+
                         SizedBox(height: 24),
 
                         // Sign Up Button (Submit form here)
-                        ElevatedButton(
-                          onPressed: _isLoading ? null : _signup,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                          ),
-                          child: Text('Sign Up'),
-                        ),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _isLoading ? null : _signup,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff015F3E),
+                                minimumSize: Size(150,
+                                    50), // Set specific width (150) and height (50)
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16), // Optional: Custom padding
+                              ),
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                                height:
+                                    20), // Adjust the space between the button and the text
+
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to the login screen
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen(), // Replace with your login screen widget
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Already have an account? Go to login page',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
