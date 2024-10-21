@@ -298,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen>
                       );
                     },
                     child: Text(
-                      "Don't have an account? Sign up here",
+                      "Don't have an account? Sign Up",
                       style: TextStyle(
                         color: Color(0xff015F3E),
                         fontSize: 16,
