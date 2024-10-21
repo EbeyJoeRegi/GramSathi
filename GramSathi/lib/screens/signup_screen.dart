@@ -18,8 +18,9 @@ class _SignupScreenState extends State<SignupScreen>
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _jobTitleController = TextEditingController();
-  final TextEditingController _otpController =
-      TextEditingController(); // For OTP
+  final TextEditingController _otpController = TextEditingController();
+  final List<TextEditingController> _otpPhoneControllers =
+      List.generate(6, (index) => TextEditingController());
   final TextEditingController _otpEmailController =
       TextEditingController(); // For OTP
   final List<TextEditingController> _otpEmailControllers =
@@ -37,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen>
   String? _emailVerificationStatus; // To store verification status messages
   bool _isPhoneVerified = false;
   bool _isEmailVerified = false;
-  //bool _isLoading = false;
+  String? _phoneVerificationStatus;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -127,19 +128,25 @@ class _SignupScreenState extends State<SignupScreen>
     }
   }
 
-  // Function to verify OTP
+  // Function to verify phone OTP
   Future<void> _verifyOTP() async {
-    final otp = _otpController.text;
+    // Collect the OTP from each individual text field (assuming 6 fields)
+    final otp = _otpPhoneControllers
+        .map((controller) => controller.text)
+        .join(); // Collect OTP digits
     final phone = _phoneController.text;
 
+    // Validate the OTP length
     if (otp.length != 6) {
       setState(() {
-        _phoneError = 'OTP must be 6 digits.';
+        _phoneError =
+            'OTP must be 6 digits.'; // Display error if OTP is incomplete
       });
       return;
     }
 
     try {
+      // Send the OTP verification request to the server
       final response = await http.post(
         Uri.parse('${AppConfig.baseUrl}/verify-otp'),
         headers: <String, String>{
@@ -147,16 +154,19 @@ class _SignupScreenState extends State<SignupScreen>
         },
         body: jsonEncode({
           'phoneNumber': phone,
-          'otp': otp,
+          'otp': otp, // Use the concatenated OTP
         }),
       );
 
+      // Handle the response from the server
       if (response.statusCode == 200) {
         setState(() {
           _isOTPFieldVisible =
               false; // Hide OTP input on successful verification
-          _isPhoneVerified = true;
+          _isPhoneVerified = true; // Mark phone as verified
         });
+
+        // Show success dialog
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -172,12 +182,13 @@ class _SignupScreenState extends State<SignupScreen>
         );
       } else {
         setState(() {
-          _phoneError = 'Invalid OTP. Please try again.';
+          _phoneError =
+              'Invalid OTP. Please try again.'; // Error on invalid OTP
         });
       }
     } catch (e) {
       setState(() {
-        _phoneError = 'Error verifying OTP.';
+        _phoneError = 'Error verifying OTP.'; // Handle network or server errors
       });
     }
   }
@@ -674,14 +685,17 @@ class _SignupScreenState extends State<SignupScreen>
                                       controller: _otpEmailControllers[index],
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText:
-                                            '0', // Placeholder for each box
+                                        hintText: '', // No hint text
+                                        counterText:
+                                            '', // Disable character counter
                                         hintStyle: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: Color(0xFF57636C),
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                         ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 15), // Adjust padding
                                       ),
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
@@ -878,61 +892,107 @@ class _SignupScreenState extends State<SignupScreen>
                         SizedBox(height: 18),
 
                         // Phone Number Field with Send OTP Button
+                        // Phone Number TextField
                         Row(
                           children: [
                             Expanded(
-                              child: TextField(
-                                controller: _phoneController,
-                                decoration: InputDecoration(
-                                  hintText: 'Phone Number',
-                                  errorText: _phoneError,
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Color(0xFF57636C)
-                                        .withOpacity(0.7), // Hint text opacity
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFE0E3E7),
-                                      width: 2,
+                              child: Stack(
+                                children: [
+                                  TextField(
+                                    controller: _phoneController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Phone Number',
+                                      errorText: _phoneError,
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color:
+                                            Color(0xFF57636C).withOpacity(0.7),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xff015F3E),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white.withOpacity(0.7),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 19,
+                                        horizontal: 20,
+                                      ),
+                                      suffixIcon: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (_isPhoneVerified)
+                                            Icon(
+                                              Icons.check_circle,
+                                              color: Colors.green,
+                                              size: 24,
+                                            ),
+                                          if (!_isPhoneVerified)
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Positioned(
+                                                left: 10,
+                                                top: 10,
+                                                child: ElevatedButton(
+                                                  onPressed: _isLoading
+                                                      ? null
+                                                      : _sendOTP,
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10,
+                                                            horizontal: 15),
+                                                    backgroundColor: Colors
+                                                        .greenAccent
+                                                        .withOpacity(0.8),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    'Verify',
+                                                    style: TextStyle(
+                                                      color: Color(0xff015F3E),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xff015F3E),
-                                      width: 2,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      color: Color(0xFF101213),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
+                                    keyboardType: TextInputType.phone,
+                                    onChanged: (phone) {
+                                      setState(() {
+                                        _phoneError = null;
+                                        _isPhoneVerified = false;
+                                      });
+                                    },
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.white
-                                      .withOpacity(0.7), // Background opacity
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 19, horizontal: 20),
-                                ),
-                                style: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF101213)
-                                      .withOpacity(0.7), // Input text opacity
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.phone,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: _isLoading ? null : _sendOTP,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.greenAccent.withOpacity(
-                                    0.8), // Set button background with opacity
-                              ),
-                              child: Text(
-                                'Send OTP',
-                                style: TextStyle(color: Color(0xff015F3E)),
+                                ],
                               ),
                             ),
                           ],
@@ -940,55 +1000,94 @@ class _SignupScreenState extends State<SignupScreen>
 
                         SizedBox(height: 18),
 
-                        // OTP Verification TextField (Visible after sending OTP)
+// OTP Verification TextField (Visible after sending OTP)
                         if (_isOTPFieldVisible)
-                          TextField(
-                            controller: _otpController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter OTP',
-                              hintStyle: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                color: Color(0xFF57636C),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(6, (index) {
+                                  return Container(
+                                    width: 50, // Width of each OTP box
+                                    height: 50, // Height of each OTP box
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 4), // Margin between boxes
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: Color(0xFFE0E3E7), width: 2),
+                                      color: Colors.white.withOpacity(
+                                          0.5), // Reduced transparency
+                                    ),
+                                    child: TextField(
+                                      controller: _otpPhoneControllers[index],
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        // Remove the hintText line
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: Color(0xFF57636C),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 15), // Adjust as needed
+                                      ),
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Color(0xFF101213),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      // maxLength: 1, // You can keep or remove this line
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty) {
+                                          if (index < 5) {
+                                            FocusScope.of(context).nextFocus();
+                                          } else {
+                                            FocusScope.of(context).unfocus();
+                                          }
+                                        }
+                                      },
+                                    ),
+                                  );
+                                }),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFE0E3E7),
-                                  width: 2,
+                              SizedBox(height: 10),
+
+                              // Verify Phone OTP button
+                              if (!_isPhoneVerified)
+                                ElevatedButton(
+                                  onPressed: _verifyOTP,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.greenAccent,
+                                  ),
+                                  child: Text(
+                                    'Verify Phone OTP',
+                                    style: TextStyle(color: Color(0xff015F3E)),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xff015F3E),
-                                  width: 2,
+
+                              // Phone verification status message
+                              if (_phoneVerificationStatus != null)
+                                Padding(
+                                  padding: EdgeInsets.only(top: 16),
+                                  child: Text(
+                                    _phoneVerificationStatus!,
+                                    style: TextStyle(
+                                      color: _isPhoneVerified
+                                          ? Colors.green
+                                          : Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 19, horizontal: 20),
-                            ),
-                            style: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF101213),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            keyboardType: TextInputType.number,
+                            ],
                           ),
-                        if (_isOTPFieldVisible) SizedBox(height: 16),
-                        if (_isOTPFieldVisible)
-                          ElevatedButton(
-                            onPressed: _verifyOTP,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.greenAccent,
-                            ),
-                            child: Text('Verify OTP',
-                                style: TextStyle(color: Color(0xff015F3E))),
-                          ),
+                        SizedBox(height: 15),
 
                         // Location Dropdown Field
                         DropdownButtonFormField<String>(
@@ -1079,7 +1178,7 @@ class _SignupScreenState extends State<SignupScreen>
                                 );
                               },
                               child: Text(
-                                'Already have an account? Go to login page',
+                                'Already have an account?Sign in',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

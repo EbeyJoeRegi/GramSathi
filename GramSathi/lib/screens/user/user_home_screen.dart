@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import '/config.dart';
 import 'market_updates_screen.dart';
-import 'enquiry_screen.dart';
+import 'feedback_hub.dart';
 import 'important_contacts_screen.dart';
 import 'suggestions_screen.dart';
 import 'user_profile.dart';
@@ -219,7 +219,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         children: <Widget>[
           _buildHomePage(),
           MarketUpdatesScreen(),
-          EnquiryScreen(username: widget.username),
+          FeedbackHub(username: widget.username),
           SuggestionsScreen(username: widget.username),
           ImportantContactsScreen(),
         ],
@@ -235,12 +235,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             label: 'Marketplace',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.question_answer),
-            label: 'Enquiries',
+            icon: Icon(Icons.feedback), // Feedback Hub icon
+            label: 'Feedback Hub',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.speaker_notes),
-            label: 'Suggestions',
+            icon: Icon(Icons.swap_horiz), // Exchange Zone icon
+            label: 'Exchange Zone',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),

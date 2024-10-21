@@ -31,7 +31,8 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     });
 
     try {
-      final response = await http.get(Uri.parse('${AppConfig.baseUrl}/places'));
+      final response =
+          await http.get(Uri.parse('${AppConfig.baseUrl}/locations'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -136,12 +137,12 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
 
   Future<void> _updateCropPrice(int cropId, double newPrice) async {
     final response = await http.post(
-      Uri.parse('${AppConfig.baseUrl}/update-price'),
+      Uri.parse('${AppConfig.baseUrl}/update-price/$cropId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'crop_id': cropId,
+        'id': cropId,
         'price': newPrice,
         'month_year': DateFormat('MMMM yyyy').format(DateTime.now()),
       }),
@@ -502,7 +503,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
         },
         body: jsonEncode(<String, dynamic>{
           'crop_name': cropName,
-          'average_price': averagePrice,
+          'avg_price': averagePrice,
         }),
       );
 

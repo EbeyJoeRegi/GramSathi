@@ -67,7 +67,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.5.1:3000/createQuery'),
+        Uri.parse('${AppConfig.baseUrl}/createQuery'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(newEnquiry),
       );
