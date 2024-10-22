@@ -1178,7 +1178,7 @@ class _SignupScreenState extends State<SignupScreen>
                                 );
                               },
                               child: Text(
-                                'Already have an account? Go to login Page',
+                                'Already have an account? Sign in',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
