@@ -38,6 +38,7 @@ class _SignupScreenState extends State<SignupScreen>
   String? _emailVerificationStatus; // To store verification status messages
   bool _isPhoneVerified = false;
   bool _isEmailVerified = false;
+  String? _otpError;
   String? _phoneVerificationStatus;
 
   late AnimationController _animationController;
@@ -685,17 +686,13 @@ class _SignupScreenState extends State<SignupScreen>
                                       controller: _otpEmailControllers[index],
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: '', // No hint text
-                                        counterText:
-                                            '', // Disable character counter
+                                        //hintText:'0', // Placeholder for each box
                                         hintStyle: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: Color(0xFF57636C),
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 15), // Adjust padding
                                       ),
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
@@ -705,8 +702,7 @@ class _SignupScreenState extends State<SignupScreen>
                                       ),
                                       keyboardType: TextInputType.number,
                                       textAlign: TextAlign.center,
-                                      maxLength:
-                                          1, // Limiting to one character per box
+                                      //maxLength:1, // Limiting to one character per box
                                       onChanged: (value) {
                                         // Logic for auto-focusing next box after entering a digit
                                         if (value.isNotEmpty) {
@@ -943,34 +939,27 @@ class _SignupScreenState extends State<SignupScreen>
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: Positioned(
-                                                left: 10,
-                                                top: 10,
-                                                child: ElevatedButton(
-                                                  onPressed: _isLoading
-                                                      ? null
-                                                      : _sendOTP,
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 10,
-                                                            horizontal: 15),
-                                                    backgroundColor: Colors
-                                                        .greenAccent
-                                                        .withOpacity(0.8),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                    ),
+                                              child: ElevatedButton(
+                                                onPressed: _isLoading
+                                                    ? null
+                                                    : _sendOTP,
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 15),
+                                                  backgroundColor: Colors
+                                                      .greenAccent
+                                                      .withOpacity(0.8),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                   ),
-                                                  child: Text(
-                                                    'Verify',
-                                                    style: TextStyle(
-                                                      color: Color(0xff015F3E),
-                                                    ),
+                                                ),
+                                                child: Text(
+                                                  'Verify',
+                                                  style: TextStyle(
+                                                    color: Color(0xff015F3E),
                                                   ),
                                                 ),
                                               ),
@@ -1003,10 +992,10 @@ class _SignupScreenState extends State<SignupScreen>
 // OTP Verification TextField (Visible after sending OTP)
                         if (_isOTPFieldVisible)
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Bring OTP boxes closer
                                 children: List.generate(6, (index) {
                                   return Container(
                                     width: 50, // Width of each OTP box
@@ -1024,15 +1013,13 @@ class _SignupScreenState extends State<SignupScreen>
                                       controller: _otpPhoneControllers[index],
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        // Remove the hintText line
+                                        // hintText:'0', // Placeholder for each box
                                         hintStyle: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: Color(0xFF57636C),
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 15), // Adjust as needed
                                       ),
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
@@ -1042,12 +1029,14 @@ class _SignupScreenState extends State<SignupScreen>
                                       ),
                                       keyboardType: TextInputType.number,
                                       textAlign: TextAlign.center,
-                                      // maxLength: 1, // You can keep or remove this line
+                                      //   maxLength: 1, // Limiting to one character per box
                                       onChanged: (value) {
+                                        // Logic for auto-focusing next box after entering a digit
                                         if (value.isNotEmpty) {
                                           if (index < 5) {
                                             FocusScope.of(context).nextFocus();
                                           } else {
+                                            // If it's the last box, remove focus
                                             FocusScope.of(context).unfocus();
                                           }
                                         }
@@ -1178,7 +1167,7 @@ class _SignupScreenState extends State<SignupScreen>
                                 );
                               },
                               child: Text(
-                                'Already have an account? Sign In',
+                                'Already have an account?Sign in',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
