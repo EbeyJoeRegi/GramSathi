@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'admin/admin_home_screen.dart';
 import 'user/user_home_screen.dart';
 import 'signup_screen.dart';
-import 'package:gramsathi/config.dart';
+import '/config.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

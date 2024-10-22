@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import '/screens/login_screen.dart';
 import 'dart:convert';
-import 'package:gramsathi/config.dart';
+import '/config.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -38,8 +38,8 @@ class _SignupScreenState extends State<SignupScreen>
   String? _emailVerificationStatus; // To store verification status messages
   bool _isPhoneVerified = false;
   bool _isEmailVerified = false;
-  String? _otpError;
   String? _phoneVerificationStatus;
+  bool _otpError = false;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -1167,7 +1167,7 @@ class _SignupScreenState extends State<SignupScreen>
                                 );
                               },
                               child: Text(
-                                'Already have an account?Sign in',
+                                'Already have an account? Sign in',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

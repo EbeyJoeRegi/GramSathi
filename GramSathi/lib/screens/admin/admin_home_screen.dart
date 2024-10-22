@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:gramsathi/config.dart';
+import '/config.dart';
 
 import 'admin_announcements_screen.dart';
 import 'admin_enquiry_screen.dart';
@@ -108,6 +108,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 Text('Phone: ${user['phone']}', style: TextStyle(fontSize: 18)),
                 SizedBox(height: 8),
                 Text('Email: ${user['email']}', style: TextStyle(fontSize: 18)),
+                SizedBox(height: 8),
+                Text('Ration Card Number: ${user['raID']}',
+                    style: TextStyle(fontSize: 18)),
                 SizedBox(height: 8),
                 Text('Address: ${user['address']}',
                     style: TextStyle(fontSize: 18)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:gramsathi/config.dart';
+import '/config.dart';
 
 class MarketUpdatesScreen extends StatefulWidget {
   const MarketUpdatesScreen({super.key});
