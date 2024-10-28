@@ -10,7 +10,8 @@ class ForgetPw extends StatefulWidget {
 
 class _ForgetPwState extends State<ForgetPw> {
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _otpController = TextEditingController();
+  final List<TextEditingController> _otpControllers =
+      List.generate(6, (index) => TextEditingController());
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -63,12 +64,13 @@ class _ForgetPwState extends State<ForgetPw> {
     });
 
     try {
+      final otp = _otpControllers.map((controller) => controller.text).join();
       final response = await http.post(
         Uri.parse('${AppConfig.baseUrl}/verify-otp'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'phoneNumber': phoneNumber,
-          'otp': _otpController.text,
+          'otp': otp,
         }),
       );
 
@@ -153,6 +155,39 @@ class _ForgetPwState extends State<ForgetPw> {
     }
   }
 
+  Widget _buildImage() {
+    String imagePath;
+    if (!_isOtpSent) {
+      imagePath = 'assets/images/forgetpw.png';
+    } else if (!_isOtpVerified) {
+      imagePath = 'assets/images/verifyotp.png';
+    } else {
+      imagePath = 'assets/images/resetpassword.png';
+    }
+
+    return Stack(
+      alignment: Alignment.center, // Center the image over the background
+      children: [
+        Container(
+          width: 350, // Width of the circular background
+          height: 350, // Height of the circular background
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Color(0xFFD1E7A6)
+                .withOpacity(0.7), // Light green with reduced opacity
+          ),
+        ),
+        ClipOval(
+          child: Image.asset(
+            imagePath,
+            height: 250, // Adjust the height as needed
+            fit: BoxFit.cover, // Adjust image fit
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,59 +195,63 @@ class _ForgetPwState extends State<ForgetPw> {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          _isOtpSent
+              ? (_isOtpVerified
+                  ? "Create New Password"
+                  : "Verify Your Phone Number")
+              : "Forgot Password",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Step-specific Title
-            Text(
-              _isOtpSent
-                  ? (_isOtpVerified
-                      ? "Create New Password"
-                      : "Verify Your Phone Number")
-                  : "Forgot Password",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 10),
+      body: Container(
+        color: Colors.white, // Ensure the body has a white background
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Center horizontally
+              children: [
+                _buildImage(),
+                SizedBox(height: 20),
 
-            // Step-specific Instructions
-            Text(
-              _isOtpSent
-                  ? (_isOtpVerified
-                      ? "Your New Password Must Be Different from Previously Used Password."
-                      : "Enter The 6 Digit Code Sent To ${_usernameController.text}")
-                  : "Enter Your username To Receive a Verification Code.",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey[700]),
-            ),
-            SizedBox(height: 30),
-
-            // Input Fields
-            if (!_isOtpSent) _buildUserNameField(),
-            if (_isOtpSent && !_isOtpVerified) _buildOtpField(),
-            if (_isOtpVerified) _buildPasswordFields(),
-
-            SizedBox(height: 30),
-            _isLoading ? CircularProgressIndicator() : _buildActionButton(),
-
-            // Error Message
-            if (_errorMessage.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  _errorMessage,
-                  style: TextStyle(color: Colors.red, fontSize: 14),
+                // Step-specific Instructions
+                Text(
+                  _isOtpSent
+                      ? (_isOtpVerified
+                          ? "Your New Password Must Be Different from Previously Used Password."
+                          : "Enter The 6 Digit Code Sent To ${_usernameController.text}")
+                      : "Enter Your username To Receive a Verification Code.",
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 18), // Increased font size
                 ),
-              ),
-          ],
+                SizedBox(height: 30),
+
+                // Input Fields
+                if (!_isOtpSent) _buildUserNameField(),
+                if (_isOtpSent && !_isOtpVerified) _buildOtpFields(),
+                if (_isOtpVerified) _buildPasswordFields(),
+
+                SizedBox(height: 30),
+                _isLoading ? CircularProgressIndicator() : _buildActionButton(),
+
+                // Error Message
+                if (_errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      _errorMessage,
+                      style: TextStyle(color: Colors.red, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -228,14 +267,35 @@ class _ForgetPwState extends State<ForgetPw> {
     );
   }
 
-  Widget _buildOtpField() {
-    return TextField(
-      controller: _otpController,
-      decoration: InputDecoration(
-        labelText: 'Enter OTP',
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      keyboardType: TextInputType.number,
+  Widget _buildOtpFields() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(6, (index) {
+        return Container(
+          width: 40,
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          child: TextField(
+            controller: _otpControllers[index],
+            decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              counterText: '', // Hide the counter text
+            ),
+            keyboardType: TextInputType.number,
+            maxLength: 1, // Limit to one character
+            textAlign: TextAlign.center,
+            onChanged: (value) {
+              // Automatically move to the next text field
+              if (value.length == 1 && index < 5) {
+                FocusScope.of(context).nextFocus();
+              } else if (value.isEmpty && index > 0) {
+                // Move back to the previous field if current is empty
+                FocusScope.of(context).previousFocus();
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 
@@ -268,14 +328,9 @@ class _ForgetPwState extends State<ForgetPw> {
       onPressed: _isOtpSent
           ? (_isOtpVerified ? _resetPassword : _verifyOtp)
           : _sendOtp,
-      child: Text(_isOtpSent ? (_isOtpVerified ? "Save" : "Verify") : "Send"),
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 15),
-        backgroundColor: Colors.orange,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
+      child: Text(_isOtpSent
+          ? (_isOtpVerified ? 'Reset Password' : 'Verify OTP')
+          : 'Send OTP'),
     );
   }
 }

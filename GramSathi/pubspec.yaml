@@ -81,6 +81,9 @@ flutter:
     - assets/images/bgvillage8.jpg
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage9.jpeg
+    - assets/images/forgetpw.png
+    - assets/images/resetpassword.png
+    - assets/images/verifyotp.png
 
   fonts:
     - family: Plus Jakarta Sans
