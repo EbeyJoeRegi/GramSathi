@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen>
         children: [
           // Background image covering the top half
           Container(
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.55,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/bgvillage9.jpeg'),
@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen>
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.45,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.68),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
