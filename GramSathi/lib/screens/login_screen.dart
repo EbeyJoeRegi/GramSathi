@@ -216,6 +216,7 @@ class _LoginScreenState extends State<LoginScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 20),
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -235,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen>
                       contentPadding: EdgeInsets.all(24),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 14),
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -276,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 3),
                   _isLoading
                       ? CircularProgressIndicator()
                       : ElevatedButton(
@@ -296,7 +297,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                   if (_errorMessage.isNotEmpty) ...[
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     Text(
                       _errorMessage,
                       style: TextStyle(
@@ -305,7 +306,7 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                     ),
                   ],
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
