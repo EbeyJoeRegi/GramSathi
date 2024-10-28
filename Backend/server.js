@@ -180,6 +180,99 @@ app.post('/verify-email-otp', (req, res) => {
   return res.status(200).json({ message: 'OTP verified successfully.' });
 });
 
+// forgetpassword endpoint
+app.post('/forgetpw', async (req, res) => {
+  const { username } = req.body;
+  let phoneNumber; // Declare phoneNumber outside of the try block
+
+  try {
+    // Check if user exists
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // If user is found, generate OTP and send it to phone number
+    phoneNumber = user.phone; // Assign value to phoneNumber
+    if (!phoneNumber) {
+      return res.status(400).json({ success: false, message: 'Phone number is not available for this user.' });
+    }
+
+    if (!phoneNumber.startsWith('+91')) { 
+      phoneNumber = `+91${phoneNumber}`;
+    }
+    const otp = generateOTP();
+    otpStore[phoneNumber] = otp; // Store OTP temporarily
+
+    // Log the OTP for testing purposes
+    console.log(`Generated OTP for phone ${phoneNumber}: ${otp}`);
+
+    // Send OTP via Twilio
+    const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    await twilioClient.messages.create({
+      body: `Your OTP is: ${otp}`,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: phoneNumber,
+    });
+
+    // Respond with a success message
+    return res.status(200).json({ success: true, message: 'OTP sent successfully.' });
+    
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+
+    // Check if the error is due to an unverified number
+    if (error.code === 21608) {
+      // Log the attempted OTP send
+      console.log(`Attempted to send OTP to unverified number ${phoneNumber}.`);
+      // Respond with a success message for testing
+      return res.status(200).json({ success: true, message: 'OTP generation successful, but number is unverified.',phoneNumber });
+    }
+
+    // Handle other types of errors
+    res.status(500).json({ success: false, error: 'Failed to send OTP.' });
+  }
+});
+
+// Endpoint to reset password
+app.post('/reset-password', async (req, res) => {
+  const { username, new_password, confirm_password } = req.body;
+
+  // Check if both passwords match
+  if (new_password !== confirm_password) {
+    return res.status(400).json({ success: false, message: 'Passwords do not match!' });
+  }
+
+  // Validate password format (minimum 8 characters, letters, numbers, special characters)
+  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!passwordPattern.test(new_password)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Password must be at least 8 characters long, contain letters, numbers, and special characters.',
+    });
+  }
+
+  try {
+    // Fetch user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(new_password, 10);
+
+    // Update the user's password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ success: true, message: 'Password reset successfully!' });
+  } catch (error) {
+    console.error('Error resetting password:', error);
+    return res.status(500).json({ success: false, message: 'An error occurred. Please try again.' });
+  }
+});
+
 // Login endpoint
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;

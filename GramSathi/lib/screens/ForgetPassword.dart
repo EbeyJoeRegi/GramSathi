@@ -19,6 +19,7 @@ class _ForgetPwState extends State<ForgetPw> {
   bool _isOtpVerified = false;
   String _errorMessage = '';
   bool _isLoading = false;
+  String? phoneNumber;
 
   Future<void> _sendOtp() async {
     setState(() {
@@ -28,7 +29,7 @@ class _ForgetPwState extends State<ForgetPw> {
 
     try {
       final response = await http.post(
-        Uri.parse('${AppConfig.baseUrl}/send-otp'),
+        Uri.parse('${AppConfig.baseUrl}/forgetpw'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'username': _usernameController.text}),
       );
@@ -37,6 +38,7 @@ class _ForgetPwState extends State<ForgetPw> {
       if (response.statusCode == 200 && responseData['success'] == true) {
         setState(() {
           _isOtpSent = true;
+          phoneNumber = responseData['phoneNumber'];
         });
       } else {
         setState(() {
@@ -65,13 +67,13 @@ class _ForgetPwState extends State<ForgetPw> {
         Uri.parse('${AppConfig.baseUrl}/verify-otp'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'username': _usernameController.text,
+          'phoneNumber': phoneNumber,
           'otp': _otpController.text,
         }),
       );
 
       final responseData = json.decode(response.body);
-      if (response.statusCode == 200 && responseData['success'] == true) {
+      if (response.statusCode == 200) {
         setState(() {
           _isOtpVerified = true;
         });
@@ -155,87 +157,123 @@ class _ForgetPwState extends State<ForgetPw> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Forgot Password"),
-        backgroundColor: Color(0xff015F3E),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (!_isOtpSent) ...[
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  prefixIcon: Icon(Icons.person, color: Color(0xff015F3E)),
+            // Step-specific Title
+            Text(
+              _isOtpSent
+                  ? (_isOtpVerified
+                      ? "Create New Password"
+                      : "Verify Your Phone Number")
+                  : "Forgot Password",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 10),
+
+            // Step-specific Instructions
+            Text(
+              _isOtpSent
+                  ? (_isOtpVerified
+                      ? "Your New Password Must Be Different from Previously Used Password."
+                      : "Enter The 6 Digit Code Sent To ${_usernameController.text}")
+                  : "Enter Your username To Receive a Verification Code.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            SizedBox(height: 30),
+
+            // Input Fields
+            if (!_isOtpSent) _buildUserNameField(),
+            if (_isOtpSent && !_isOtpVerified) _buildOtpField(),
+            if (_isOtpVerified) _buildPasswordFields(),
+
+            SizedBox(height: 30),
+            _isLoading ? CircularProgressIndicator() : _buildActionButton(),
+
+            // Error Message
+            if (_errorMessage.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  _errorMessage,
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 20),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _sendOtp,
-                      child: Text("Send OTP"),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff015F3E),
-                      ),
-                    ),
-            ] else if (!_isOtpVerified) ...[
-              TextField(
-                controller: _otpController,
-                decoration: InputDecoration(
-                  labelText: 'Enter OTP',
-                  prefixIcon: Icon(Icons.security, color: Color(0xff015F3E)),
-                ),
-              ),
-              SizedBox(height: 20),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _verifyOtp,
-                      child: Text("Verify OTP"),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff015F3E),
-                      ),
-                    ),
-            ] else ...[
-              TextField(
-                controller: _newPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'New Password',
-                  prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _confirmPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
-                ),
-              ),
-              SizedBox(height: 20),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _resetPassword,
-                      child: Text("Reset Password"),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff015F3E),
-                      ),
-                    ),
-            ],
-            if (_errorMessage.isNotEmpty) ...[
-              SizedBox(height: 20),
-              Text(
-                _errorMessage,
-                style: TextStyle(color: Colors.red, fontSize: 14),
-              ),
-            ],
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserNameField() {
+    return TextField(
+      controller: _usernameController,
+      decoration: InputDecoration(
+        labelText: 'UserName',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
+  }
+
+  Widget _buildOtpField() {
+    return TextField(
+      controller: _otpController,
+      decoration: InputDecoration(
+        labelText: 'Enter OTP',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      keyboardType: TextInputType.number,
+    );
+  }
+
+  Widget _buildPasswordFields() {
+    return Column(
+      children: [
+        TextField(
+          controller: _newPasswordController,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: 'New Password',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        ),
+        SizedBox(height: 20),
+        TextField(
+          controller: _confirmPasswordController,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: 'Confirm Password',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton() {
+    return ElevatedButton(
+      onPressed: _isOtpSent
+          ? (_isOtpVerified ? _resetPassword : _verifyOtp)
+          : _sendOtp,
+      child: Text(_isOtpSent ? (_isOtpVerified ? "Save" : "Verify") : "Send"),
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 15),
+        backgroundColor: Colors.orange,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
