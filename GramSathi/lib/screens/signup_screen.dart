@@ -39,7 +39,7 @@ class _SignupScreenState extends State<SignupScreen>
   bool _isPhoneVerified = false;
   bool _isEmailVerified = false;
   String? _phoneVerificationStatus;
-  bool _otpError = false;
+  //bool _otpError = false;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;

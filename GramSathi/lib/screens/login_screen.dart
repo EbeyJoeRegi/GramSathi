@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'admin/admin_home_screen.dart';
 import 'user/user_home_screen.dart';
 import 'signup_screen.dart';
 import '/config.dart';
+import 'ForgetPassword.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -299,6 +301,23 @@ class _LoginScreenState extends State<LoginScreen>
                     },
                     child: Text(
                       "Don't have an account? Sign Up",
+                      style: TextStyle(
+                        color: Color(0xff015F3E),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  // Add the "Forgot Password?" button here
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ForgetPw()),
+                      );
+                    },
+                    child: Text(
+                      "Forgot Password?",
                       style: TextStyle(
                         color: Color(0xff015F3E),
                         fontSize: 16,
