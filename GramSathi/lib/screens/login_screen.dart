@@ -136,14 +136,14 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset:
-          true, // Prevent bottom overflow when keyboard appears
+      //resizeToAvoidBottomInset:
+      // Prevent bottom overflow when keyboard appears
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Top curved background with image
+          // Background image covering the top half
           Container(
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery.of(context).size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/bgvillage9.jpeg'),
@@ -159,66 +159,60 @@ class _LoginScreenState extends State<LoginScreen>
           ),
           // Overlay text on background image
           Positioned(
-            top: 110,
+            top: 95,
             left: 20,
             right: 20,
             child: Column(
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'GramSathi',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 37,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 5.0,
-                            color: Colors.black,
-                            offset: Offset(2.0, 2.0),
-                          ),
-                        ],
+                Text(
+                  'GramSathi',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 37,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 5.0,
+                        color: Colors.black,
+                        offset: Offset(2.0, 2.0),
                       ),
-                    ),
-                    SizedBox(height: 2),
-                    // Tagline with only opacity animation
-                    FadeTransition(
-                      opacity: _fadeAnimation,
-                      child: Text(
-                        'Bridging communities with technology',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 2.0,
-                              color: Colors.black,
-                              offset: Offset(1.0, 1.0),
-                            ),
-                          ],
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2),
+                // Tagline with only opacity animation
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Text(
+                    'Bridging communities with technology',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 2.0,
+                          color: Colors.black,
+                          offset: Offset(1.0, 1.0),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
           ),
-          // White background for the input fields
-          SingleChildScrollView(
+          // White container for the login form on the bottom half
+          Align(
+            alignment: Alignment.bottomCenter,
             child: Container(
-              height: 450,
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.52,
-              ),
+              height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.68),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
               ),
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(24.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -262,7 +256,27 @@ class _LoginScreenState extends State<LoginScreen>
                       contentPadding: EdgeInsets.all(24),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  // Forgot Password button moved here, directly below the password field
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForgetPw()),
+                        );
+                      },
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                            color: Color(0xff015F3E),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
                   _isLoading
                       ? CircularProgressIndicator()
                       : ElevatedButton(
@@ -301,23 +315,6 @@ class _LoginScreenState extends State<LoginScreen>
                     },
                     child: Text(
                       "Don't have an account? Sign Up",
-                      style: TextStyle(
-                        color: Color(0xff015F3E),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  // Add the "Forgot Password?" button here
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ForgetPw()),
-                      );
-                    },
-                    child: Text(
-                      "Forgot Password?",
                       style: TextStyle(
                         color: Color(0xff015F3E),
                         fontSize: 16,
