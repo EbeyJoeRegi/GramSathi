@@ -586,14 +586,16 @@ class _SignupScreenState extends State<SignupScreen>
                                           color: Color(0xFFE0E3E7),
                                           width: 2,
                                         ),
-                                        borderRadius: BorderRadius.circular(40),
+                                        borderRadius: BorderRadius.circular(
+                                            40), // Keep border rounded
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xff015F3E),
                                           width: 2,
                                         ),
-                                        borderRadius: BorderRadius.circular(40),
+                                        borderRadius: BorderRadius.circular(
+                                            40), // Keep border rounded
                                       ),
                                       filled: true,
                                       fillColor: Colors.white.withOpacity(0.7),

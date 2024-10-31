@@ -42,7 +42,6 @@ dependencies:
   animated_text_kit: ^4.2.1
   weather_icons: ^3.0.0
   fluttertoast: ^8.2.8
-  flutter_keyboard_visibility: ^6.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
