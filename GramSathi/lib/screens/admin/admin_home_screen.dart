@@ -227,7 +227,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   },
                   children: <Widget>[
                     _buildPendingUsersPage(),
-                    AdminAnnouncementPage(),
+                    AdminAnnouncementPage(username: widget.username),
                     AdminEnquiryScreen(),
                     AdminSuggestionsScreen(),
                   ],

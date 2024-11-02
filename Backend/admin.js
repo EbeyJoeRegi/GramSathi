@@ -28,7 +28,7 @@ const getNextSequenceValue = async (sequenceName) => {
 
 //admin create announcements
 router.post('/createAnnouncement', async (req, res) => {
-    const { title, content } = req.body;
+    const { admin,title, content } = req.body;
 
     try {
         // Log incoming request
@@ -41,6 +41,7 @@ router.post('/createAnnouncement', async (req, res) => {
         // Create and save the new announcement
         const newAnnouncement = new Announcement({
             id: announcementId, // Use the auto-incremented ID
+            admin,
             title,
             content
         });
@@ -78,7 +79,7 @@ router.delete('/deleteAnnouncement/:id', async (req, res) => {
 // Update announcement endpoint
 router.put('/updateAnnouncement/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, content } = req.body;
+    const { admin,title, content } = req.body;
 
     try {
         // Convert the id to a number if it's not already
@@ -87,7 +88,7 @@ router.put('/updateAnnouncement/:id', async (req, res) => {
         // Update the announcement by the 'id' field
         const result = await Announcement.findOneAndUpdate(
             { id: announcementId }, // Use 'id' field for query
-            { title, content },
+            { admin,title, content },
             { new: true } // Option to return the updated document
         );
 

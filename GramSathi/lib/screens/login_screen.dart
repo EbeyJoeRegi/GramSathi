@@ -64,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen>
 
       if (response.statusCode == 200) {
         if (responseBody['success']) {
+          final name = responseBody['name'];
           final userType = responseBody['userType'];
           if (userType == 'admin') {
             Navigator.pushReplacement(
@@ -76,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen>
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => UserHomeScreen(username: username),
+                builder: (context) =>
+                    UserHomeScreen(username: username, name: name),
               ),
             );
           }

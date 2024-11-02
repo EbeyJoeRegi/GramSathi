@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 import '/config.dart';
 
 class AdminAnnouncementPage extends StatefulWidget {
-  const AdminAnnouncementPage({super.key});
+  final String username;
+  AdminAnnouncementPage({required this.username});
 
   @override
   _AdminAnnouncementPageState createState() => _AdminAnnouncementPageState();
@@ -60,6 +61,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
+          'admin': widget.username,
           'title': title,
           'content': content,
         }),
@@ -117,6 +119,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
+          'admin': widget.username,
           'title': title,
           'content': content,
         }),
@@ -262,6 +265,9 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(announcement['content'],
+                                  textAlign: TextAlign.justify),
+                              const SizedBox(height: 4),
+                              Text(announcement['admin'],
                                   textAlign: TextAlign.justify),
                               const SizedBox(height: 4),
                               Text(

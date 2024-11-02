@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
 });
 
 const announcementSchema = new mongoose.Schema({
-    id: { type: Number, unique: true },
+    id: { type: Number, unique: true },    
+    admin: String,
     title: String,
     content: String,
     created_at: { type: Date, default: Date.now }
@@ -24,7 +25,8 @@ const announcementSchema = new mongoose.Schema({
 
 const suggestionSchema = new mongoose.Schema({
     id: { type: Number, unique: true },
-    title: String,
+    title: String, 
+    admin: String,
     content: String,
     username: String,
     created_at: { type: Date, default: Date.now },
@@ -33,7 +35,9 @@ const suggestionSchema = new mongoose.Schema({
 
 const querySchema = new mongoose.Schema({
     id: { type: Number, unique: true },
-    username: String,
+    username: String, 
+    admin: String,
+    type:Number,
     matter: String,
     time: { type: Date, default: Date.now },
     admin_response: String

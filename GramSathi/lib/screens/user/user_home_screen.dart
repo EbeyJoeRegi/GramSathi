@@ -13,8 +13,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 class UserHomeScreen extends StatefulWidget {
   final String username;
+  final String name;
 
-  UserHomeScreen({required this.username});
+  UserHomeScreen({required this.username, required this.name});
 
   @override
   _UserHomeScreenState createState() => _UserHomeScreenState();
@@ -271,7 +272,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             AnimatedTextKit(
               animatedTexts: [
                 TyperAnimatedText(
-                  'Hi, ${widget.username}',
+                  'Hi, ${widget.name}',
                   textStyle: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -360,6 +361,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             final title = announcement['title'] ?? 'No Title';
                             final description =
                                 announcement['content'] ?? 'No Description';
+                            final admin = announcement['admin'] ?? 'UnKnown';
 
                             return Card(
                               elevation: 2,
@@ -379,6 +381,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     SizedBox(height: 8.0),
                                     Text(
                                       description,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      'Posted by: $admin',
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
