@@ -204,52 +204,56 @@ class _ForgetPwState extends State<ForgetPw> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Container(
-        color: Colors.white, // Ensure the body has a white background
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Center horizontally
-              children: [
-                _buildImage(),
-                SizedBox(height: 20),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white, // Ensure the body has a white background
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Center horizontally
+                children: [
+                  _buildImage(),
+                  SizedBox(height: 20),
 
-                // Step-specific Instructions
-                Text(
-                  _isOtpSent
-                      ? (_isOtpVerified
-                          ? "Your New Password Must Be Different from Previously Used Password."
-                          : "Enter The 6 Digit Code Sent To ${_usernameController.text}")
-                      : "Enter Your username To Receive a Verification Code.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 18), // Increased font size
-                ),
-                SizedBox(height: 30),
-
-                // Input Fields
-                if (!_isOtpSent) _buildUserNameField(),
-                if (_isOtpSent && !_isOtpVerified) _buildOtpFields(),
-                if (_isOtpVerified) _buildPasswordFields(),
-
-                SizedBox(height: 30),
-                _isLoading ? CircularProgressIndicator() : _buildActionButton(),
-
-                // Error Message
-                if (_errorMessage.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      _errorMessage,
-                      style: TextStyle(color: Colors.red, fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
+                  // Step-specific Instructions
+                  Text(
+                    _isOtpSent
+                        ? (_isOtpVerified
+                            ? "Your New Password Must Be Different from Previously Used Password."
+                            : "Enter The 6 Digit Code Sent To ${_usernameController.text}")
+                        : "Enter Your username To Receive a Verification Code.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 18), // Increased font size
                   ),
-              ],
+                  SizedBox(height: 30),
+
+                  // Input Fields
+                  if (!_isOtpSent) _buildUserNameField(),
+                  if (_isOtpSent && !_isOtpVerified) _buildOtpFields(),
+                  if (_isOtpVerified) _buildPasswordFields(),
+
+                  SizedBox(height: 30),
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : _buildActionButton(),
+
+                  // Error Message
+                  if (_errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        _errorMessage,
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),
