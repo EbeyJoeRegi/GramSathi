@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 import '/config.dart';
 
 class AdminAnnouncementPage extends StatefulWidget {
-  final String username;
-  AdminAnnouncementPage({required this.username});
+  final String name;
+  final String place;
+  AdminAnnouncementPage({required this.name, required this.place});
 
   @override
   _AdminAnnouncementPageState createState() => _AdminAnnouncementPageState();
@@ -22,14 +23,14 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
   @override
   void initState() {
     super.initState();
-    _fetchAnnouncements();
+    _fetchAnnouncements(widget.place);
   }
 
-  Future<void> _fetchAnnouncements() async {
+  Future<void> _fetchAnnouncements(String place) async {
     try {
       final response = await http.get(
         Uri.parse(
-            '${AppConfig.baseUrl}/announcements'), // Replace with your IP address
+            '${AppConfig.baseUrl}/announcements?place=$place'), // Replace with your IP address
       );
 
       if (response.statusCode == 200) {
@@ -61,7 +62,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'admin': widget.username,
+          'admin': widget.name,
           'title': title,
           'content': content,
         }),
@@ -70,7 +71,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
       if (response.statusCode == 200) {
         setState(() {
           _message = 'Announcement created successfully';
-          _fetchAnnouncements(); // Refresh the announcements list
+          _fetchAnnouncements(widget.place); // Refresh the announcements list
           _titleController.clear();
           _contentController.clear();
         });
@@ -96,7 +97,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
       if (response.statusCode == 200) {
         setState(() {
           _message = 'Announcement deleted successfully';
-          _fetchAnnouncements(); // Refresh the announcements list
+          _fetchAnnouncements(widget.place); // Refresh the announcements list
         });
       } else {
         setState(() {
@@ -119,7 +120,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'admin': widget.username,
+          'admin': widget.name,
           'title': title,
           'content': content,
         }),
@@ -128,7 +129,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
       if (response.statusCode == 200) {
         setState(() {
           _message = 'Announcement updated successfully';
-          _fetchAnnouncements(); // Refresh the announcements list
+          _fetchAnnouncements(widget.place); // Refresh the announcements list
           _currentAnnouncementId =
               null; // Clear the current announcement being updated
           _titleController.clear();
@@ -267,7 +268,7 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
                               Text(announcement['content'],
                                   textAlign: TextAlign.justify),
                               const SizedBox(height: 4),
-                              Text(announcement['admin'],
+                              Text('Posted By: ${announcement['admin']}',
                                   textAlign: TextAlign.justify),
                               const SizedBox(height: 4),
                               Text(

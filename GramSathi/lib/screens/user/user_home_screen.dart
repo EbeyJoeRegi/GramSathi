@@ -14,8 +14,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 class UserHomeScreen extends StatefulWidget {
   final String username;
   final String name;
+  final String place;
 
-  UserHomeScreen({required this.username, required this.name});
+  UserHomeScreen(
+      {required this.username, required this.name, required this.place});
 
   @override
   _UserHomeScreenState createState() => _UserHomeScreenState();
@@ -34,14 +36,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchAnnouncements();
+    _fetchAnnouncements(widget.place);
     _fetchLocationAndWeather();
   }
 
-  Future<void> _fetchAnnouncements() async {
+  Future<void> _fetchAnnouncements(String place) async {
     try {
       final response = await http.get(
-        Uri.parse('${AppConfig.baseUrl}/announcements'),
+        Uri.parse('${AppConfig.baseUrl}/announcements?place=$place'),
       );
 
       if (response.statusCode == 200) {

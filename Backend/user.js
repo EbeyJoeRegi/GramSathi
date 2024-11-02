@@ -25,14 +25,33 @@ const getNextSequenceValue = async (sequenceName) => {
 
 // Retrieve announcements endpoint
 router.get('/announcements', async (req, res) => {
-    try {
-      const announcements = await Announcement.find().sort({ created_at: -1 });
+  const location = req.query.place; // Assuming location is passed as a query parameter
+
+  if (!location) {
+      return res.status(400).json({ error: 'Location is required' });
+  }
+
+  try {
+      // Step 1: Find all users from the specified location
+      const users = await User.find({ address: location }).select('name');
+      // Check if users were found
+      if (!users.length) {
+          return res.status(404).json({ message: 'No users found in the specified location.' });
+      }
+
+      // Extract usernames from the found users
+      const name = users.map(user => user.name);
+
+      // Step 2: Find announcements posted by these users
+      const announcements = await Announcement.find({ admin: { $in: name } }).sort({ created_at: -1 });
+
       res.status(200).json(announcements);
-    } catch (err) {
+  } catch (err) {
       console.error('Error:', err);
       res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+  }
+});
+
 
 // Fetch locations endpoint
 router.get('/locations', async (req, res) => {
