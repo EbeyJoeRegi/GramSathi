@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "66ebf39a080b5c8906d037d4"
+  },
+  "id": 1,
+  "crop_name": "Arecanut",
+  "avg_price": 36713.01
+},
+{
+  "_id": {
+    "$oid": "66ebf39a080b5c8906d037d5"
+  },
+  "id": 2,
+  "crop_name": "Onion",
+  "avg_price": 14340
+},
+{
+  "_id": {
+    "$oid": "66ebf39a080b5c8906d037d6"
+  },
+  "id": 3,
+  "crop_name": "Tomato",
+  "avg_price": 10
+},
+{
+  "_id": {
+    "$oid": "66ebf39a080b5c8906d037d7"
+  },
+  "id": 4,
+  "crop_name": "Carrot",
+  "avg_price": 0
+},
+{
+  "_id": {
+    "$oid": "66ebf39a080b5c8906d037d8"
+  },
+  "id": 5,
+  "crop_name": "Pumpkin",
+  "avg_price": 0
+},
+{
+  "_id": {
+    "$oid": "66ec780721b00e302211ab7c"
+  },
+  "id": 9,
+  "crop_name": "Pepper",
+  "avg_price": 89.45,
+  "__v": 0
+}]

@@ -1,0 +1,175 @@
+[{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fc9"
+  },
+  "id": 1,
+  "place_name": "Bagalkot"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fca"
+  },
+  "id": 2,
+  "place_name": "Bangalore"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fcb"
+  },
+  "id": 3,
+  "place_name": "Belgaum"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fcc"
+  },
+  "id": 4,
+  "place_name": "Bellary"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fcd"
+  },
+  "id": 5,
+  "place_name": "Bijapur"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fce"
+  },
+  "id": 6,
+  "place_name": "Chamrajnagar"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fcf"
+  },
+  "id": 7,
+  "place_name": "Chikmagalur"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fd0"
+  },
+  "id": 8,
+  "place_name": "Davangere"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fd1"
+  },
+  "id": 9,
+  "place_name": "Dharwad"
+},
+{
+  "_id": {
+    "$oid": "66eaefb7b4ae03588e228fd2"
+  },
+  "id": 10,
+  "place_name": "Gadag"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439c9"
+  },
+  "id": 11,
+  "place_name": "Hassan"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439ca"
+  },
+  "id": 12,
+  "place_name": "Haveri"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439cb"
+  },
+  "id": 13,
+  "place_name": "Kalburgi"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439cc"
+  },
+  "id": 14,
+  "place_name": "Kolar"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439cd"
+  },
+  "id": 15,
+  "place_name": "Koppal"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439ce"
+  },
+  "id": 16,
+  "place_name": "Mandya"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439cf"
+  },
+  "id": 17,
+  "place_name": "Mangalore (Dakshin Kannada)"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d0"
+  },
+  "id": 18,
+  "place_name": "Mysore"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d1"
+  },
+  "id": 19,
+  "place_name": "Raichur"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d2"
+  },
+  "id": 20,
+  "place_name": "Shimoga"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d3"
+  },
+  "id": 21,
+  "place_name": "Tumkur"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d4"
+  },
+  "id": 22,
+  "place_name": "Udupi"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d5"
+  },
+  "id": 23,
+  "place_name": "Chitradurga"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d6"
+  },
+  "id": 27,
+  "place_name": "Madikeri (Kodagu)"
+},
+{
+  "_id": {
+    "$oid": "66ebe9c7b39ecf7d31b439d7"
+  },
+  "id": 29,
+  "place_name": "Karwar (Uttar Kannada)"
+}]
