@@ -10,11 +10,8 @@ import 'admin_console_screen.dart'; // Import your AdminConsolePage
 
 class AdminHomeScreen extends StatefulWidget {
   final String username;
-  final String name;
-  final String place;
 
-  AdminHomeScreen(
-      {required this.username, required this.name, required this.place});
+  AdminHomeScreen({required this.username});
 
   @override
   _AdminHomeScreenState createState() => _AdminHomeScreenState();
@@ -231,8 +228,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   children: <Widget>[
                     _buildPendingUsersPage(),
                     AdminAnnouncementPage(
-                      name: widget.name,
-                      place: widget.place,
+                      username: widget.username,
                     ),
                     AdminEnquiryScreen(),
                     AdminSuggestionsScreen(),

@@ -33,32 +33,23 @@ class VillageApp extends StatelessWidget {
           final args =
               ModalRoute.of(context)!.settings.arguments as Map<String, String>;
           final username = args['username'];
-          final name = args['name'];
-          final place = args['place'];
           return AdminHomeScreen(
             username: username ?? '',
-            name: name ?? '',
-            place: place ?? '',
           );
         },
         '/user_home': (context) {
           final args =
               ModalRoute.of(context)!.settings.arguments as Map<String, String>;
           final username = args['username'];
-          final name = args['name'];
-          final place = args['place'];
-          return UserHomeScreen(
-              username: username ?? '', name: name ?? '', place: place ?? '');
+          return UserHomeScreen(username: username ?? '');
         },
 
         '/announcements': (context) {
           final args =
               ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-          final name = args['name'];
-          final place = args['place'];
+          final username = args['username'];
           return AdminAnnouncementPage(
-            name: name ?? '',
-            place: place ?? '',
+            username: username ?? '',
           );
         }, // Add route for announcements
         '/profile': (context) {

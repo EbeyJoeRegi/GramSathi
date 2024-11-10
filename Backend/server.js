@@ -285,7 +285,7 @@ app.post('/login', async (req, res) => {
           if (user.activation === 0) {
             return res.status(200).json({ success: false, message: 'Account not activated' });
           }
-          res.status(200).json({ success: true, userType: user.user_type, name : user.name, place : user.address});
+          res.status(200).json({ success: true, userType: user.user_type});
         } else {
           res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
@@ -357,6 +357,27 @@ app.get('/locations', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
+
+  // API to get user details by username
+app.get('/user/:username', async (req, res) => {
+  try {
+      const username = req.params.username;
+      
+      // Find the user by username
+      const user = await User.findOne({ username: username });
+      
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Exclude the password from the response for security
+      const { password, ...userDetails } = user.toObject();
+      
+      res.status(200).json(userDetails);
+  } catch (error) {
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
