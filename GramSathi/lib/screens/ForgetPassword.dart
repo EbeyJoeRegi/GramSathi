@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '/config.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ForgetPw extends StatefulWidget {
   @override
@@ -155,109 +156,116 @@ class _ForgetPwState extends State<ForgetPw> {
     }
   }
 
-  Widget _buildImage() {
-    String imagePath;
-    if (!_isOtpSent) {
-      imagePath = 'assets/images/forgetpw.png';
-    } else if (!_isOtpVerified) {
-      imagePath = 'assets/images/verifyotp.png';
-    } else {
-      imagePath = 'assets/images/resetpassword.png';
-    }
-
-    return Stack(
-      alignment: Alignment.center, // Center the image over the background
-      children: [
-        Container(
-          width: 350, // Width of the circular background
-          height: 350, // Height of the circular background
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xFFD1E7A6)
-                .withOpacity(0.7), // Light green with reduced opacity
-          ),
-        ),
-        ClipOval(
-          child: Image.asset(
-            imagePath,
-            height: 250, // Adjust the height as needed
-            fit: BoxFit.cover, // Adjust image fit
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text(
-          _isOtpSent
-              ? (_isOtpVerified
-                  ? "Create New Password"
-                  : "Verify Your Phone Number")
-              : "Forgot Password",
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white, // Ensure the body has a white background
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, // Center horizontally
-                children: [
-                  _buildImage(),
-                  SizedBox(height: 20),
-
-                  // Step-specific Instructions
-                  Text(
-                    _isOtpSent
-                        ? (_isOtpVerified
-                            ? "Your New Password Must Be Different from Previously Used Password."
-                            : "Enter The 6 Digit Code Sent To ${_usernameController.text}")
-                        : "Enter Your username To Receive a Verification Code.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 18), // Increased font size
-                  ),
-                  SizedBox(height: 30),
-
-                  // Input Fields
-                  if (!_isOtpSent) _buildUserNameField(),
-                  if (_isOtpSent && !_isOtpVerified) _buildOtpFields(),
-                  if (_isOtpVerified) _buildPasswordFields(),
-
-                  SizedBox(height: 30),
-                  _isLoading
-                      ? CircularProgressIndicator()
-                      : _buildActionButton(),
-
-                  // Error Message
-                  if (_errorMessage.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        _errorMessage,
-                        style: TextStyle(color: Colors.red, fontSize: 14),
-                        textAlign: TextAlign.center,
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        height:
+                            70), // Adjust top space to position text correctly
+                    Text(
+                      "Forgot Your Password",
+                      style: GoogleFonts.roboto(
+                        fontSize: 27,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                ],
+                    SizedBox(height: 15),
+                    Text(
+                      _isOtpSent
+                          ? (_isOtpVerified
+                              ? "Your New Password Must Be Different from Previously Used Password."
+                              : "Enter the 6-Digit Code Sent to ${_usernameController.text}")
+                          : "Don\'t worry enter your registered username to recieve verification code",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                          fontSize: 16, color: Colors.grey[500]),
+                    ),
+                    SizedBox(height: 35),
+                    _buildIllustration(),
+                    SizedBox(height: 20),
+                    if (!_isOtpSent) _buildUserNameField(),
+                    if (_isOtpSent && !_isOtpVerified) _buildOtpFields(),
+                    if (_isOtpVerified) _buildPasswordFields(),
+                    SizedBox(height: 20),
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : _buildActionButton(),
+                    if (_errorMessage.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          _errorMessage,
+                          style: TextStyle(color: Colors.red, fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    if (_isOtpSent && !_isOtpVerified)
+                      TextButton(
+                        onPressed:
+                            () {}, // Add your resend OTP functionality here
+                        child: Text(
+                          "Resend OTP?",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+          Positioned(
+            top: 30,
+            left: 6,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildIllustration() {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.green.withOpacity(0.3),
+                spreadRadius: 25,
+                blurRadius: 45,
+                offset: Offset(0, 0),
+              ),
+            ],
+          ),
+          child: Image.asset(
+            _isOtpSent
+                ? (_isOtpVerified
+                    ? 'assets/images/resetpassword.png'
+                    : 'assets/images/verifyotp.png')
+                : 'assets/images/forgetpw.png',
+            height: 200,
+          ),
+        ),
+        SizedBox(height: 35),
+      ],
     );
   }
 
@@ -265,9 +273,20 @@ class _ForgetPwState extends State<ForgetPw> {
     return TextField(
       controller: _usernameController,
       decoration: InputDecoration(
-        labelText: 'UserName',
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        hintText: 'Enter your registered username',
+        labelStyle: TextStyle(color: Color(0xFF015F3E)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Color(0xFF015F3E)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Color(0xFF015F3E)),
+        ),
+        filled: true,
+        fillColor: Colors.white,
       ),
+      cursorColor: Color(0xFF015F3E),
     );
   }
 
@@ -281,22 +300,20 @@ class _ForgetPwState extends State<ForgetPw> {
           child: TextField(
             controller: _otpControllers[index],
             decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              counterText: '', // Hide the counter text
+              labelText: 'OTP',
+              labelStyle: TextStyle(color: Color(0xFF015F3E)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Color(0xFF015F3E)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Color(0xFF015F3E)),
+              ),
             ),
             keyboardType: TextInputType.number,
-            maxLength: 1, // Limit to one character
+            maxLength: 1,
             textAlign: TextAlign.center,
-            onChanged: (value) {
-              // Automatically move to the next text field
-              if (value.length == 1 && index < 5) {
-                FocusScope.of(context).nextFocus();
-              } else if (value.isEmpty && index > 0) {
-                // Move back to the previous field if current is empty
-                FocusScope.of(context).previousFocus();
-              }
-            },
           ),
         );
       }),
@@ -310,18 +327,40 @@ class _ForgetPwState extends State<ForgetPw> {
           controller: _newPasswordController,
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'New Password',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            hintText: 'New Password',
+            labelStyle: TextStyle(color: Color(0xFF015F3E)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Color(0xFF015F3E)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Color(0xFF015F3E)),
+            ),
+            filled: true,
+            fillColor: Colors.white,
           ),
+          cursorColor: Color(0xFF015F3E),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 15),
         TextField(
           controller: _confirmPasswordController,
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'Confirm Password',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            hintText: 'Confirm Password',
+            labelStyle: TextStyle(color: Color(0xFF015F3E)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Color(0xFF015F3E)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Color(0xFF015F3E)),
+            ),
+            filled: true,
+            fillColor: Colors.white,
           ),
+          cursorColor: Color(0xFF015F3E),
         ),
       ],
     );
@@ -332,9 +371,17 @@ class _ForgetPwState extends State<ForgetPw> {
       onPressed: _isOtpSent
           ? (_isOtpVerified ? _resetPassword : _verifyOtp)
           : _sendOtp,
-      child: Text(_isOtpSent
-          ? (_isOtpVerified ? 'Reset Password' : 'Verify OTP')
-          : 'Send OTP'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF015F3E),
+        padding: EdgeInsets.symmetric(vertical: 13, horizontal: 28),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      child: Text(
+        _isOtpSent
+            ? (_isOtpVerified ? "Reset Password" : "Verify OTP")
+            : "Send OTP",
+        style: TextStyle(fontSize: 15, color: Colors.white),
+      ),
     );
   }
 }
