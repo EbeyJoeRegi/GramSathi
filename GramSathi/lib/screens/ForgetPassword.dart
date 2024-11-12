@@ -242,6 +242,7 @@ class _ForgetPwState extends State<ForgetPw> {
   Widget _buildIllustration() {
     return Column(
       children: [
+        SizedBox(height: 20), // Added padding to push down the illustration
         Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -261,11 +262,45 @@ class _ForgetPwState extends State<ForgetPw> {
                     ? 'assets/images/resetpassword.png'
                     : 'assets/images/verifyotp.png')
                 : 'assets/images/forgetpw.png',
-            height: 200,
+            height: 300,
           ),
         ),
-        SizedBox(height: 35),
+        SizedBox(height: 100),
       ],
+    );
+  }
+
+  Widget _buildOtpFields() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(6, (index) {
+        return Container(
+          width: 40,
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          child: TextField(
+            controller: _otpControllers[index],
+            decoration: InputDecoration(
+              counterText: "", // Hides the '0/1' counter below each text field
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Color(0xFF015F3E)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Color(0xFF015F3E)),
+              ),
+            ),
+            keyboardType: TextInputType.number,
+            maxLength: 1,
+            textAlign: TextAlign.center,
+            onChanged: (value) {
+              if (value.length == 1 && index < _otpControllers.length - 1) {
+                FocusScope.of(context).nextFocus();
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 
@@ -287,36 +322,6 @@ class _ForgetPwState extends State<ForgetPw> {
         fillColor: Colors.white,
       ),
       cursorColor: Color(0xFF015F3E),
-    );
-  }
-
-  Widget _buildOtpFields() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(6, (index) {
-        return Container(
-          width: 40,
-          margin: EdgeInsets.symmetric(horizontal: 5),
-          child: TextField(
-            controller: _otpControllers[index],
-            decoration: InputDecoration(
-              labelText: 'OTP',
-              labelStyle: TextStyle(color: Color(0xFF015F3E)),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Color(0xFF015F3E)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Color(0xFF015F3E)),
-              ),
-            ),
-            keyboardType: TextInputType.number,
-            maxLength: 1,
-            textAlign: TextAlign.center,
-          ),
-        );
-      }),
     );
   }
 

@@ -13,8 +13,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 class UserHomeScreen extends StatefulWidget {
   final String username;
+  final String name;
 
-  UserHomeScreen({required this.username});
+  UserHomeScreen({required this.username, required this.name});
 
   @override
   _UserHomeScreenState createState() => _UserHomeScreenState();
@@ -29,7 +30,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String _temperature = '';
   String _city = '';
   String _weatherCondition = '';
-  String name = '';
   String place = '';
 
   @override
@@ -46,7 +46,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          name = data['name'];
           place = data['address'];
         });
         _fetchAnnouncements(place);
@@ -295,7 +294,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             AnimatedTextKit(
               animatedTexts: [
                 TyperAnimatedText(
-                  'Hi, ${name}',
+                  'Hi, ${widget.name}',
                   textStyle: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
