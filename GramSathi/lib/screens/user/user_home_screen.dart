@@ -13,8 +13,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 class UserHomeScreen extends StatefulWidget {
   final String username;
+  final String name;
 
-  UserHomeScreen({required this.username});
+  UserHomeScreen({required this.username, required this.name});
 
   @override
   _UserHomeScreenState createState() => _UserHomeScreenState();
@@ -29,12 +30,34 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String _temperature = '';
   String _city = '';
   String _weatherCondition = '';
+  String place = '';
 
   @override
   void initState() {
     super.initState();
-    _fetchAnnouncements();
-    _fetchLocationAndWeather();
+    fetchUserName(widget.username);
+  }
+
+  Future<void> fetchUserName(String username) async {
+    try {
+      final response =
+          await http.get(Uri.parse('${AppConfig.baseUrl}/user/$username'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          place = data['address'];
+        });
+        _fetchAnnouncements(place);
+        _fetchLocationAndWeather();
+      } else if (response.statusCode == 404) {
+        print('User not found');
+      } else {
+        print('Error: ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error fetching user details: $error');
+    }
   }
 
   Future<void> _fetchAnnouncements() async {
@@ -240,7 +263,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             AnimatedTextKit(
               animatedTexts: [
                 TyperAnimatedText(
-                  'Hi, ${widget.username}',
+                  'Hi, ${widget.name}',
                   textStyle: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,

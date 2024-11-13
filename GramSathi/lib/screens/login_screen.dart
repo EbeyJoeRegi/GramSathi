@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen>
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _errorMessage = '';
+  String name = '';
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation; // Opacity animation
@@ -65,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen>
       if (response.statusCode == 200) {
         if (responseBody['success']) {
           final userType = responseBody['userType'];
+          name = responseBody['name'];
           if (userType == 'admin') {
             Navigator.pushReplacement(
               context,
@@ -76,7 +78,8 @@ class _LoginScreenState extends State<LoginScreen>
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => UserHomeScreen(username: username),
+                builder: (context) =>
+                    UserHomeScreen(username: username, name: name),
               ),
             );
           }

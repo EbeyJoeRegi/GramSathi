@@ -285,7 +285,7 @@ app.post('/login', async (req, res) => {
           if (user.activation === 0) {
             return res.status(200).json({ success: false, message: 'Account not activated' });
           }
-          res.status(200).json({ success: true, userType: user.user_type});
+          res.status(200).json({ success: true, userType: user.user_type, name: user.name});
         } else {
           res.status(401).json({ success: false, message: 'Invalid credentials' });
         }

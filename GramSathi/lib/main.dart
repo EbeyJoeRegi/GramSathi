@@ -41,7 +41,8 @@ class VillageApp extends StatelessWidget {
           final args =
               ModalRoute.of(context)!.settings.arguments as Map<String, String>;
           final username = args['username'];
-          return UserHomeScreen(username: username ?? '');
+          final name = args['name'];
+          return UserHomeScreen(username: username ?? '', name: name ?? '');
         },
 
         '/announcements': (context) {
