@@ -248,9 +248,9 @@ class _ForgetPwState extends State<ForgetPw> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.green.withOpacity(0.3),
-                spreadRadius: 25,
-                blurRadius: 45,
+                color: const Color.fromARGB(255, 61, 175, 65).withOpacity(0.3),
+                spreadRadius: 30,
+                blurRadius: 40,
                 offset: Offset(0, 0),
               ),
             ],

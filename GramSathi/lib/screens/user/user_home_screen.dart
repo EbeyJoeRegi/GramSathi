@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import '/config.dart';
 import 'market_updates_screen.dart';
-import 'feedback_hub.dart';
+import 'enquiry_screen.dart';
 import 'important_contacts_screen.dart';
 import 'suggestions_screen.dart';
 import 'user_profile.dart';
@@ -29,42 +29,18 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String _temperature = '';
   String _city = '';
   String _weatherCondition = '';
-  String name = '';
-  String place = '';
 
   @override
   void initState() {
     super.initState();
-    fetchUserName(widget.username);
+    _fetchAnnouncements();
+    _fetchLocationAndWeather();
   }
 
-  Future<void> fetchUserName(String username) async {
-    try {
-      final response =
-          await http.get(Uri.parse('${AppConfig.baseUrl}/user/$username'));
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          name = data['name'];
-          place = data['address'];
-        });
-        _fetchAnnouncements(place);
-        _fetchLocationAndWeather();
-      } else if (response.statusCode == 404) {
-        print('User not found');
-      } else {
-        print('Error: ${response.reasonPhrase}');
-      }
-    } catch (error) {
-      print('Error fetching user details: $error');
-    }
-  }
-
-  Future<void> _fetchAnnouncements(String place) async {
+  Future<void> _fetchAnnouncements() async {
     try {
       final response = await http.get(
-        Uri.parse('${AppConfig.baseUrl}/announcements?place=$place'),
+        Uri.parse('${AppConfig.baseUrl}/announcements'),
       );
 
       if (response.statusCode == 200) {
@@ -106,8 +82,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
         final weatherResponse = await http.get(
           Uri.parse(
-            'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=e8544d130b60b1a8ee3cf6b86ae6b593',
-          ),
+              'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=e8544d130b60b1a8ee3cf6b86ae6b593'),
         );
 
         if (weatherResponse.statusCode == 200) {
@@ -115,14 +90,18 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           final temp = weatherData['main']['temp'];
           _weatherCondition = weatherData['weather'][0]['main'];
 
-          // Add a print statement to debug weather condition
-          print('Weather Condition: $_weatherCondition');
-
           setState(() {
-            _temperature =
-                '${temp.toStringAsFixed(1)}°C'; // Corrected degree symbol
+            _temperature = '${temp.toStringAsFixed(1)}°C';
+          });
+        } else {
+          setState(() {
+            _temperature = 'Failed to fetch weather';
           });
         }
+      } else {
+        setState(() {
+          _temperature = 'Failed to fetch location';
+        });
       }
     } catch (e) {
       setState(() {
@@ -144,8 +123,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   Widget _buildWeatherWidget() {
     IconData weatherIcon;
-
-    // Map more weather conditions to corresponding icons
     switch (_weatherCondition) {
       case 'Clear':
         weatherIcon = WeatherIcons.day_sunny;
@@ -156,43 +133,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       case 'Rain':
         weatherIcon = WeatherIcons.rain;
         break;
-      case 'Thunderstorm':
-        weatherIcon = WeatherIcons.thunderstorm;
-        break;
-      case 'Drizzle':
-        weatherIcon = WeatherIcons.showers;
-        break;
       case 'Snow':
         weatherIcon = WeatherIcons.snow;
         break;
-      case 'Mist':
-      case 'Fog':
-      case 'Haze':
-        weatherIcon = WeatherIcons.fog;
-        break;
-      case 'Smoke':
-      case 'Dust':
-      case 'Sand':
-      case 'Ash':
-      case 'Squall':
-      case 'Tornado':
-        weatherIcon = WeatherIcons.dust;
-        break;
       default:
-        weatherIcon = WeatherIcons.cloud_refresh; // Fallback icon
-    }
-
-    // Add temperature-based logic for icon changes
-    if (_temperature.isNotEmpty) {
-      final tempValue = double.tryParse(_temperature.split('°')[0]);
-      if (tempValue != null) {
-        if (tempValue < 10) {
-          weatherIcon =
-              WeatherIcons.snowflake_cold; // Cold icon for low temperatures
-        } else if (tempValue > 30) {
-          weatherIcon = WeatherIcons.hot; // Hot icon for high temperatures
-        }
-      }
+        weatherIcon = WeatherIcons.cloud_refresh;
     }
 
     return Container(
@@ -243,7 +188,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         children: <Widget>[
           _buildHomePage(),
           MarketUpdatesScreen(),
-          FeedbackHub(username: widget.username),
+          EnquiryScreen(username: widget.username),
           SuggestionsScreen(username: widget.username),
           ImportantContactsScreen(),
         ],
@@ -259,12 +204,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             label: 'Marketplace',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.feedback), // Feedback Hub icon
-            label: 'Feedback Hub',
+            icon: Icon(Icons.question_answer),
+            label: 'Enquiries',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.swap_horiz), // Exchange Zone icon
-            label: 'Exchange Zone',
+            icon: Icon(Icons.speaker_notes),
+            label: 'Suggestions',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
@@ -295,7 +240,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             AnimatedTextKit(
               animatedTexts: [
                 TyperAnimatedText(
-                  'Hi, ${name}',
+                  'Hi, ${widget.username}',
                   textStyle: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -383,8 +328,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             // Safely access announcement fields
                             final title = announcement['title'] ?? 'No Title';
                             final description =
-                                announcement['content'] ?? 'No Description';
-                            final admin = announcement['admin'] ?? 'UnKnown';
+                                announcement['description'] ?? 'No Description';
 
                             return Card(
                               elevation: 2,
@@ -404,13 +348,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     SizedBox(height: 8.0),
                                     Text(
                                       description,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      'Posted by: $admin',
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
