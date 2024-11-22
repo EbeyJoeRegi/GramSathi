@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import '/config.dart';
 import 'market_updates_screen.dart';
-import 'enquiry_screen.dart';
+import 'feedback_hub.dart';
 import 'important_contacts_screen.dart';
 import 'suggestions_screen.dart';
 import 'user_profile.dart';
@@ -60,10 +60,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     }
   }
 
-  Future<void> _fetchAnnouncements() async {
+  Future<void> _fetchAnnouncements(String place) async {
     try {
       final response = await http.get(
-        Uri.parse('${AppConfig.baseUrl}/announcements'),
+        Uri.parse('${AppConfig.baseUrl}/announcements?place=$place'),
       );
 
       if (response.statusCode == 200) {
@@ -105,26 +105,20 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
         final weatherResponse = await http.get(
           Uri.parse(
-              'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=e8544d130b60b1a8ee3cf6b86ae6b593'),
+            'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=e8544d130b60b1a8ee3cf6b86ae6b593',
+          ),
         );
 
         if (weatherResponse.statusCode == 200) {
           final weatherData = json.decode(weatherResponse.body);
           final temp = weatherData['main']['temp'];
-          _weatherCondition = weatherData['weather'][0]['main'];
+          _weatherCondition = weatherData['weather'][0]['description'];
 
           setState(() {
-            _temperature = '${temp.toStringAsFixed(1)}°C';
-          });
-        } else {
-          setState(() {
-            _temperature = 'Failed to fetch weather';
+            _temperature =
+                '${temp.toStringAsFixed(1)}°C'; // Corrected degree symbol
           });
         }
-      } else {
-        setState(() {
-          _temperature = 'Failed to fetch location';
-        });
       }
     } catch (e) {
       setState(() {
@@ -146,24 +140,47 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   Widget _buildWeatherWidget() {
     IconData weatherIcon;
+    Color bgColor = Colors.blueAccent.withOpacity(0.7);
+
     switch (_weatherCondition) {
-      case 'Clear':
+      case 'clear sky':
         weatherIcon = WeatherIcons.day_sunny;
+        bgColor = Colors.yellow.withOpacity(0.7);
         break;
-      case 'Clouds':
+      case 'few clouds':
+      case 'scattered clouds':
+      case 'broken clouds':
         weatherIcon = WeatherIcons.cloud;
+        bgColor = Colors.grey.withOpacity(0.7);
         break;
-      case 'Rain':
+      case 'shower rain':
+      case 'rain':
         weatherIcon = WeatherIcons.rain;
+        bgColor = Colors.blueGrey.withOpacity(0.7);
         break;
-      case 'Snow':
+      case 'thunderstorm':
+        weatherIcon = WeatherIcons.thunderstorm;
+        bgColor = Colors.deepPurple.withOpacity(0.7);
+        break;
+      case 'snow':
         weatherIcon = WeatherIcons.snow;
+        bgColor = Colors.lightBlue.withOpacity(0.7);
+        break;
+      case 'mist':
+        weatherIcon = WeatherIcons.fog;
+        bgColor = Colors.lightGreen.withOpacity(0.7);
         break;
       default:
         weatherIcon = WeatherIcons.cloud_refresh;
+        bgColor = Colors.teal.withOpacity(0.7);
     }
 
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(seconds: 2),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(35.0),
+      ),
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,6 +201,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 4.0),
+              Text(
+                _weatherCondition.isNotEmpty
+                    ? _weatherCondition.toUpperCase()
+                    : 'Fetching...',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white70,
                 ),
               ),
             ],
@@ -211,7 +239,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         children: <Widget>[
           _buildHomePage(),
           MarketUpdatesScreen(),
-          EnquiryScreen(username: widget.username),
+          FeedbackHub(username: widget.username),
           SuggestionsScreen(username: widget.username),
           ImportantContactsScreen(),
         ],
@@ -227,12 +255,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             label: 'Marketplace',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.question_answer),
-            label: 'Enquiries',
+            icon: Icon(Icons.feedback), // Feedback Hub icon
+            label: 'Feedback Hub',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.speaker_notes),
-            label: 'Suggestions',
+            icon: Icon(Icons.swap_horiz), // Exchange Zone icon
+            label: 'Exchange Zone',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
@@ -280,6 +308,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.person),
+            color: Colors.black,
             onPressed: () {
               Navigator.push(
                 context,
@@ -290,109 +319,73 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
-            },
-          ),
         ],
       ),
-      body: Container(
-        color: Colors.white, // Set the entire background to white
-        child: Column(
-          children: [
-            SizedBox(height: 15.0), // Gap between AppBar and container
-            Center(
-              child: Container(
-                width: 390,
-                height: 150, // Set the desired width here
-                decoration: BoxDecoration(
-                  color: Colors.teal
-                      .withOpacity(0.7), // Teal background with opacity
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(35.0),
-                    bottom: Radius.circular(35.0),
-                  ), // Rounded borders
-                ),
-                padding: const EdgeInsets.all(16.0),
-                child: _buildWeatherWidget(),
-              ),
-            ),
-            SizedBox(height: 28.0), // Space before the heading
-            Padding(
-              padding: const EdgeInsets.only(right: 180),
-              child: Text(
-                'Announcements',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 5), // Space before announcements list
-            Expanded(
-              child: _isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : _errorMessage.isNotEmpty
-                      ? Center(child: Text(_errorMessage))
-                      : ListView.builder(
-                          padding: EdgeInsets.all(16.0),
-                          itemCount: _announcements.length,
-                          itemBuilder: (context, index) {
-                            final announcement = _announcements[index];
-                            final dateTimeUtc =
-                                DateTime.parse(announcement['created_at']);
-                            final dateTimeIst = convertUtcToIst(dateTimeUtc);
-                            final formattedDate =
-                                DateFormat('dd MMM yyyy, hh:mm a')
-                                    .format(dateTimeIst);
-
-                            // Safely access announcement fields
-                            final title = announcement['title'] ?? 'No Title';
-                            final description =
-                                announcement['description'] ?? 'No Description';
-
-                            return Card(
-                              elevation: 2,
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      title,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      description,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      'Posted on: $formattedDate',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: _buildWeatherWidget(),
+          ),
+          SizedBox(height: 16.0),
+          _buildAnnouncementsSection(),
+        ],
       ),
     );
+  }
+
+  Widget _buildAnnouncementsSection() {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    } else if (_errorMessage.isNotEmpty) {
+      return Center(child: Text(_errorMessage));
+    } else if (_announcements.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'No announcements in the last 2 days!',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+        ),
+      );
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: _announcements.length,
+        itemBuilder: (context, index) {
+          final announcement = _announcements[index];
+          final announcementDate =
+              convertUtcToIst(DateTime.parse(announcement['created_at']));
+          final formattedDate =
+              DateFormat('yyyy-MM-dd HH:mm').format(announcementDate);
+          return Card(
+            margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            elevation: 4.0,
+            child: ListTile(
+              title: Text(
+                announcement['title'],
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    announcement['content'],
+                    style: TextStyle(fontSize: 14.0),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Date: $formattedDate',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 }
