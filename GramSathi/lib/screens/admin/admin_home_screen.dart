@@ -4,6 +4,7 @@ import 'dart:convert';
 import '/config.dart';
 
 import 'admin_announcements_screen.dart';
+import 'feedback_hub.dart';
 import 'admin_enquiry_screen.dart';
 import 'admin_suggestion_screen.dart';
 import 'admin_console_screen.dart'; // Import your AdminConsolePage
@@ -230,7 +231,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     AdminAnnouncementPage(
                       username: widget.username,
                     ),
-                    AdminEnquiryScreen(username: widget.username),
+                    FeedbackHub(username: widget.username),
                     AdminSuggestionsScreen(username: widget.username),
                   ],
                 ),
@@ -250,8 +251,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             label: 'Announcements',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.question_answer),
-            label: 'Enquiries',
+            icon: Icon(Icons.feedback),
+            label: 'FeedBack Hub',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.speaker_notes),
