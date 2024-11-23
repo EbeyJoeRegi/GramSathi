@@ -5,6 +5,10 @@ import 'package:intl/intl.dart';
 import '/config.dart';
 
 class AdminEnquiryScreen extends StatefulWidget {
+  final String username;
+
+  AdminEnquiryScreen({required this.username});
+
   @override
   _AdminEnquiryScreenState createState() => _AdminEnquiryScreenState();
 }
@@ -21,8 +25,8 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
 
   Future<void> _fetchQueries() async {
     try {
-      final response =
-          await http.get(Uri.parse('${AppConfig.baseUrl}/admin/queries'));
+      final response = await http.get(Uri.parse(
+          '${AppConfig.baseUrl}/admin/queries?username=${widget.username}&type=1'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -132,16 +136,19 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
               itemCount: _queries.length,
               itemBuilder: (context, index) {
                 final query = _queries[index];
-                final hasResponse =
-                    query['response'] != null && query['response'].isNotEmpty;
+                final adminResponse =
+                    query['admin_response']; // Access admin_response directly
+                final hasResponse = adminResponse != null &&
+                    adminResponse.isNotEmpty; // Check for valid response
+
                 return GestureDetector(
                   onTap: () {
-                    _showResponseDialog(query['id'], query['response'] ?? '');
+                    _showResponseDialog(query['id'], adminResponse ?? '');
                   },
                   child: Card(
                     margin: EdgeInsets.only(bottom: 16.0),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0), // Add padding here
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -161,8 +168,8 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
                           SizedBox(height: 8.0),
                           Text(
                             hasResponse
-                                ? 'Admin: ${query['response']}'
-                                : 'Response Awaiting',
+                                ? 'Admin: $adminResponse'
+                                : 'Response Awaiting', // Display appropriate message
                             style: TextStyle(
                               color: hasResponse ? Colors.black : Colors.red,
                             ),

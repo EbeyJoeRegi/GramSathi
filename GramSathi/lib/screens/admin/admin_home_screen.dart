@@ -230,8 +230,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     AdminAnnouncementPage(
                       username: widget.username,
                     ),
-                    AdminEnquiryScreen(),
-                    AdminSuggestionsScreen(),
+                    AdminEnquiryScreen(username: widget.username),
+                    AdminSuggestionsScreen(username: widget.username),
                   ],
                 ),
               ),

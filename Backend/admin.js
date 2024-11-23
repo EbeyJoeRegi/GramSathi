@@ -153,15 +153,46 @@ router.get('/pending-users', async (req, res) => {
 
 // Get all queries
 router.get('/admin/queries', async (req, res) => {
-    try {
-      const queries = await Query.find().sort({ time: -1 });
+  try {
+      const { username } = req.query; // Get username from request query
+
+      if (!username) {
+          return res.status(400).json({ error: 'Username is required' });
+      }
+
+      // Step 1: Get the address of the user with the given username
+      const adminUser = await User.findOne({ username });
+
+      if (!adminUser || !adminUser.address) {
+          return res.status(404).json({ error: 'Admin user or address not found' });
+      }
+
+      const location = adminUser.address;
+
+      // Step 2: Get all users with the same address and user_type='user'
+      const usersInLocation = await User.find({ 
+          address: location, 
+          user_type: 'user' 
+      }).select('username');
+
+      const userUsernames = usersInLocation.map(user => user.username);
+
+      if (userUsernames.length === 0) {
+          return res.status(404).json({ error: 'No users found in this location' });
+      }
+
+      // Step 3: Get all queries of type=1 for the retrieved usernames
+      const queries = await Query.find({ 
+          username: { $in: userUsernames }, 
+          type: 1 
+      }).sort({ time: -1 });
+
       res.status(200).json(queries);
-    } catch (err) {
+  } catch (err) {
       console.error('Error:', err);
       res.status(500).json({ error: 'Internal server error' });
-    }
-  });
-  
+  }
+});
   
   // Respond to a query
   router.put('/admin/respondQuery/:id', async (req, res) => {

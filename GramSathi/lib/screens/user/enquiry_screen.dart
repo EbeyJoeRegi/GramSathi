@@ -28,7 +28,8 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
   Future<void> _fetchEnquiries() async {
     try {
       final response = await http.get(
-        Uri.parse('${AppConfig.baseUrl}/queries?username=${widget.username}'),
+        Uri.parse(
+            '${AppConfig.baseUrl}/queries?username=${widget.username}&type=1'),
       );
 
       if (response.statusCode == 200) {
@@ -63,6 +64,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
       'username': widget.username,
       'matter': matter,
       'time': DateTime.now().toIso8601String(),
+      'type': '1',
     };
 
     try {

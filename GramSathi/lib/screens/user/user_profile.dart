@@ -135,7 +135,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 context,
                 '/user_home',
                 ModalRoute.withName('/'),
-                arguments: widget.username,
+                arguments: {
+                  'username': widget.username,
+                  'name': _nameController.text,
+                },
               );
             },
           ),

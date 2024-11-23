@@ -123,12 +123,30 @@ router.get('/crops/:placeId', async (req, res) => {
 // Retrieve all suggestions endpoint
 router.get('/suggestions', async (req, res) => {
   try {
-    // Fetch all suggestions, sorted by created_at in descending order
-    const results = await Suggestion.find({})
-      .sort({ created_at: -1 }) // Sort by created_at descending
+    // Extract the username from the query parameters
+    const { username } = req.query;
+
+    // Step 1: Find the user by username to get their address
+    const user = await User.findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Step 2: Get all users with the same address as the current user
+    const usersInSameAddress = await User.find({ address: user.address });
+
+    // Step 3: Extract the usernames of users in the same address
+    const usernamesInSameAddress = usersInSameAddress.map(user => user.username);
+
+    // Step 4: Fetch all suggestions for users in the same address
+    const suggestions = await Suggestion.find({
+      username: { $in: usernamesInSameAddress }, // Match suggestions for users in the same address
+    })
+      .sort({ created_at: -1 }) // Sort by created_at in descending order
       .exec();
 
-    res.status(200).json(results);
+    // Step 5: Return the suggestions
+    res.status(200).json(suggestions);
   } catch (err) {
     console.error('Database query error:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -164,18 +182,34 @@ router.post('/createSuggestion', async (req, res) => {
 
 // Create a new query
 router.post('/createQuery', async (req, res) => {
-  const { username, matter, time } = req.body;
+  const { username, matter, time, type } = req.body;
+
+  // Validate input
+  if (!username || !matter || !time || type === undefined) {
+    return res.status(400).json({ error: 'All fields (username, matter, time, type) are required' });
+  }
 
   try {
-    const queryId = await getNextSequenceValue('queries'); // Get the next sequence value for the query ID
+    // Ensure type is a valid number
+    const typeNumber = parseInt(type, 10);
+    if (isNaN(typeNumber)) {
+      return res.status(400).json({ error: 'Type must be a valid number' });
+    }
+
+    // Generate a new query ID
+    const queryId = await getNextSequenceValue('queries');
+
+    // Create the new query document
     const newQuery = new Query({
       id: queryId,
       username,
       matter,
-      time
+      time,
+      type: typeNumber
     });
 
-    await newQuery.save(); // Save the new query to the database
+    // Save the new query to the database
+    await newQuery.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err);
@@ -185,14 +219,26 @@ router.post('/createQuery', async (req, res) => {
 
 // Get all queries for a user
 router.get('/queries', async (req, res) => {
-  const { username } = req.query;
+  const { username, type } = req.query;
 
+  // Validate required query parameters
   if (!username) {
     return res.status(400).json({ error: 'Username query parameter is required' });
   }
 
+  if (!type) {
+    return res.status(400).json({ error: 'Type query parameter is required' });
+  }
+
   try {
-    const results = await Query.find({ username })
+    // Convert type to a number
+    const typeNumber = parseInt(type, 10);
+    if (isNaN(typeNumber)) {
+      return res.status(400).json({ error: 'Type query parameter must be a valid number' });
+    }
+
+    // Query the database with filters
+    const results = await Query.find({ username, type: typeNumber })
       .sort({ time: -1 }) // Sort by time in descending order
       .exec();
 
@@ -202,6 +248,7 @@ router.get('/queries', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch queries' });
   }
 });
+
 
 // Fetch all admins
 router.get('/admins', async (req, res) => {

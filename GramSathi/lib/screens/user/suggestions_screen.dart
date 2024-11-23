@@ -28,7 +28,7 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
     try {
       final response = await http.get(
         Uri.parse(
-            '${AppConfig.baseUrl}/suggestions'), // Replace with your API URL
+            '${AppConfig.baseUrl}/suggestions?username=${widget.username}'), // Replace with your API URL
       );
 
       if (response.statusCode == 200) {
