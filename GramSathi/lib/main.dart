@@ -58,10 +58,17 @@ class VillageApp extends StatelessWidget {
               ModalRoute.of(context)!.settings.arguments as String?;
           return UserProfilePage(username: username ?? '');
         },
-        '/admin-enquiries': (context) =>
-            AdminEnquiryScreen(), // Add route for admin enquiries
-        '/admin-suggestions': (context) =>
-            AdminSuggestionsScreen(), // Add route for admin suggestions
+        '/admin-enquiries': (context) {
+          final username =
+              ModalRoute.of(context)!.settings.arguments as String?;
+          return AdminEnquiryScreen(
+              username: username ?? ''); // Add route for admin enquiries
+        },
+        '/admin-suggestions': (context) {
+          final username =
+              ModalRoute.of(context)!.settings.arguments as String?;
+          return AdminSuggestionsScreen(username: username ?? '');
+        } // Add route for admin suggestions
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(builder: (context) => LoginScreen());

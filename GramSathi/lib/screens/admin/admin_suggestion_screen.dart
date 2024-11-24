@@ -5,6 +5,9 @@ import 'dart:convert';
 import '/config.dart';
 
 class AdminSuggestionsScreen extends StatefulWidget {
+  final String username;
+  AdminSuggestionsScreen({required this.username});
+
   @override
   _AdminSuggestionsScreenState createState() => _AdminSuggestionsScreenState();
 }
@@ -22,7 +25,7 @@ class _AdminSuggestionsScreenState extends State<AdminSuggestionsScreen> {
     try {
       final response = await http.get(
         Uri.parse(
-            '${AppConfig.baseUrl}/suggestions'), // Replace with your API URL
+            '${AppConfig.baseUrl}/suggestions?username=${widget.username}'), // Replace with your API URL
       );
 
       if (response.statusCode == 200) {
