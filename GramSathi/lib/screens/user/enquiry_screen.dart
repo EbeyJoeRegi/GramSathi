@@ -114,11 +114,17 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
           // Content on top of background image
           Column(
             children: [
-              AppBar(
-                title: Text('Enquiries'),
-                backgroundColor: Colors.teal,
-                elevation: 0,
-              ),
+              // AppBar(
+              //   title: Text(
+              //     'Enquiries',
+              //     style: TextStyle(
+              //         color: Colors
+              //             .white), // Set text color to white for better contrast
+              //   ),
+              //   backgroundColor: Colors
+              //       .transparent, // Make the AppBar background transparent
+              //   elevation: 0, // Remove the shadow below the AppBar
+              // ),
               Expanded(
                 child: _isLoading
                     ? Center(child: CircularProgressIndicator())

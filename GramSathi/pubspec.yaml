@@ -78,11 +78,13 @@ flutter:
     - assets/images/bgvillage.webp
     - assets/images/bgvillage2.avif
     - assets/images/bgvillage3.png
+    - assets/images/bgvillage4.jpg
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage8.jpg
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage9.jpeg
     - assets/images/forgetpw.png
+    - assets/images/no_data.png
     - assets/images/resetpassword.png
     - assets/images/verifyotp.png
 

@@ -79,10 +79,14 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Suggestions'),
-        backgroundColor: Colors.teal,
-      ),
+      // appBar: AppBar(
+      //   // title: Text(
+      //   //   'Suggestions',
+      //   //   style: TextStyle(color: Colors.teal), // AppBar title text is teal
+      //   // ),
+      //   backgroundColor: Colors.transparent, // Transparent AppBar background
+      //   elevation: 0, // No shadow
+      // ),
       body: Stack(
         children: [
           // Background image
