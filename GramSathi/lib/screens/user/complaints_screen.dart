@@ -114,11 +114,17 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
           // Content on top of background image
           Column(
             children: [
-              AppBar(
-                title: Text('Complaints'),
-                backgroundColor: Colors.teal,
-                elevation: 0,
-              ),
+              // AppBar(
+              //   title: Text(
+              //     'Complaints',
+              //     style: TextStyle(
+              //         color: Colors
+              //             .white), // Set text color to white for better contrast
+              //   ),
+              //   backgroundColor: Colors
+              //       .transparent, // Make the AppBar background transparent
+              //   elevation: 0, // Remove the shadow below the AppBar
+              // ),
               Expanded(
                 child: _isLoading
                     ? Center(child: CircularProgressIndicator())

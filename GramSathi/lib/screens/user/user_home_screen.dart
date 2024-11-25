@@ -273,6 +273,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.teal,
         unselectedItemColor: Colors.grey,
+        backgroundColor: Color(0xFF5B4C2E), // Set the background color
         onTap: _onItemTapped,
       ),
     );

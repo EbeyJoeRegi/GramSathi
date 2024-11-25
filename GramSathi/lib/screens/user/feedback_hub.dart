@@ -36,11 +36,29 @@ class _FeedbackHubState extends State<FeedbackHub>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: 'Suggestions'),
-            Tab(text: 'Enquiry'),
-            Tab(text: 'Complaints'),
+            Tab(
+              child: Text(
+                'Suggestions',
+                style:
+                    TextStyle(color: Colors.black), // Set text color to black
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Enquiry',
+                style:
+                    TextStyle(color: Colors.black), // Set text color to black
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Complaints',
+                style:
+                    TextStyle(color: Colors.black), // Set text color to black
+              ),
+            ),
           ],
-          indicatorColor: Colors.white,
+          indicatorColor: Color(0xff005F3D),
         ),
       ),
       body: TabBarView(
