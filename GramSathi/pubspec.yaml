@@ -84,6 +84,8 @@ flutter:
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage9.jpeg
     - assets/images/forgetpw.png
+    - assets/images/marketupdate1.jpg
+    - assets/images/marketupdate2.jpg
     - assets/images/no_data.png
     - assets/images/resetpassword.png
     - assets/images/verifyotp.png

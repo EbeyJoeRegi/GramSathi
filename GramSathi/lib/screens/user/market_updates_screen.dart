@@ -69,33 +69,47 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0, // Aligns the logo with the edge
-        backgroundColor:
-            Colors.white, // Set the AppBar background color to white
-        elevation: 0, // Remove shadow for a cleaner look
-        title: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 9.0),
-              child: Image.asset(
-                'assets/images/icon.png',
-                height: 53.0,
-                width: 52.0,
-              ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xff959FB1), // Start color
+                Color(0xffB9BDC0), // End color
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
             ),
-            const SizedBox(width: 8),
-            const Text(
-              'Market Updates',
-              style: TextStyle(
-                color: Colors.black, // Set the text color to black
-                fontWeight: FontWeight.bold,
-              ),
+          ),
+          child: AppBar(
+            titleSpacing: 0,
+            backgroundColor:
+                Colors.transparent, // Make AppBar background transparent
+            elevation: 0,
+            title: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 9.0),
+                  child: Image.asset(
+                    'assets/images/icon.png',
+                    height: 53.0,
+                    width: 52.0,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'Market Updates',
+                  style: TextStyle(
+                    color: Colors.black, // Set the text color to black
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
+            iconTheme: const IconThemeData(color: Colors.black),
+          ),
         ),
-        iconTheme: const IconThemeData(
-            color: Colors.black), // Set back icon color to black
       ),
       body: Stack(
         children: [
@@ -106,9 +120,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/images/bgvillage9.jpeg'), // Your background image
+                    'assets/images/marketupdate1.jpg'), // Your background image
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.25),
+                colorFilter: ColorFilter.mode(
+                    const Color.fromARGB(255, 22, 37, 45).withOpacity(0.3),
                     BlendMode.darken), // Adjust opacity
               ),
             ),

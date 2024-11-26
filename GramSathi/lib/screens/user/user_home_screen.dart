@@ -247,34 +247,51 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           ImportantContactsScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color:
+              Color(0xFF5B4C2E), // Background color of the BottomNavigationBar
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(50.0), // Rounded corners on the top
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.trending_up),
-            label: 'Marketplace',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.feedback), // Feedback Hub icon
-            label: 'Feedback Hub',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.swap_horiz), // Exchange Zone icon
-            label: 'Exchange Zone',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contacts),
-            label: 'Emergency',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Color(0xFF5B4C2E), // Set the background color
-        onTap: _onItemTapped,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26, // Subtle shadow
+              blurRadius: 8.0,
+              offset: Offset(0, -2), // Shadow positioned slightly above the bar
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.trending_up),
+              label: 'Marketplace',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.feedback),
+              label: 'Feedback Hub',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.swap_horiz),
+              label: 'Exchange Zone',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.contacts),
+              label: 'Emergency',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color(0xff005F3D),
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors
+              .transparent, // Set to transparent since Container already has a color
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
