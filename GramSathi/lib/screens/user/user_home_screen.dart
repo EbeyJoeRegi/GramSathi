@@ -9,6 +9,7 @@ import 'important_contacts_screen.dart';
 import 'suggestions_screen.dart';
 import 'user_profile.dart';
 import 'package:weather_icons/weather_icons.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class UserHomeScreen extends StatefulWidget {
@@ -29,6 +30,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String _errorMessage = '';
   String _temperature = '';
   String _city = '';
+  String _lastUpdated = '';
+  String formattedDate = '';
   String _weatherCondition = '';
   String place = '';
 
@@ -95,38 +98,82 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   Future<void> _fetchLocationAndWeather() async {
     try {
-      final locationResponse =
-          await http.get(Uri.parse('https://ipapi.co/json/'));
-      if (locationResponse.statusCode == 200) {
-        final locationData = json.decode(locationResponse.body);
-        _city = locationData['city'];
-        final lat = locationData['latitude'];
-        final lon = locationData['longitude'];
+      // Use Geolocator to get the current location
+      Position position = await _getCurrentLocation();
 
-        final weatherResponse = await http.get(
-          Uri.parse(
-            'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=e8544d130b60b1a8ee3cf6b86ae6b593',
-          ),
-        );
+      // Get the latitude and longitude from the position
+      final lat = position.latitude;
+      final lon = position.longitude;
 
-        if (weatherResponse.statusCode == 200) {
-          final weatherData = json.decode(weatherResponse.body);
-          final temp = weatherData['main']['temp'];
-          _weatherCondition = weatherData['weather'][0]['main'];
+      final username = widget.username;
+      final weatherResponse = await http.get(
+        Uri.parse(
+          '${AppConfig.baseUrl}/api/weather?username=$username&lat=$lat&lon=$lon',
+        ),
+      );
 
-          // Add a print statement to debug weather condition
-          print('Weather Condition: $_weatherCondition');
+      if (weatherResponse.statusCode == 200) {
+        final weatherData = json.decode(weatherResponse.body);
+        final temp = weatherData['temperature'];
+        _weatherCondition = weatherData['weatherCondition'];
+        _city = weatherData['city'];
+        _lastUpdated = weatherData['lastUpdated'];
+        DateTime lastUpdated = DateTime.parse(_lastUpdated);
+        formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(lastUpdated);
 
-          setState(() {
-            _temperature =
-                '${temp.toStringAsFixed(1)}°C'; // Corrected degree symbol
-          });
-        }
+        setState(() {
+          _temperature = temp;
+        });
+      } else {
+        setState(() {
+          _temperature = 'Error fetching weather from backend';
+        });
+        print('Weather API error: ${weatherResponse.statusCode}');
       }
     } catch (e) {
       setState(() {
         _temperature = 'Error fetching weather';
       });
+      print('Exception: $e');
+    }
+  }
+
+  // Function to get current location using Geolocator
+  Future<Position> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Handle case when location services are disabled
+      return Future.error('Location services are disabled');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    // Set location settings for better accuracy and power management
+    LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.best, // Using best accuracy
+      distanceFilter: 0, // No distance filter, will receive updates immediately
+      timeLimit:
+          Duration(seconds: 10), // Set a timeout for getting the location
+    );
+
+    // Get the current location using the new settings
+    try {
+      return await Geolocator.getCurrentPosition(
+        locationSettings: locationSettings, // Pass location settings here
+      );
+    } catch (e) {
+      return Future.error('Failed to get location: $e');
     }
   }
 
@@ -212,6 +259,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               ),
               Text(
                 _temperature.isNotEmpty ? _temperature : 'Loading...',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                _lastUpdated.isNotEmpty
+                    ? "last updated at \n $formattedDate"
+                    : 'Loading...',
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,

@@ -75,8 +75,8 @@
   "id": 14,
   "crop_id": 1,
   "place_id": 17,
-  "price": 33134,
-  "month_year": "September 2024"
+  "price": 33134.15,
+  "month_year": "October 2024"
 },
 {
   "_id": {
@@ -199,5 +199,38 @@
   "crop_id": 5,
   "price": 0,
   "month_year": "September 2024",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66eeae19f5a11d2caada9618"
+  },
+  "id": 32,
+  "place_id": 6,
+  "crop_id": 5,
+  "price": 100.75,
+  "month_year": "September 2024",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67165d7363fc2945b9dbd10a"
+  },
+  "id": 33,
+  "place_id": 17,
+  "crop_id": 9,
+  "price": 10,
+  "month_year": "October 2024",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67166d3757134deded19a73e"
+  },
+  "id": 35,
+  "place_id": 17,
+  "crop_id": 12,
+  "price": 235.56,
+  "month_year": "October 2024",
   "__v": 0
 }]

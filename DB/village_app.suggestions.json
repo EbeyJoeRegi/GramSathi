@@ -37,4 +37,57 @@
   },
   "__v": 0,
   "response": "test 1"
+},
+{
+  "_id": {
+    "$oid": "6716562ca51dcadf58c5a3ed"
+  },
+  "id": 18,
+  "title": "testing suggestion ",
+  "content": "test",
+  "username": "ebeyjoeregi",
+  "created_at": {
+    "$date": "2024-10-21T13:25:00.933Z"
+  },
+  "__v": 0,
+  "response": "responded"
+},
+{
+  "_id": {
+    "$oid": "674191ef15d1a145878f3b7a"
+  },
+  "id": 19,
+  "title": "safsafs",
+  "content": "ffss",
+  "username": "suryakumar",
+  "created_at": {
+    "$date": "2024-11-23T08:27:27.971Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674191f415d1a145878f3b81"
+  },
+  "id": 20,
+  "title": "kze",
+  "content": "kze",
+  "username": "suryakumar",
+  "created_at": {
+    "$date": "2024-11-23T08:27:32.543Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6741927515d1a145878f3bae"
+  },
+  "id": 21,
+  "title": "dsads",
+  "content": "dsada",
+  "username": "ebeyjoeregi",
+  "created_at": {
+    "$date": "2024-11-23T08:29:41.078Z"
+  },
+  "__v": 0
 }]

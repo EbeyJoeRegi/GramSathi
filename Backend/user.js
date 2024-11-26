@@ -1,6 +1,8 @@
 const express = require('express');
+const moment = require('moment');
+const axios = require('axios');
 const router = express.Router();
-const { User, Announcement,Suggestion, Query, Place, Crop, Price, Counter } = require('./models');
+const { User, Announcement,Suggestion, Query, Place, Crop, Price, Counter, Weather } = require('./models');
 
 // Auto increment helper function
 const getNextSequenceValue = async (sequenceName) => {
@@ -22,6 +24,93 @@ const getNextSequenceValue = async (sequenceName) => {
       throw new Error('Failed to increment sequence value');
     }
   };
+  const API_KEY = process.env.WEATHER_KEY;
+
+// Fetch Weather
+router.get('/api/weather', async (req, res) => {
+  const { username, lat, lon } = req.query;
+
+  // Ensure username, latitude, and longitude are provided
+  if (!username || !lat || !lon) {
+    return res.status(400).send('Username, latitude, and longitude are required.');
+  }
+
+  try {
+    // Check if weather data exists for the given username
+    let weather = await Weather.findOne({ username });
+
+    // If no weather data exists for the username
+    if (!weather) {
+      // Calculate the next sequence value for the weather data
+      const newWeatherId = await getNextSequenceValue('weather');
+
+      // Fetch the weather data for the given latitude and longitude
+      const weatherResponse = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+      );
+
+      if (weatherResponse.status === 200) {
+        const temp = weatherResponse.data.main.temp;
+        const weatherCondition = weatherResponse.data.weather[0].main;
+        const cityName = weatherResponse.data.name; // Extract the city name
+
+        // Create new weather data with fetched temperature and city
+        weather = new Weather({
+          id: newWeatherId,
+          username,
+          temperature: `${temp.toFixed(1)}°C`,
+          weatherCondition: `${weatherCondition}`,
+          city: `${cityName}`, // Store the city name
+          lastUpdated: new Date(), // Ensure updatedAt is set correctly
+        });
+
+        // Save the new weather data to the database
+        await weather.save();
+
+        return res.json(weather); // Send the new weather data to the frontend
+      } else {
+        return res.status(500).send('Failed to fetch weather data from API');
+      }
+    }
+
+    // If the user already exists, check the time gap between last update and now
+    const lastUpdated = moment(weather.lastUpdated);
+    const now = moment();
+    const diffMinutes = now.diff(lastUpdated, 'minutes');
+
+    if (diffMinutes < 30) {
+      // If data is recent (less than 30 minutes), send the existing weather data
+      return res.json(weather);
+    }
+
+    // If data is older than 30 minutes, fetch new weather data
+    const weatherResponse = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+    );
+
+    if (weatherResponse.status === 200) {
+      const temp = weatherResponse.data.main.temp;      
+      const weatherCondition = weatherResponse.data.weather[0].main;
+      const cityName = weatherResponse.data.name; 
+
+      // Update the weather data with new temperature and city
+      weather.temperature = `${temp.toFixed(1)}°C`;
+      weather.weatherCondition = `${weatherCondition}`;
+      weather.city =`${cityName}`; // Update the city name
+      weather.lastUpdated = new Date(); // Make sure to update updatedAt
+
+      // Save the updated weather data
+      await weather.save();
+
+      return res.json(weather); // Send the updated weather data to the frontend
+    } else {
+      return res.status(500).send('Failed to fetch weather data from API');
+    }
+  } catch (error) {
+    console.error('Error occurred:', error);
+    res.status(500).send('An error occurred while fetching weather data.');
+  }
+});
 
 // Retrieve announcements endpoint
 router.get('/announcements', async (req, res) => {

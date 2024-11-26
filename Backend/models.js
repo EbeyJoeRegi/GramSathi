@@ -62,6 +62,15 @@ const priceSchema = new mongoose.Schema({
     month_year: String
 });
 
+const weatherSchema = new mongoose.Schema({
+    id: {type: Number,required: true,unique: true,},
+    username: {type: String,required: true,unique: true,},
+    temperature: {type: String,required: true,},
+    weatherCondition: {type: String,required: true,},
+    city: {type: String,required: true,},
+    lastUpdated: {type: Date,default: Date.now,},
+});
+
 const counterSchema = new mongoose.Schema({
     _id: String,
     sequence_value: Number
@@ -75,6 +84,7 @@ const Place = mongoose.model('Place', placeSchema);
 const Crop = mongoose.model('Crop', cropSchema);
 const Price = mongoose.model('Price', priceSchema);
 const Counter = mongoose.model('Counter', counterSchema);
+const Weather = mongoose.model('Weather', weatherSchema);
 
 module.exports = {
     User,
@@ -84,5 +94,6 @@ module.exports = {
     Place,
     Crop,
     Price,
-    Counter
+    Counter,
+    Weather,
 };

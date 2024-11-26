@@ -4,25 +4,29 @@
 },
 {
   "_id": "announcements",
-  "sequence_value": 28
+  "sequence_value": 36
 },
 {
   "_id": "crop",
-  "sequence_value": 9
+  "sequence_value": 12
 },
 {
   "_id": "price",
-  "sequence_value": 31
+  "sequence_value": 35
 },
 {
   "_id": "queries",
-  "sequence_value": 14
+  "sequence_value": 24
 },
 {
   "_id": "suggestions",
-  "sequence_value": 17
+  "sequence_value": 21
 },
 {
   "_id": "users",
-  "sequence_value": 13
+  "sequence_value": 19
+},
+{
+  "_id": "weather",
+  "sequence_value": 20
 }]

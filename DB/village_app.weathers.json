@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "6745e53667e9a01ccd37923d"
+  },
+  "id": 11,
+  "username": "user",
+  "temperature": "25.2°C",
+  "weatherCondition": "Clouds",
+  "lastUpdated": {
+    "$date": "2024-11-26T17:27:30.578Z"
+  },
+  "__v": 0,
+  "city": "Azhikkal"
+},
+{
+  "_id": {
+    "$oid": "674606675afd0dbb4df17e5a"
+  },
+  "id": 19,
+  "username": "ebeyjoeregi",
+  "temperature": "12.3°C",
+  "weatherCondition": "Rain",
+  "city": "Mountain View",
+  "lastUpdated": {
+    "$date": "2024-11-26T17:33:27.572Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674607a45afd0dbb4df17e63"
+  },
+  "id": 20,
+  "username": "suryakumar",
+  "temperature": "12.4°C",
+  "weatherCondition": "Rain",
+  "city": "Mountain View",
+  "lastUpdated": {
+    "$date": "2024-11-26T17:38:44.656Z"
+  },
+  "__v": 0
+}]
