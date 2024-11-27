@@ -75,8 +75,8 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff959FB1), // Start color
-                Color(0xffB9BDC0), // End color
+                Color(0xffAE976A), // Start color
+                Color(0xffAE976A), // End color
               ],
               begin: Alignment.topLeft,
               end: Alignment.topRight,
@@ -120,10 +120,9 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/images/marketupdate1.jpg'), // Your background image
+                    'assets/images/marketupdate2.jpg'), // Your background image
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    const Color.fromARGB(255, 22, 37, 45).withOpacity(0.3),
+                colorFilter: ColorFilter.mode(Colors.black54.withOpacity(0.3),
                     BlendMode.darken), // Adjust opacity
               ),
             ),
