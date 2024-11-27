@@ -36,7 +36,7 @@
   },
   "id": 5,
   "crop_name": "Pumpkin",
-  "avg_price": 0
+  "avg_price": 110
 },
 {
   "_id": {
@@ -44,6 +44,15 @@
   },
   "id": 9,
   "crop_name": "Pepper",
-  "avg_price": 89.45,
+  "avg_price": 98.66,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67166d0c57134deded19a732"
+  },
+  "id": 12,
+  "crop_name": "Lemon",
+  "avg_price": 256.3,
   "__v": 0
 }]

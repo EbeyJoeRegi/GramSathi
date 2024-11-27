@@ -8,7 +8,8 @@
   "time": {
     "$date": "2024-07-30T00:56:04.000Z"
   },
-  "admin_response": null
+  "admin_response": "update",
+  "type": 1
 },
 {
   "_id": {
@@ -20,7 +21,8 @@
   "time": {
     "$date": "2024-07-30T01:10:50.000Z"
   },
-  "admin_response": "Will discuss regarding that in upcoming general body meeting."
+  "admin_response": "Will discuss regarding that in upcoming general body meeting.",
+  "type": 1
 },
 {
   "_id": {
@@ -32,7 +34,8 @@
   "time": {
     "$date": "2024-07-30T04:25:44.000Z"
   },
-  "admin_response": "high chance"
+  "admin_response": "high chance",
+  "type": 1
 },
 {
   "_id": {
@@ -44,7 +47,9 @@
   "time": {
     "$date": "2024-09-19T12:53:22.901Z"
   },
-  "__v": 0
+  "__v": 0,
+  "type": 1,
+  "admin_response": null
 },
 {
   "_id": {
@@ -56,7 +61,9 @@
   "time": {
     "$date": "2024-09-19T12:54:47.288Z"
   },
-  "__v": 0
+  "__v": 0,
+  "type": 1,
+  "admin_response": null
 },
 {
   "_id": {
@@ -69,5 +76,144 @@
     "$date": "2024-09-19T12:57:49.674Z"
   },
   "__v": 0,
-  "admin_response": "test"
+  "admin_response": "test",
+  "type": 1
+},
+{
+  "_id": {
+    "$oid": "671656e35451182fcc24ad09"
+  },
+  "id": 15,
+  "username": "ebeyjoeregi",
+  "matter": "enquiry test",
+  "time": {
+    "$date": "2024-10-21T13:28:03.382Z"
+  },
+  "__v": 0,
+  "type": 1,
+  "admin_response": null
+},
+{
+  "_id": {
+    "$oid": "674163830fb83aea757fe335"
+  },
+  "id": 16,
+  "username": "user",
+  "type": 2,
+  "matter": "ponnu",
+  "time": {
+    "$date": "2024-11-23T05:09:22.896Z"
+  },
+  "__v": 0,
+  "admin_response": null
+},
+{
+  "_id": {
+    "$oid": "674163e60fb83aea757fe342"
+  },
+  "id": 17,
+  "username": "user",
+  "type": 1,
+  "matter": "esha",
+  "time": {
+    "$date": "2024-11-23T05:11:01.941Z"
+  },
+  "__v": 0,
+  "admin_response": null
+},
+{
+  "_id": {
+    "$oid": "6741640c0fb83aea757fe346"
+  },
+  "id": 18,
+  "username": "user",
+  "type": 1,
+  "matter": "ddddd",
+  "time": {
+    "$date": "2024-11-23T05:11:40.272Z"
+  },
+  "__v": 0,
+  "admin_response": "assff"
+},
+{
+  "_id": {
+    "$oid": "674164320fb83aea757fe34a"
+  },
+  "id": 19,
+  "username": "user",
+  "type": 1,
+  "matter": "able",
+  "time": {
+    "$date": "2024-11-23T05:12:18.508Z"
+  },
+  "__v": 0,
+  "admin_response": "respondingsd"
+},
+{
+  "_id": {
+    "$oid": "674165b50fb83aea757fe355"
+  },
+  "id": 20,
+  "username": "user",
+  "type": 2,
+  "matter": "able",
+  "time": {
+    "$date": "2024-11-23T05:18:44.754Z"
+  },
+  "__v": 0,
+  "admin_response": null
+},
+{
+  "_id": {
+    "$oid": "67416e53804a4c9b8e050358"
+  },
+  "id": 21,
+  "username": "ebeyjoeregi",
+  "type": 1,
+  "matter": "kunju",
+  "time": {
+    "$date": "2024-11-23T05:55:31.358Z"
+  },
+  "__v": 0,
+  "admin_response": null
+},
+{
+  "_id": {
+    "$oid": "67416e5a804a4c9b8e05035d"
+  },
+  "id": 22,
+  "username": "ebeyjoeregi",
+  "type": 2,
+  "matter": "wowdaa",
+  "time": {
+    "$date": "2024-11-23T05:55:38.591Z"
+  },
+  "__v": 0,
+  "admin_response": null
+},
+{
+  "_id": {
+    "$oid": "674191fc15d1a145878f3b8b"
+  },
+  "id": 23,
+  "username": "suryakumar",
+  "type": 1,
+  "matter": "ponuuuuuuuuuuuuuus",
+  "time": {
+    "$date": "2024-11-23T08:27:39.669Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6741920615d1a145878f3b93"
+  },
+  "id": 24,
+  "username": "suryakumar",
+  "type": 2,
+  "matter": "complaint ponus",
+  "time": {
+    "$date": "2024-11-23T08:27:50.234Z"
+  },
+  "__v": 0
 }]

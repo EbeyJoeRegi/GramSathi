@@ -7,7 +7,8 @@
   "content": "Heavy rainfall affected Mangalore Rural, leading to significant flooding in several villages. The local authorities are working to manage the situation and provide assistance to the affected residents.",
   "created_at": {
     "$date": "2024-07-16T17:34:53.000Z"
-  }
+  },
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -18,7 +19,8 @@
   "content": "The cold climate has led to an increase in pepper consumption. As a result, the current prices for pepper in Cochin are at Rs. 580-585 per kilogram, while the best quality is being traded at Rs. 680-700 per kilogram.",
   "created_at": {
     "$date": "2024-07-22T12:22:40.000Z"
-  }
+  },
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -29,7 +31,8 @@
   "content": "The price of arecanut beginning to fall, CAMPCO, Mangaluru, wrote to Prime Minister Modi seeking his intervention to ensure the seized arecanut’s auction floor price is maintained.",
   "created_at": {
     "$date": "2024-07-22T12:57:43.000Z"
-  }
+  },
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -40,7 +43,8 @@
   "content": "Expected rain around 9.00 a.m⛈",
   "created_at": {
     "$date": "2024-07-30T00:49:40.000Z"
-  }
+  },
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -51,7 +55,8 @@
   "content": "Scheduled maintenance outage from 11:00 AM to 5:00 PM. Affected areas: Hampankatta, B B Alabi Road, MG Road, Falnir First Cross, Kadri, Bendoorwell, Bejai, Kankanady.",
   "created_at": {
     "$date": "2024-07-30T00:52:48.000Z"
-  }
+  },
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -62,7 +67,8 @@
   "content": "test announcemnts",
   "created_at": {
     "$date": "2024-07-30T04:17:30.000Z"
-  }
+  },
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -74,7 +80,8 @@
   "created_at": {
     "$date": "2024-09-19T07:41:33.813Z"
   },
-  "__v": 0
+  "__v": 0,
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -86,7 +93,8 @@
   "created_at": {
     "$date": "2024-09-19T07:53:55.747Z"
   },
-  "__v": 0
+  "__v": 0,
+  "admin": "Admin Name"
 },
 {
   "_id": {
@@ -97,6 +105,111 @@
   "content": "എബി ജോ റെജി",
   "created_at": {
     "$date": "2024-09-19T13:07:38.125Z"
+  },
+  "__v": 0,
+  "admin": "Admin Name"
+},
+{
+  "_id": {
+    "$oid": "66f1354beb3282900169f87c"
+  },
+  "id": 29,
+  "title": "test geolocator",
+  "content": "geoloacator",
+  "created_at": {
+    "$date": "2024-09-23T09:30:51.362Z"
+  },
+  "__v": 0,
+  "admin": "Admin Name"
+},
+{
+  "_id": {
+    "$oid": "6714eb573c4baa9d905e4cca"
+  },
+  "id": 30,
+  "title": "test notification",
+  "content": "again wow",
+  "created_at": {
+    "$date": "2024-10-20T11:36:55.584Z"
+  },
+  "__v": 0,
+  "admin": "Admin Name"
+},
+{
+  "_id": {
+    "$oid": "6714ed333c4baa9d905e4cd9"
+  },
+  "id": 31,
+  "title": "check",
+  "content": "working or not",
+  "created_at": {
+    "$date": "2024-10-20T11:44:51.999Z"
+  },
+  "__v": 0,
+  "admin": "Admin Name"
+},
+{
+  "_id": {
+    "$oid": "6725b78f586faf21c2e3a8e3"
+  },
+  "id": 32,
+  "admin": "Admin Name",
+  "title": "posted today",
+  "content": "nrg",
+  "created_at": {
+    "$date": "2024-11-02T05:24:31.776Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6730e03767dac8b9a99a8cf1"
+  },
+  "id": 33,
+  "admin": "Admin Name",
+  "title": "sdsad",
+  "content": "ADASAA",
+  "created_at": {
+    "$date": "2024-11-10T16:32:55.088Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673342c0643c488b122864c3"
+  },
+  "id": 34,
+  "admin": "Admin Name",
+  "title": "sfsa",
+  "content": "dasdas",
+  "created_at": {
+    "$date": "2024-11-12T11:57:52.550Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67409ff1b1c84fad5a978109"
+  },
+  "id": 35,
+  "admin": "Admin Name",
+  "title": "check from kze",
+  "content": "updated kze",
+  "created_at": {
+    "$date": "2024-11-22T15:14:57.906Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674607e55afd0dbb4df17e6c"
+  },
+  "id": 36,
+  "admin": "Admin Name",
+  "title": "weather check",
+  "content": "snkjfbh",
+  "created_at": {
+    "$date": "2024-11-26T17:39:49.190Z"
   },
   "__v": 0
 }]

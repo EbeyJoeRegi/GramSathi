@@ -39,7 +39,7 @@
   "user_type": "user",
   "name": "User Home",
   "phone": "1234567891",
-  "address": "User Word",
+  "address": "Mangalore (Dakshin Kannada)",
   "job_title": "User Work",
   "activation": 1,
   "email": "user@user.co.in",
@@ -54,8 +54,8 @@
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
   "user_type": "admin",
   "name": "Admin Name",
-  "phone": "123-456-7890",
-  "address": "Admin Address",
+  "phone": "1234567890",
+  "address": "Mangalore (Dakshin Kannada)",
   "job_title": "Administrator",
   "activation": 1,
   "email": "admin@example.com",
@@ -67,7 +67,7 @@
     "$oid": "66eaf112b4ae03588e228feb"
   },
   "username": "ebeyjoeregi",
-  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "password": "$2b$10$5FXk911oxSh0x5fbZBgb8eqaXSVa.btanxZR30.VlzjJEMtLCu/rG",
   "user_type": "user",
   "name": "Ebey Joe Regi",
   "phone": "9497698743",
@@ -188,7 +188,7 @@
   "job_title": "Farmer",
   "email": "suryakumar@gmail.com",
   "password": "$2b$10$Xod30hGSOqB/wlmDDEaL.O9aIHOARoMrAAGamjRCItfXmMPd.6wRm",
-  "activation": 0,
+  "activation": 1,
   "user_type": "user",
   "raID": "mglr8513",
   "__v": 0
@@ -208,5 +208,22 @@
   "activation": 0,
   "user_type": "user",
   "raID": "mglr9870",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fcf8dea935c891854144a0"
+  },
+  "id": 19,
+  "username": "mishalvs",
+  "name": "Mishal V S",
+  "phone": "+918138928744",
+  "address": "Mangalore (Dakshin Kannada)",
+  "job_title": "Farmer",
+  "email": "ebeyjoeregi@gmail.com",
+  "password": "$2b$10$P9/QY1K/ULdwKwXnc/WXVOhTMGVEFigDAIskCcw6Q4YtPe6CfBc6G",
+  "activation": 0,
+  "user_type": "user",
+  "raID": "mglr9860",
   "__v": 0
 }]
