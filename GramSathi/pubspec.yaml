@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^8.2.8
   shared_preferences: ^2.3.3
   geolocator: ^13.0.2
+  font_awesome_flutter: ^10.8.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -74,7 +75,8 @@ flutter:
     - assets\images\bg.jpg
     - assets\images\admin.png
     - assets\images\user.png
-    - assets\images\admin.png    
+    - assets\images\admin.png 
+    - assets/vegetables/arecaunut.jpg   
     - assets/images/bgleaf.jpg
     - assets/images/bgvillage.webp
     - assets/images/bgvillage2.avif
@@ -84,11 +86,19 @@ flutter:
     - assets/images/bgvillage8.jpg
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage9.jpeg
+    - assets/vegetables/carrot.jpg
+    - assets/vegetables/default.jpg
+    - assets/vegetables/default1.jpg
     - assets/images/forgetpw.png
+    - assets/vegetables/lemon.jpg
     - assets/images/marketupdate1.jpg
     - assets/images/marketupdate2.jpg
     - assets/images/no_data.png
+    - assets/vegetables/onion.jpg
+    - assets/vegetables/pepper.jpg
+    - assets/vegetables/pumpkin.jpg
     - assets/images/resetpassword.png
+    - assets/vegetables/tomato.jpg
     - assets/images/verifyotp.png
 
   fonts:

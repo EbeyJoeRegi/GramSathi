@@ -66,6 +66,29 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     }
   }
 
+  // Function to get background image based on crop name
+  String _getBackgroundImage(String cropName) {
+    switch (cropName.toLowerCase()) {
+      case 'carrot':
+        return 'assets/vegetables/carrot.jpg';
+      case 'arecanut':
+        return 'assets/vegetables/arecaunut.jpg'; // Local image for carrot
+      // Add more cases for different crops as necessary
+      case 'onion':
+        return 'assets/vegetables/onion.jpg';
+      case 'tomato':
+        return 'assets/vegetables/tomato.jpg';
+      case 'pumpkin':
+        return 'assets/vegetables/pumpkin.jpg';
+      case 'pepper':
+        return 'assets/vegetables/pepper.jpg';
+      case 'lemon':
+        return 'assets/vegetables/lemon.jpg';
+      default:
+        return 'assets/vegetables/default1.jpg'; // Default image if crop not found
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,14 +96,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xffAE976A), // Start color
-                Color(0xffAE976A), // End color
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.topRight,
-            ),
+            color: Colors.white, // Changed to white color
           ),
           child: AppBar(
             titleSpacing: 0,
@@ -111,134 +127,170 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          // Background Image with opacity
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'assets/images/marketupdate2.jpg'), // Your background image
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.black54.withOpacity(0.3),
-                    BlendMode.darken), // Adjust opacity
-              ),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xfff0f0f0), // Light gray for the background
+              Colors.white, // White for the foreground
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          // Foreground content
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 200, 200, 200),
-                          width: 2.0),
-                      color: Colors.white.withOpacity(0.7),
-                    ),
-                    child: DropdownButton<String>(
-                      hint: const Text('Select Location'),
-                      value: selectedLocation,
-                      onChanged: _onLocationChanged,
-                      underline:
-                          const SizedBox(), // Hides the default underline
-                      isExpanded: true,
-                      items: locations.map((location) {
-                        return DropdownMenuItem<String>(
-                          value: location['id'].toString(),
-                          child: Text(
-                            location['place_name'],
-                            style: const TextStyle(color: Color(0xff015F3E)),
-                          ),
-                        );
-                      }).toList(),
-                    ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Custom container with border and rounded corners
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(
+                    color: Color(0xff005F3D).withOpacity(0.5), // Soft border
+                    width: 1.5,
                   ),
-                  if (selectedLocation != null) ...[
-                    const SizedBox(height: 20),
-                    if (crops.isEmpty)
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/no_data.png', // Placeholder image for no data
-                              height: 150,
-                            ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'No crops found for this location. Please try another.',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.teal,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                  color:
+                      Colors.white.withOpacity(0.9), // Semi-transparent white
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10.0,
+                      offset: Offset(0, 4), // Soft shadow
+                    ),
+                  ],
+                ),
+                child: DropdownButton<String>(
+                  hint: const Text('Select Location'),
+                  value: selectedLocation,
+                  onChanged: _onLocationChanged,
+                  underline: const SizedBox(), // Hides the default underline
+                  isExpanded: true,
+                  items: locations.map((location) {
+                    return DropdownMenuItem<String>(
+                      value: location['id'].toString(),
+                      child: Text(
+                        location['place_name'],
+                        style: const TextStyle(color: Color(0xff015F3E)),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              if (selectedLocation != null) ...[
+                const SizedBox(height: 20),
+                if (crops.isEmpty)
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/no_data.png', // Placeholder image for no data
+                          height: 150,
                         ),
-                      )
-                    else
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: crops.length,
-                          itemBuilder: (context, index) {
-                            final crop = crops[index];
-                            final cropName = crop['crop_name'];
-                            final cropPrice = crop['price'];
-                            final avgPriceRaw = crop['avg_price'];
+                        const SizedBox(height: 20),
+                        const Text(
+                          'No crops found for this location. Please try another.',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff005F3D),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: crops.length,
+                      itemBuilder: (context, index) {
+                        final crop = crops[index];
+                        final cropName = crop['crop_name'];
+                        final cropPrice = crop['price'];
+                        final avgPriceRaw = crop['avg_price'];
 
-                            // Extract avg_price value from Decimal128 representation
-                            final avgPrice = avgPriceRaw is Map
-                                ? double.tryParse(
-                                        avgPriceRaw['\$numberDecimal']) ??
-                                    0.0
-                                : double.tryParse(avgPriceRaw.toString()) ??
-                                    0.0;
+                        // Extract avg_price value from Decimal128 representation
+                        final avgPrice = avgPriceRaw is Map
+                            ? double.tryParse(avgPriceRaw['\$numberDecimal']) ??
+                                0.0
+                            : double.tryParse(avgPriceRaw.toString()) ?? 0.0;
 
-                            return Opacity(
-                              opacity: 0.8, // Adjust opacity here
-                              child: Card(
-                                margin: const EdgeInsets.only(bottom: 16.0),
-                                elevation: 4.0,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFF005F3D), // Dark green color
-                                        Color(
-                                            0xFF66B287), // Lighter green color
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
+                        return Opacity(
+                          opacity: 0.8, // Adjust opacity here
+                          child: Card(
+                            margin: const EdgeInsets.only(bottom: 16.0),
+                            elevation: 4.0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: AssetImage(_getBackgroundImage(
+                                      cropName)), // Set background image
+                                  fit:
+                                      BoxFit.cover, // Cover the whole container
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.6),
+                                    BlendMode.darken,
+                                  ), // Adding black opacity filter
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 8.0,
+                                    offset: Offset(0, 4),
                                   ),
-                                  child: ListTile(
-                                    subtitle: Text(
-                                      'Crop: $cropName\nPrice: $cropPrice (${crop['month_year']})\nAverage Price: ${avgPrice.toStringAsFixed(2)}',
+                                ],
+                              ),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.all(16.0),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      cropName,
                                       style: const TextStyle(
-                                          fontSize: 16.0, color: Colors.white),
+                                        fontSize: 20.0, // Increased font size
+                                        fontWeight:
+                                            FontWeight.bold, // Bold text
+                                        color: Colors
+                                            .white, // White color for cropName
+                                      ),
                                     ),
-                                  ),
+                                    const SizedBox(
+                                        height:
+                                            8), // Space between cropName and other text
+                                    Text(
+                                      'Price: $cropPrice (${crop['month_year']})',
+                                      style: const TextStyle(
+                                        fontSize: 16.0, // Default font size
+                                        color: Colors
+                                            .white, // White color for price and avg price
+                                      ),
+                                    ),
+                                    Text(
+                                      'Average Price: ${avgPrice.toStringAsFixed(2)}',
+                                      style: const TextStyle(
+                                        fontSize: 16.0, // Default font size
+                                        color: Colors
+                                            .white, // White color for average price
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                  ],
-                ],
-              ),
-            ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
