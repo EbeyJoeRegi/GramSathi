@@ -71,6 +71,25 @@ const weatherSchema = new mongoose.Schema({
     lastUpdated: {type: Date,default: Date.now,},
 });
 
+const sellSchema = new mongoose.Schema({
+    id: {type: Number,unique: true,},
+    sellername: {type: String,required: true,},
+    cropname: {type: String,required: true,},
+    quantity: {type: Number, required: true,},
+    price: {type: Number, required: true,},
+    date_updated: {type: Date,default: Date.now,},
+    sold: {type: Boolean,default: false,},
+  });
+
+  const buySchema = new mongoose.Schema({
+    id: {type: Number,unique: true,},
+    buyername: {type: String, required: true,},
+    sell_id: {type: Number,required: true,},
+    sellername: {type: String,required: true,},
+    date: {type: Date,default: Date.now,},
+    buy: {type: Boolean,default: false,},
+  });
+
 const counterSchema = new mongoose.Schema({
     _id: String,
     sequence_value: Number
@@ -85,6 +104,8 @@ const Crop = mongoose.model('Crop', cropSchema);
 const Price = mongoose.model('Price', priceSchema);
 const Counter = mongoose.model('Counter', counterSchema);
 const Weather = mongoose.model('Weather', weatherSchema);
+const Sell = mongoose.model('Sell', sellSchema);
+const Buy = mongoose.model('Buy', buySchema);
 
 module.exports = {
     User,
@@ -95,5 +116,7 @@ module.exports = {
     Crop,
     Price,
     Counter,
+    Sell,
+    Buy,
     Weather,
 };

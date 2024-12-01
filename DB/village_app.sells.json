@@ -1,0 +1,104 @@
+[{
+  "_id": {
+    "$oid": "6749cb2bc60c9372998cfd20"
+  },
+  "id": 1,
+  "sellername": "user",
+  "cropname": "Wheat",
+  "quantity": 100,
+  "price": 20.5,
+  "date_updated": {
+    "$date": "2024-11-29T14:09:47.152Z"
+  },
+  "sold": false
+},
+{
+  "_id": {
+    "$oid": "674ad9cc357899b40d81007f"
+  },
+  "id": 10,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Onion",
+  "quantity": 1,
+  "price": 250,
+  "sold": true,
+  "date_updated": {
+    "$date": "2024-11-30T09:24:28.469Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674ae291f8304bfa85f69c6c"
+  },
+  "id": 16,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Cucumber",
+  "quantity": 1,
+  "price": 250,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-11-30T10:01:53.316Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674ae692a43d425842742f2d"
+  },
+  "id": 22,
+  "sellername": "user",
+  "cropname": "Carrot",
+  "quantity": 10,
+  "price": 256,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-11-30T10:18:58.386Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674ae6a6ab58c7d2bf6457f7"
+  },
+  "id": 23,
+  "sellername": "user",
+  "cropname": "Carrot",
+  "quantity": 10,
+  "price": 256,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-11-30T10:19:18.023Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674ae77b05c586fbc1e9c3fa"
+  },
+  "id": 25,
+  "sellername": "user",
+  "cropname": "Corriander",
+  "quantity": 0,
+  "price": 6,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-11-30T10:22:51.062Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674ae7c8f08d98e217741685"
+  },
+  "id": 26,
+  "sellername": "user",
+  "cropname": "Curry Leaves",
+  "quantity": 0.1,
+  "price": 26,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-11-30T10:24:08.235Z"
+  },
+  "__v": 0
+}]

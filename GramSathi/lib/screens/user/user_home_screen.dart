@@ -6,7 +6,7 @@ import '/config.dart';
 import 'market_updates_screen.dart';
 import 'feedback_hub.dart';
 import 'important_contacts_screen.dart';
-import 'suggestions_screen.dart';
+import 'exchange_zone.dart';
 import 'user_profile.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:geolocator/geolocator.dart';
@@ -108,7 +108,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       final username = widget.username;
       final weatherResponse = await http.get(
         Uri.parse(
-          '${AppConfig.baseUrl}/api/weather?username=$username&lat=$lat&lon=$lon',
+          '${AppConfig.baseUrl}/weather?username=$username&lat=$lat&lon=$lon',
         ),
       );
 
@@ -301,7 +301,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           _buildHomePage(),
           MarketUpdatesScreen(),
           FeedbackHub(username: widget.username),
-          SuggestionsScreen(username: widget.username),
+          ExchangeZone(username: widget.username),
           ImportantContactsScreen(),
         ],
       ),
