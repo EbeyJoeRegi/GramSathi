@@ -119,7 +119,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         _city = weatherData['city'];
         _lastUpdated = weatherData['lastUpdated'];
         DateTime lastUpdated = DateTime.parse(_lastUpdated);
-        formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(lastUpdated);
+        formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(lastUpdated);
 
         setState(() {
           _temperature = temp;
@@ -242,7 +242,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     }
 
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(5.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -264,15 +264,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   color: Colors.white,
                 ),
               ),
+              SizedBox(height: 5),
               Text(
                 _lastUpdated.isNotEmpty
-                    ? "last updated at \n $formattedDate"
+                    ? "last updated at $formattedDate"
                     : 'Loading...',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 15,
                   color: Colors.white,
+                  fontStyle: FontStyle.italic, // Makes the text italic
                 ),
-              ),
+              )
             ],
           ),
           Icon(
@@ -407,24 +409,24 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         color: Colors.white, // Set the entire background to white
         child: Column(
           children: [
-            SizedBox(height: 15.0), // Gap between AppBar and container
+            SizedBox(height: 18.0), // Gap between AppBar and container
             Center(
               child: Container(
-                width: 390,
-                height: 150, // Set the desired width here
+                width: 385,
+                height: 145, // Set the desired width here
                 decoration: BoxDecoration(
-                  color: Colors.teal
-                      .withOpacity(0.7), // Teal background with opacity
+                  color: Color(0xff015F3E)
+                      .withOpacity(0.8), // Teal background with opacity
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(35.0),
-                    bottom: Radius.circular(35.0),
+                    top: Radius.circular(25.0),
+                    bottom: Radius.circular(25.0),
                   ), // Rounded borders
                 ),
                 padding: const EdgeInsets.all(16.0),
                 child: _buildWeatherWidget(),
               ),
             ),
-            SizedBox(height: 28.0), // Space before the heading
+            SizedBox(height: 26.0), // Space before the heading
             Padding(
               padding: const EdgeInsets.only(right: 180),
               child: Text(
