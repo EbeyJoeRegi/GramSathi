@@ -10,7 +10,8 @@
   "date_updated": {
     "$date": "2024-11-29T14:09:47.152Z"
   },
-  "sold": false
+  "sold": false,
+  "__v": 0
 },
 {
   "_id": {
@@ -96,9 +97,24 @@
   "cropname": "Curry Leaves",
   "quantity": 0.1,
   "price": 26,
-  "sold": false,
+  "sold": true,
   "date_updated": {
     "$date": "2024-11-30T10:24:08.235Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674b0b06fdf86cce51f86c04"
+  },
+  "id": 32,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Onion",
+  "quantity": 12,
+  "price": 125,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-11-30T12:54:30.102Z"
   },
   "__v": 0
 }]
