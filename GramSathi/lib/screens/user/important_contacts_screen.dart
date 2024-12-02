@@ -71,36 +71,68 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Important Contacts'),
-        backgroundColor: Colors.teal,
-      ),
-      body: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/user.png',
-              fit: BoxFit.cover,
-              color: const Color.fromARGB(255, 255, 255, 255)
-                  .withOpacity(0.5), // Optional opacity
-              colorBlendMode: BlendMode.lighten,
-            ),
+        title: const Text(
+          'Important Contacts',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding:
+              const EdgeInsets.only(left: 9.0), // Adjust this padding as needed
+          child: Image.asset(
+            'assets/images/icon.png',
+            height: 56.0,
+            width: 54.0,
           ),
-          // Main Content
-          ListView(
-            children: [
-              // Emergency Contacts
-              ...contacts.map((contact) {
+        ),
+        leadingWidth:
+            60, // Adjust this to make the icon's space narrower, bringing it closer to the title
+      ),
+      body: Container(
+        color: Colors.white, // Set the background color to white
+        child: ListView(
+          children: [
+            // Emergency Contacts
+            ...contacts.map((contact) {
+              return Card(
+                margin: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 80, // Increase the height as needed
+                  child: Center(
+                    child: ListTile(
+                      leading: Icon(contact['icon'],
+                          color: Color(0xff015F3E), size: 40),
+                      title: Text(contact['name']),
+                      onTap: () => _makePhoneCall(contact['phone']),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
+                  ),
+                ),
+              );
+            }),
+
+            // Admin Contacts
+            if (adminContacts.isNotEmpty) ...[
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Admin Contacts',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ...adminContacts.map((admin) {
                 return Card(
                   margin: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     height: 80, // Increase the height as needed
                     child: Center(
                       child: ListTile(
-                        leading:
-                            Icon(contact['icon'], color: Colors.teal, size: 40),
-                        title: Text(contact['name']),
-                        onTap: () => _makePhoneCall(contact['phone']),
+                        leading: const Icon(Icons.person,
+                            color: Color(0xff015F3E), size: 40), // Random icon
+                        title: Text(admin['name']),
+                        subtitle: Text(admin['job_title'] ?? 'No Job Title'),
+                        onTap: () => _makePhoneCall(admin['phone']),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 16.0),
                       ),
@@ -108,39 +140,9 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
                   ),
                 );
               }),
-
-              // Admin Contacts
-              if (adminContacts.isNotEmpty) ...[
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Admin Contacts',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                ...adminContacts.map((admin) {
-                  return Card(
-                    margin: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 80, // Increase the height as needed
-                      child: Center(
-                        child: ListTile(
-                          leading: const Icon(Icons.person,
-                              color: Colors.teal, size: 40), // Random icon
-                          title: Text(admin['name']),
-                          subtitle: Text(admin['job_title'] ?? 'No Job Title'),
-                          onTap: () => _makePhoneCall(admin['phone']),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-              ],
             ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

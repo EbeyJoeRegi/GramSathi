@@ -50,7 +50,6 @@ class _ExchangeZoneState extends State<ExchangeZone>
           hasNotification = notifications.isNotEmpty;
         });
       }
-      //print(notifications);
     } catch (e) {
       print('Error fetching notifications: $e');
     }
@@ -69,18 +68,16 @@ class _ExchangeZoneState extends State<ExchangeZone>
       String action, int notificationId) async {
     try {
       if (action == 'markAsBought') {
-        // Mark as bought API call
         await http.put(
           Uri.parse('${AppConfig.baseUrl}/notify/$notificationId'),
           body: json.encode({'buy': true}),
           headers: {'Content-Type': 'application/json'},
         );
       } else if (action == 'dismiss') {
-        // Delete notification API call
         await http
             .delete(Uri.parse('${AppConfig.baseUrl}/notify/$notificationId'));
       }
-      await fetchNotifications(); // Refresh notifications
+      await fetchNotifications();
     } catch (e) {
       print('Error handling notification action: $e');
     }
@@ -90,12 +87,19 @@ class _ExchangeZoneState extends State<ExchangeZone>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exchange Zone'),
+        title: Text(
+          'Exchange Zone',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Color(0xff005F3D),
         actions: [
           Stack(
             children: [
               IconButton(
-                icon: Icon(Icons.notifications),
+                icon: Icon(Icons.notifications, color: Colors.white),
                 onPressed: () {
                   if (notifications.isNotEmpty) {
                     showDialog(
@@ -104,86 +108,79 @@ class _ExchangeZoneState extends State<ExchangeZone>
                         return StatefulBuilder(
                           builder: (context, setDialogState) {
                             return AlertDialog(
-                              title: Text('Notifications'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              title: Text(
+                                'Notifications',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               content: SizedBox(
-                                width: double
-                                    .maxFinite, // Ensures proper width constraint
-                                height:
-                                    300, // Set a fixed or constrained height
+                                width: double.maxFinite,
+                                height: 300,
                                 child: ListView.builder(
                                   itemCount: notifications.length,
                                   itemBuilder: (context, index) {
                                     final notification = notifications[index];
-                                    return ListTile(
-                                      title: Text(
-                                        '${notification['buyername']} is interested in ${notification['cropname']}.',
+                                    return Card(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 0),
+                                      elevation: 3,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
-                                      trailing: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          IconButton(
-                                            icon: Icon(Icons.phone,
-                                                color: Colors.blue),
-                                            onPressed: () async {
-                                              final String phoneNumber =
-                                                  notification[
-                                                      'buyerphone']; // Update with the actual phone key
-                                              if (phoneNumber.isNotEmpty) {
-                                                await makePhoneCall(
-                                                    phoneNumber);
-                                              } else {
-                                                print(
-                                                    'Phone number is not available.');
-                                              }
-                                            },
+                                      child: ListTile(
+                                        title: Text(
+                                          '${notification['buyername']} is interested in ${notification['cropname']}.',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                          IconButton(
-                                            icon: Icon(Icons.check,
-                                                color: Colors.green),
-                                            onPressed: () async {
-                                              await handleNotificationAction(
-                                                  'markAsBought',
-                                                  notification['id']);
-                                              setDialogState(() {
-                                                if (notifications.isNotEmpty &&
-                                                    index >= 0 &&
-                                                    index <
-                                                        notifications.length) {
-                                                  setDialogState(() {
-                                                    notifications
-                                                        .removeAt(index);
-                                                  });
+                                        ),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.phone,
+                                                  color: Colors.blue),
+                                              onPressed: () async {
+                                                final String phoneNumber =
+                                                    notification['buyerphone'];
+                                                if (phoneNumber.isNotEmpty) {
+                                                  await makePhoneCall(
+                                                      phoneNumber);
                                                 } else {
                                                   print(
-                                                      'Notification list is empty or index is out of range.');
+                                                      'Phone number is not available.');
                                                 }
-                                              });
-                                            },
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.close,
-                                                color: Colors.red),
-                                            onPressed: () async {
-                                              await handleNotificationAction(
-                                                  'dismiss',
-                                                  notification['id']);
-                                              setDialogState(() {
-                                                if (notifications.isNotEmpty &&
-                                                    index >= 0 &&
-                                                    index <
-                                                        notifications.length) {
-                                                  setDialogState(() {
-                                                    notifications
-                                                        .removeAt(index);
-                                                  });
-                                                } else {
-                                                  print(
-                                                      'Notification list is empty or index is out of range.');
-                                                }
-                                              });
-                                            },
-                                          ),
-                                        ],
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.check,
+                                                  color: Colors.green),
+                                              onPressed: () async {
+                                                await handleNotificationAction(
+                                                    'markAsBought',
+                                                    notification['id']);
+                                                setDialogState(() {
+                                                  notifications.removeAt(index);
+                                                });
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.close,
+                                                  color: Colors.red),
+                                              onPressed: () async {
+                                                await handleNotificationAction(
+                                                    'dismiss',
+                                                    notification['id']);
+                                                setDialogState(() {
+                                                  notifications.removeAt(index);
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
@@ -219,17 +216,17 @@ class _ExchangeZoneState extends State<ExchangeZone>
             Tab(
               child: Text(
                 'Sell',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             ),
             Tab(
               child: Text(
                 'Buy',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
-          indicatorColor: Color(0xff005F3D),
+          indicatorColor: Colors.white,
         ),
       ),
       body: TabBarView(

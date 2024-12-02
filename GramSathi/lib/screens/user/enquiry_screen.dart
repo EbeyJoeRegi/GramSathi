@@ -202,7 +202,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                     ),
                     SizedBox(width: 8),
                     IconButton(
-                      icon: Icon(Icons.send, color: Colors.teal),
+                      icon: Icon(Icons.send, color: Color(0xff015F3E)),
                       onPressed: _createEnquiry,
                     ),
                   ],

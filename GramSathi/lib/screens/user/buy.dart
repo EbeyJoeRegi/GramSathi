@@ -4,6 +4,25 @@ import '/config.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
+// Add the cropImageMap here
+Map<String, String> cropImageMap = {
+  'arecanut': 'assets/vegetables/arecaunut.jpg',
+  'capsicum': 'assets/vegetables/capsicum.jpg',
+  'carrot': 'assets/vegetables/carrot.jpg',
+  'chilli': 'assets/vegetables/chilli.jpg',
+  'corriander': 'assets/vegetables/coriander.jpg',
+  'corn': 'assets/vegetables/corn.jpg',
+  'curry': 'assets/vegetables/curry.jpg',
+  'cucumber': 'assets/vegetables/cucumber.jpg',
+  'lemon': 'assets/vegetables/lemon.jpg',
+  'onion': 'assets/vegetables/onion.jpg',
+  'pumpkin': 'assets/vegetables/pumpkin.jpg',
+  'pepper': 'assets/vegetables/pepper.jpg',
+  'rice': 'assets/vegetables/rice.jpg',
+  'tomato': 'assets/vegetables/tomato.jpg',
+  'wheat': 'assets/vegetables/wheat.jpg',
+};
+
 class BuyScreen extends StatefulWidget {
   final String username;
   BuyScreen({required this.username});
@@ -77,9 +96,6 @@ class _BuyScreenState extends State<BuyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Buy Crops"),
-      ),
       body: Column(
         children: [
           // Dropdown for filtering
@@ -123,8 +139,11 @@ class _BuyScreenState extends State<BuyScreen> {
       itemCount: crops.length,
       itemBuilder: (context, index) {
         final crop = crops[index];
+        String cropImage = cropImageMap[crop['cropname'].toLowerCase()] ??
+            'assets/vegetables/default1.jpg'; // Default image if not found
         return ListTile(
-          leading: Icon(Icons.grass),
+          leading:
+              Image.asset(cropImage, width: 50, height: 50, fit: BoxFit.cover),
           title: Text(crop['cropname'] ?? 'Unknown Crop'),
           subtitle: Text("₹${crop['price']}"),
           onTap: () => showCropDetails(crop),

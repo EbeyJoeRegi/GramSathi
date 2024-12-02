@@ -87,6 +87,12 @@ flutter:
     - assets/images/bgvillage7.jpg
     - assets/images/bgvillage9.jpeg
     - assets/vegetables/carrot.jpg
+    - assets/vegetables/capsicum.jpg
+    - assets/vegetables/chilli.jpg
+    - assets/vegetables/coriander.jpg
+    - assets/vegetables/corn.jpg
+    - assets/vegetables/curry.jpg
+    - assets/vegetables/cucumber.jpg
     - assets/vegetables/default.jpg
     - assets/vegetables/default1.jpg
     - assets/images/forgetpw.png
@@ -98,8 +104,10 @@ flutter:
     - assets/vegetables/pepper.jpg
     - assets/vegetables/pumpkin.jpg
     - assets/images/resetpassword.png
+    - assets/vegetables/rice.jpg
     - assets/vegetables/tomato.jpg
     - assets/images/verifyotp.png
+    - assets/vegetables/wheat.jpg
 
   fonts:
     - family: Plus Jakarta Sans
