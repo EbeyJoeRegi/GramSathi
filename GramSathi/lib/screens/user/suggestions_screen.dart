@@ -200,7 +200,7 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
                         child: Text('Post Suggestion'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              Colors.teal, // Button background color
+                              Color(0xff015F3E), // Button background color
                           foregroundColor: Colors.white, // Button text color
                           padding: EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 16.0),
