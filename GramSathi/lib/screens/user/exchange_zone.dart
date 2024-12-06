@@ -102,6 +102,7 @@ class _ExchangeZoneState extends State<ExchangeZone>
                 icon: Icon(Icons.notifications, color: Colors.white),
                 onPressed: () {
                   if (notifications.isNotEmpty) {
+                    // Show the list of notifications as before
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -163,7 +164,14 @@ class _ExchangeZoneState extends State<ExchangeZone>
                                                     'markAsBought',
                                                     notification['id']);
                                                 setDialogState(() {
-                                                  notifications.removeAt(index);
+                                                  if (notifications
+                                                          .isNotEmpty &&
+                                                      index <
+                                                          notifications
+                                                              .length) {
+                                                    notifications
+                                                        .removeAt(index);
+                                                  }
                                                 });
                                               },
                                             ),
@@ -175,7 +183,14 @@ class _ExchangeZoneState extends State<ExchangeZone>
                                                     'dismiss',
                                                     notification['id']);
                                                 setDialogState(() {
-                                                  notifications.removeAt(index);
+                                                  if (notifications
+                                                          .isNotEmpty &&
+                                                      index <
+                                                          notifications
+                                                              .length) {
+                                                    notifications
+                                                        .removeAt(index);
+                                                  }
                                                 });
                                               },
                                             ),
@@ -188,6 +203,31 @@ class _ExchangeZoneState extends State<ExchangeZone>
                               ),
                             );
                           },
+                        );
+                      },
+                    );
+                  } else {
+                    // Show a popup message saying no new notifications
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          title: Text(
+                            'Notification',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          content: Text('No new notifications available.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
                         );
                       },
                     );

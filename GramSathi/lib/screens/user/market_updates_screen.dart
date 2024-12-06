@@ -4,8 +4,8 @@ import 'dart:convert';
 import '/config.dart';
 
 class MarketUpdatesScreen extends StatefulWidget {
-  const MarketUpdatesScreen({super.key});
-
+  final String username;
+  MarketUpdatesScreen({required this.username});
   @override
   _MarketUpdatesScreenState createState() => _MarketUpdatesScreenState();
 }
@@ -18,42 +18,78 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchLocations();
+    _initializeScreen();
+  }
+
+  Future<void> _initializeScreen() async {
+    await _fetchLocations();
+    await _fetchUserPlaceId();
+  }
+
+  Future<void> _fetchUserPlaceId() async {
+    try {
+      final response = await http.get(
+        Uri.parse('${AppConfig.baseUrl}/user/${widget.username}'),
+      );
+      if (response.statusCode == 200) {
+        final user = json.decode(response.body);
+        final placeId = user['place_id'];
+        if (placeId != null) {
+          setState(() {
+            selectedLocation = placeId.toString();
+          });
+          await _fetchCrops(placeId.toString());
+        }
+      } else {
+        throw Exception('Failed to fetch user place_id');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error fetching user data')),
+      );
+    }
   }
 
   Future<void> _fetchLocations() async {
-    final response =
-        await http.get(Uri.parse('${AppConfig.baseUrl}/locations'));
-    if (response.statusCode == 200) {
-      setState(() {
-        locations = json.decode(response.body);
-      });
-    } else {
-      // Handle errors
-      throw Exception('Failed to load locations');
+    try {
+      final response =
+          await http.get(Uri.parse('${AppConfig.baseUrl}/locations'));
+      if (response.statusCode == 200) {
+        setState(() {
+          locations = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to load locations');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error fetching locations')),
+      );
     }
   }
 
   Future<void> _fetchCrops(String placeId) async {
-    final response =
-        await http.get(Uri.parse('${AppConfig.baseUrl}/crops/$placeId'));
-
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      setState(() {
-        crops = json.decode(response.body);
-      });
-    } else if (response.statusCode == 404) {
-      setState(() {
-        crops = [];
-      });
+    try {
+      final response =
+          await http.get(Uri.parse('${AppConfig.baseUrl}/crops/$placeId'));
+      if (response.statusCode == 200) {
+        setState(() {
+          crops = json.decode(response.body);
+        });
+      } else if (response.statusCode == 404) {
+        setState(() {
+          crops = [];
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No crops found for this location')),
+        );
+      } else {
+        throw Exception('Failed to load crops');
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No crops found for this placeId')),
+        const SnackBar(content: Text('Error fetching crops')),
       );
-    } else {
-      throw Exception('Failed to load crops');
     }
   }
 

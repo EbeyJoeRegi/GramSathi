@@ -13,10 +13,9 @@ class SellScreen extends StatefulWidget {
 
 class _SellScreenState extends State<SellScreen> {
   String dropdownValue = "Items for Sale";
-  String selectedUnit = '/kg';
-  String selectedPriceUnit = 'kg';
   List<Map<String, dynamic>> crops = [];
   bool isLoading = true;
+  String? selectedCrop;
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   // Map to associate crop names with image paths (all lowercase keys)
@@ -44,12 +43,32 @@ class _SellScreenState extends State<SellScreen> {
     fetchCrops();
   }
 
+  List<String> allCrops = [];
+
   void fetchCrops() async {
     final response = await fetchCropsFromApi(dropdownValue == "Items for Sale");
     setState(() {
       crops = response;
       isLoading = false;
     });
+    await fetchAllCrops();
+  }
+
+  Future<void> fetchAllCrops() async {
+    final response =
+        await http.get(Uri.parse('${AppConfig.baseUrl}/all-crops'));
+    if (response.statusCode == 200) {
+      setState(() {
+        List<dynamic> jsonData = jsonDecode(response.body);
+        allCrops = jsonData.map((crop) => crop['crop_name'] as String).toList();
+        // Ensure there's a valid selected crop
+        if (allCrops.isNotEmpty) {
+          selectedCrop = allCrops[0]; // Set default crop
+        }
+      });
+    } else {
+      throw Exception("Failed to load crops");
+    }
   }
 
   Future<List<Map<String, dynamic>>> fetchCropsFromApi(bool isForSale) async {
@@ -61,12 +80,11 @@ class _SellScreenState extends State<SellScreen> {
     if (response.statusCode == 200) {
       return List<Map<String, dynamic>>.from(jsonDecode(response.body));
     } else {
-      throw Exception("Failed to load crops");
+      return ([]);
     }
   }
 
   void showAddCropPopup(BuildContext context) {
-    final TextEditingController cropNameController = TextEditingController();
     final TextEditingController quantityController = TextEditingController();
     final TextEditingController priceController = TextEditingController();
 
@@ -84,80 +102,60 @@ class _SellScreenState extends State<SellScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                buildInputField(cropNameController, "Crop Name", Icons.grain),
+                // Crop name dropdown
+                allCrops.isNotEmpty
+                    ? DropdownButton<String>(
+                        value: selectedCrop,
+                        isExpanded: true,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCrop = newValue!;
+                          });
+                        },
+                        items: allCrops
+                            .map<DropdownMenuItem<String>>((String crop) {
+                          return DropdownMenuItem<String>(
+                            value: crop,
+                            child: Text(crop),
+                          );
+                        }).toList(),
+                        icon: Icon(Icons.arrow_drop_down),
+                      )
+                    : CircularProgressIndicator(), // Show loading indicator while fetching crops
                 SizedBox(height: 10),
 
-                // Quantity input with dropdown for unit selection
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: quantityController,
-                        decoration: InputDecoration(
-                          labelText: "Quantity",
-                          prefixIcon: Icon(Icons.bar_chart),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                      ),
+                // Quantity input
+                TextField(
+                  controller: quantityController,
+                  decoration: InputDecoration(
+                    labelText: "Quantity",
+                    prefixIcon: Icon(Icons.bar_chart),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(width: 10),
-                    DropdownButton<String>(
-                      value: selectedPriceUnit,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedPriceUnit = newValue!;
-                        });
-                      },
-                      items: <String>['kg', 'gram', 'bunch']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      icon: Icon(Icons.arrow_drop_down),
-                    ),
-                  ],
+                  ),
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(height: 10),
 
-                // Price input with dropdown for unit selection
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: priceController,
-                        decoration: InputDecoration(
-                          labelText: "Price",
-                          prefixIcon: Icon(Icons.currency_rupee),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                      ),
+                // Price input
+                TextField(
+                  controller: priceController,
+                  decoration: InputDecoration(
+                    labelText: "Price",
+                    prefixIcon: Icon(Icons.currency_rupee),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(width: 10),
-                    DropdownButton<String>(
-                      value: selectedUnit,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedUnit = newValue!;
-                        });
-                      },
-                      items: <String>['/kg', '/gram', '/bunch']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      icon: Icon(Icons.arrow_drop_down),
-                    ),
-                  ],
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(height: 10),
+
+                // Note at the bottom
+                Text(
+                  "If the crop you want to sell is not listed, please suggest it.",
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),
@@ -171,7 +169,7 @@ class _SellScreenState extends State<SellScreen> {
               onPressed: () {
                 // Make sure the state values are used correctly when adding a crop
                 addNewCrop(
-                  cropNameController.text,
+                  selectedCrop ?? "",
                   double.tryParse(quantityController.text) ?? 0,
                   double.tryParse(priceController.text) ?? 0.0,
                 );
@@ -205,7 +203,6 @@ class _SellScreenState extends State<SellScreen> {
       "cropname": cropName,
       "quantity": quantity,
       "price": price,
-      'unit': selectedUnit,
     };
 
     final response = await http.post(
@@ -215,7 +212,20 @@ class _SellScreenState extends State<SellScreen> {
     );
 
     if (response.statusCode == 200) {
-      fetchCrops();
+      // Create a new crop object with the added crop details
+      final newCrop = {
+        "cropname": cropName,
+        "quantity": quantity,
+        "price": price,
+        "sold": false, // Assuming new crops are not sold
+      };
+
+      // Insert the new crop into the list and animate it into the UI
+      crops.insert(0,
+          newCrop); // Insert at the top of the list or you can insert at a specific position
+      _listKey.currentState?.insertItem(0); // Add animation for the new crop
+
+      // Display success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Crop added successfully")),
       );
@@ -245,12 +255,11 @@ class _SellScreenState extends State<SellScreen> {
               ),
               ListTile(
                 title: Text("Quantity"),
-                subtitle:
-                    Text("${crop["quantity"]} ${crop["selectedPriceUnit"]}"),
+                subtitle: Text("${crop["quantity"]} Kg"),
               ),
               ListTile(
                 title: Text("Price"),
-                subtitle: Text("\₹${crop["price"]} ${crop["selectedUnit"]}"),
+                subtitle: Text("\₹${crop["price"]}/Kg"),
               ),
               if (!crop["sold"])
                 ElevatedButton(
@@ -295,14 +304,17 @@ class _SellScreenState extends State<SellScreen> {
           isLoading
               ? Expanded(child: Center(child: CircularProgressIndicator()))
               : Expanded(
-                  child: AnimatedList(
-                    key: _listKey,
-                    initialItemCount: crops.length,
-                    itemBuilder: (context, index, animation) {
-                      final crop = crops[index];
-                      return buildCropCard(crop, animation);
-                    },
-                  ),
+                  child: isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : AnimatedList(
+                          key: _listKey,
+                          initialItemCount: crops.length,
+                          itemBuilder: (context, index, animation) {
+                            if (index >= crops.length) return Container();
+                            final crop = crops[index];
+                            return buildCropCard(crop, animation);
+                          },
+                        ),
                 ),
         ],
       ),
@@ -379,7 +391,7 @@ class _SellScreenState extends State<SellScreen> {
             ),
             title: Text(crop["cropname"]),
             subtitle: Text(
-              "Price: ₹${crop["price"]} ${crop["unit"] ?? '/kg'}", // Show unit selected by user
+              "Price: ₹${crop["price"]} /kg", // Show unit selected by user
             ),
             trailing:
                 crop["sold"] ? Icon(Icons.check, color: Colors.green) : null,

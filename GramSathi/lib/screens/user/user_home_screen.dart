@@ -299,7 +299,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         },
         children: <Widget>[
           _buildHomePage(),
-          MarketUpdatesScreen(),
+          MarketUpdatesScreen(username: widget.username),
           FeedbackHub(username: widget.username),
           ExchangeZone(username: widget.username),
           ImportantContactsScreen(),

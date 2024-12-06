@@ -359,25 +359,34 @@ app.get('/locations', async (req, res) => {
   });
 
   // API to get user details by username
-app.get('/user/:username', async (req, res) => {
-  try {
+  app.get('/user/:username', async (req, res) => {
+    try {
       const username = req.params.username;
-      
+  
       // Find the user by username
       const user = await User.findOne({ username: username });
-      
+  
       if (!user) {
-          return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'User not found' });
       }
-
-      // Exclude the password from the response for security
-      const { password, ...userDetails } = user.toObject();
-      
-      res.status(200).json(userDetails);
-  } catch (error) {
+  
+      // Find the place associated with the user's address
+      const place = await Place.findOne({ place_name: user.address });
+  
+      if (place) {
+        // Include place_id in the response
+        const { password, ...userDetails } = user.toObject();
+        userDetails.place_id = place.id; // Add place_id to the response
+        return res.status(200).json(userDetails);
+      } else {
+        // If no place is found with the given address
+        const { password, ...userDetails } = user.toObject();
+        return res.status(200).json(userDetails);
+      }
+    } catch (error) {
       res.status(500).json({ message: 'An error occurred', error: error.message });
-  }
-});
+    }
+  });
 
 // Start the server
 app.listen(port, () => {

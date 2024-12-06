@@ -13,24 +13,6 @@ class ImportantContactsScreen extends StatefulWidget {
 }
 
 class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
-  final List<Map<String, dynamic>> contacts = [
-    {
-      'name': 'Ambulance',
-      'phone': '108', // Replace with actual number
-      'icon': Icons.local_hospital,
-    },
-    {
-      'name': 'Fire Station',
-      'phone': '101', // Replace with actual number
-      'icon': Icons.local_fire_department,
-    },
-    {
-      'name': 'Police',
-      'phone': '100', // Replace with actual number
-      'icon': Icons.local_police,
-    },
-  ];
-
   List<Map<String, dynamic>> adminContacts = [];
 
   @override
@@ -92,26 +74,6 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
         color: Colors.white, // Set the background color to white
         child: ListView(
           children: [
-            // Emergency Contacts
-            ...contacts.map((contact) {
-              return Card(
-                margin: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 80, // Increase the height as needed
-                  child: Center(
-                    child: ListTile(
-                      leading: Icon(contact['icon'],
-                          color: Color(0xff015F3E), size: 40),
-                      title: Text(contact['name']),
-                      onTap: () => _makePhoneCall(contact['phone']),
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16.0),
-                    ),
-                  ),
-                ),
-              );
-            }),
-
             // Admin Contacts
             if (adminContacts.isNotEmpty) ...[
               const Padding(
