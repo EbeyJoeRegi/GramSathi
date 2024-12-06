@@ -46,7 +46,6 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
         });
       }
     } catch (e) {
-      print('Error: $e');
       setState(() {
         _errorMessage = 'An error occurred. Please try again later.';
         _isLoading = false;
@@ -85,7 +84,6 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
         });
       }
     } catch (e) {
-      print('Error: $e');
       setState(() {
         _errorMessage = 'An error occurred. Please try again later.';
       });
@@ -99,33 +97,15 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.5, // Adjust opacity here
-              child: Image.asset(
-                'assets/images/user.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Content on top of background image
-          Column(
-            children: [
-              // AppBar(
-              //   title: Text(
-              //     'Enquiries',
-              //     style: TextStyle(
-              //         color: Colors
-              //             .white), // Set text color to white for better contrast
-              //   ),
-              //   backgroundColor: Colors
-              //       .transparent, // Make the AppBar background transparent
-              //   elevation: 0, // Remove the shadow below the AppBar
-              // ),
-              Expanded(
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFE6F4E3), // Light green color
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _fetchEnquiries,
                 child: _isLoading
                     ? Center(child: CircularProgressIndicator())
                     : _errorMessage.isNotEmpty
@@ -143,51 +123,88 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                               final formattedTime =
                                   DateFormat('hh:mm a').format(dateTimeIst);
 
-                              return Container(
-                                margin: EdgeInsets.all(8.0),
-                                padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(
-                                      0.8), // White background with opacity
-                                  border: Border.all(
-                                    color: Colors.grey[300]!,
-                                    width: 1.0,
+                              return AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: Card(
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: ListTile(
-                                  title: Text(
-                                    enquiry['matter'],
-                                    style: TextStyle(
-                                      fontSize: 18, // Increased font size
+                                  child: ListTile(
+                                    leading: Icon(
+                                      enquiry['admin_response'] != null
+                                          ? Icons.check_circle
+                                          : Icons.pending,
+                                      color: enquiry['admin_response'] != null
+                                          ? Colors.green
+                                          : Colors.green,
                                     ),
-                                  ),
-                                  subtitle: Text(
-                                    '$formattedDate • $formattedTime',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
+                                    title: Text(
+                                      enquiry['matter'],
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '$formattedDate • $formattedTime',
+                                          style: TextStyle(
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                        AnimatedOpacity(
+                                          opacity:
+                                              enquiry['admin_response'] != null
+                                                  ? 1.0
+                                                  : 0.5,
+                                          duration: Duration(seconds: 1),
+                                          child: Text(
+                                            enquiry['admin_response'] ??
+                                                'Awaiting response',
+                                            style: TextStyle(
+                                              color:
+                                                  enquiry['admin_response'] !=
+                                                          null
+                                                      ? Colors.black
+                                                      : Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      _showEnquiryDialog(enquiry);
+                                    },
                                   ),
-                                  onTap: () {
-                                    _showEnquiryDialog(enquiry);
-                                  },
                                 ),
                               );
                             },
                           ),
               ),
-              Container(
-                margin: EdgeInsets.all(0),
-                padding: EdgeInsets.all(8.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white
-                      .withOpacity(1), // White background with opacity
-                  border: Border.all(
-                    color: Colors.grey[300]!,
-                    width: 1.0,
-                  ),
-                  borderRadius: BorderRadius.circular(0),
+                  color: Color(0xFF015F3E)
+                      .withOpacity(0.1), // Light green background for emphasis
+                  borderRadius: BorderRadius.circular(12), // Rounded corners
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF015F3E)
+                          .withOpacity(0.1), // Soft shadow for highlight effect
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                      spreadRadius: 1,
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
@@ -195,22 +212,35 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                       child: TextField(
                         controller: _enquiryController,
                         decoration: InputDecoration(
-                          labelText: 'Enter your enquiry',
-                          border: OutlineInputBorder(),
+                          hintText: 'Enter your enquiry',
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 20,
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 8),
-                    IconButton(
-                      icon: Icon(Icons.send, color: Color(0xff015F3E)),
+                    SizedBox(width: 12),
+                    FloatingActionButton(
                       onPressed: _createEnquiry,
+                      backgroundColor: Color(0xff015F3E),
+                      child: Icon(
+                        Icons.send,
+                        color: Colors.white, // Set the icon color to white
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -234,7 +264,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
               Text(
                 enquiry['matter'],
                 style: TextStyle(
-                  fontSize: 18, // Increased font size
+                  fontSize: 18,
                 ),
               ),
               SizedBox(height: 16),
