@@ -133,9 +133,16 @@ class _SellScreenState extends State<SellScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    suffixText: "kg",
+                    suffixStyle: TextStyle(
+                      color: Colors.black
+                          .withOpacity(0.8), // Gray text with reduced opacity
+                      fontSize: 16, // Adjust font size if needed
+                    ),
                   ),
                   keyboardType: TextInputType.number,
                 ),
+
                 SizedBox(height: 10),
 
                 // Price input
@@ -146,6 +153,12 @@ class _SellScreenState extends State<SellScreen> {
                     prefixIcon: Icon(Icons.currency_rupee),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                    ),
+                    suffixText: "/kg",
+                    suffixStyle: TextStyle(
+                      color: Colors.black
+                          .withOpacity(0.8), // Gray text with reduced opacity
+                      fontSize: 16,
                     ),
                   ),
                   keyboardType: TextInputType.number,

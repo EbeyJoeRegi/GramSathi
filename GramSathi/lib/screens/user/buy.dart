@@ -96,26 +96,54 @@ class _BuyScreenState extends State<BuyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Buy Crops")),
       body: Column(
         children: [
           // Dropdown for filtering
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: DropdownButton<String>(
-              value: dropdownValue,
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue = newValue!;
-                  fetchCrops(); // Fetch crops on selection change
-                });
-              },
-              items: <String>['My Village', 'All Villages', 'My Purchases']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            child: Container(
+              width: 380, // Set the desired width (e.g., 200 pixels)
+              decoration: BoxDecoration(
+                color: Colors.grey[200], // Background color of the dropdown
+                borderRadius: BorderRadius.circular(12), // Rounded corners
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3), // Shadow position
+                  ),
+                ],
+              ),
+              child: DropdownButtonHideUnderline(
+                // Hide the default underline
+                child: DropdownButton<String>(
+                  value: dropdownValue,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                      fetchCrops(); // Fetch crops on selection change
+                    });
+                  },
+                  items: <String>['My Village', 'All Villages', 'My Purchases']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(value),
+                      ),
+                    );
+                  }).toList(),
+                  style: TextStyle(
+                    color: Colors.black, // Text color
+                    fontSize: 16, // Font size
+                  ),
+                  icon: Icon(Icons.arrow_drop_down,
+                      color: Colors.black), // Dropdown icon
+                ),
+              ),
             ),
           ),
 
@@ -140,13 +168,40 @@ class _BuyScreenState extends State<BuyScreen> {
       itemBuilder: (context, index) {
         final crop = crops[index];
         String cropImage = cropImageMap[crop['cropname'].toLowerCase()] ??
-            'assets/vegetables/default1.jpg'; // Default image if not found
-        return ListTile(
-          leading:
-              Image.asset(cropImage, width: 50, height: 50, fit: BoxFit.cover),
-          title: Text(crop['cropname'] ?? 'Unknown Crop'),
-          subtitle: Text("₹${crop['price']}"),
-          onTap: () => showCropDetails(crop),
+            'assets/vegetables/default1.jpg';
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            // Wrap SizedBox in Center to adjust width
+            child: SizedBox(
+              width: 380, // Adjusted width
+              height: 80, // Adjusted height
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ListTile(
+                  contentPadding: EdgeInsets.all(8),
+                  leading: CircleAvatar(
+                    backgroundImage: AssetImage(cropImage),
+                    radius: 25, // Slightly smaller radius for image
+                  ),
+                  title: Text(crop['cropname'] ?? 'Unknown Crop'),
+                  subtitle: Text("₹${crop['price']}"),
+                  onTap: () => showCropDetails(crop),
+                ),
+              ),
+            ),
+          ),
         );
       },
     );
