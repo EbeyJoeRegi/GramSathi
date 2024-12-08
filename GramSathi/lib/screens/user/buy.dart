@@ -101,7 +101,7 @@ class _BuyScreenState extends State<BuyScreen> {
         children: [
           // Dropdown for filtering
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Container(
               width: 380, // Set the desired width (e.g., 200 pixels)
               decoration: BoxDecoration(
@@ -131,7 +131,7 @@ class _BuyScreenState extends State<BuyScreen> {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(value),
                       ),
                     );
@@ -170,19 +170,18 @@ class _BuyScreenState extends State<BuyScreen> {
         String cropImage = cropImageMap[crop['cropname'].toLowerCase()] ??
             'assets/vegetables/default1.jpg';
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(6.0),
           child: Center(
-            // Wrap SizedBox in Center to adjust width
             child: SizedBox(
               width: 380, // Adjusted width
               height: 80, // Adjusted height
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: Color(0xffF7F2FA),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withOpacity(0.6),
                       spreadRadius: 2,
                       blurRadius: 5,
                       offset: Offset(0, 3),
@@ -190,13 +189,28 @@ class _BuyScreenState extends State<BuyScreen> {
                   ],
                 ),
                 child: ListTile(
-                  contentPadding: EdgeInsets.all(8),
+                  contentPadding: EdgeInsets.only(left: 20, top: 5),
                   leading: CircleAvatar(
                     backgroundImage: AssetImage(cropImage),
                     radius: 25, // Slightly smaller radius for image
                   ),
                   title: Text(crop['cropname'] ?? 'Unknown Crop'),
-                  subtitle: Text("₹${crop['price']}"),
+                  subtitle: Row(
+                    children: [
+                      Text(
+                        "₹${crop['price']}",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      SizedBox(width: 4), // Space between price and /kg
+                      Text(
+                        "/kg",
+                        style: TextStyle(
+                          color: Colors.black, // Light gray color
+                          fontSize: 14, // Slightly smaller font size
+                        ),
+                      ),
+                    ],
+                  ),
                   onTap: () => showCropDetails(crop),
                 ),
               ),

@@ -85,6 +85,9 @@ class _SellScreenState extends State<SellScreen> {
   }
 
   void showAddCropPopup(BuildContext context) {
+    setState(() {
+      selectedCrop = null;
+    });
     final TextEditingController quantityController = TextEditingController();
     final TextEditingController priceController = TextEditingController();
 
@@ -104,22 +107,60 @@ class _SellScreenState extends State<SellScreen> {
               children: [
                 // Crop name dropdown
                 allCrops.isNotEmpty
-                    ? DropdownButton<String>(
-                        value: selectedCrop,
-                        isExpanded: true,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedCrop = newValue!;
-                          });
-                        },
-                        items: allCrops
-                            .map<DropdownMenuItem<String>>((String crop) {
-                          return DropdownMenuItem<String>(
-                            value: crop,
-                            child: Text(crop),
-                          );
-                        }).toList(),
-                        icon: Icon(Icons.arrow_drop_down),
+                    ? Container(
+                        height: 55,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0), // Inner padding
+                        decoration: BoxDecoration(
+                          color: Color(
+                              0xffFEF7FF), // Background color for the rectangle
+                          borderRadius:
+                              BorderRadius.circular(8), // Rounded corners
+                          border: Border.all(
+                            color: Colors.grey, // Border color
+                            width: 2, // Border width
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value:
+                                selectedCrop, // Null initially to show the hint
+                            isExpanded: true,
+                            hint: Text(
+                              "Select a crop", // Placeholder text
+                              style: TextStyle(
+                                fontSize: 16, // Placeholder text size
+                                color: Colors.grey, // Placeholder text color
+                              ),
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCrop =
+                                    newValue; // Update the selected crop
+                              });
+                            },
+                            items: allCrops
+                                .map<DropdownMenuItem<String>>((String crop) {
+                              return DropdownMenuItem<String>(
+                                value: crop,
+                                child: Text(
+                                  crop,
+                                  style: TextStyle(
+                                    fontSize: 16, // Text size
+                                    color: Colors.black
+                                        .withOpacity(0.6), // Text color
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black, // Icon color
+                            ),
+                            dropdownColor:
+                                Colors.grey[200], // Dropdown background color
+                          ),
+                        ),
                       )
                     : CircularProgressIndicator(), // Show loading indicator while fetching crops
                 SizedBox(height: 10),
