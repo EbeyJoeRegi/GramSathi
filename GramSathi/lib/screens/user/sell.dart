@@ -85,11 +85,10 @@ class _SellScreenState extends State<SellScreen> {
   }
 
   void showAddCropPopup(BuildContext context) {
-    setState(() {
-      selectedCrop = null;
-    });
     final TextEditingController quantityController = TextEditingController();
     final TextEditingController priceController = TextEditingController();
+
+    selectedCrop = null; // Ensure the initial value is null
 
     showDialog(
       context: context,
@@ -101,118 +100,128 @@ class _SellScreenState extends State<SellScreen> {
             "Add New Crop",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Crop name dropdown
-                allCrops.isNotEmpty
-                    ? Container(
-                        height: 55,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 18.0), // Inner padding
-                        decoration: BoxDecoration(
-                          color: Color(
-                              0xffFEF7FF), // Background color for the rectangle
-                          borderRadius:
-                              BorderRadius.circular(8), // Rounded corners
-                          border: Border.all(
-                            color: Colors.grey, // Border color
-                            width: 2, // Border width
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value:
-                                selectedCrop, // Null initially to show the hint
-                            isExpanded: true,
-                            hint: Text(
-                              "Select a crop", // Placeholder text
-                              style: TextStyle(
-                                fontSize: 16, // Placeholder text size
-                                color: Colors.grey, // Placeholder text color
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setDialogState) {
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Crop name dropdown
+                    allCrops.isNotEmpty
+                        ? Container(
+                            height: 55,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xffFEF7FF),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 2,
                               ),
                             ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedCrop =
-                                    newValue; // Update the selected crop
-                              });
-                            },
-                            items: allCrops
-                                .map<DropdownMenuItem<String>>((String crop) {
-                              return DropdownMenuItem<String>(
-                                value: crop,
-                                child: Text(
-                                  crop,
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: selectedCrop,
+                                isExpanded: true,
+                                hint: Text(
+                                  "Select a crop",
                                   style: TextStyle(
-                                    fontSize: 16, // Text size
-                                    color: Colors.black
-                                        .withOpacity(0.6), // Text color
+                                    fontSize: 16,
+                                    color: Colors.grey,
                                   ),
                                 ),
-                              );
-                            }).toList(),
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.black, // Icon color
+                                onChanged: (String? newValue) {
+                                  setDialogState(() {
+                                    selectedCrop = newValue;
+                                  });
+                                },
+                                items: [
+                                  DropdownMenuItem<String>(
+                                    value: null,
+                                    child: Text(
+                                      "Select a crop",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  ...allCrops.map<DropdownMenuItem<String>>(
+                                    (String crop) {
+                                      return DropdownMenuItem<String>(
+                                        value: crop,
+                                        child: Text(
+                                          crop,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color:
+                                                Colors.black.withOpacity(0.6),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                ],
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.black,
+                                ),
+                                dropdownColor: Colors.grey[200],
+                              ),
                             ),
-                            dropdownColor:
-                                Colors.grey[200], // Dropdown background color
-                          ),
+                          )
+                        : CircularProgressIndicator(),
+                    SizedBox(height: 10),
+
+                    // Quantity input
+                    TextField(
+                      controller: quantityController,
+                      decoration: InputDecoration(
+                        labelText: "Quantity",
+                        prefixIcon: Icon(Icons.bar_chart),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      )
-                    : CircularProgressIndicator(), // Show loading indicator while fetching crops
-                SizedBox(height: 10),
+                        suffixText: "kg",
+                        suffixStyle: TextStyle(
+                          color: Colors.black.withOpacity(0.8),
+                          fontSize: 16,
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
 
-                // Quantity input
-                TextField(
-                  controller: quantityController,
-                  decoration: InputDecoration(
-                    labelText: "Quantity",
-                    prefixIcon: Icon(Icons.bar_chart),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    SizedBox(height: 10),
+
+                    // Price input
+                    TextField(
+                      controller: priceController,
+                      decoration: InputDecoration(
+                        labelText: "Price",
+                        prefixIcon: Icon(Icons.currency_rupee),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        suffixText: "/kg",
+                        suffixStyle: TextStyle(
+                          color: Colors.black.withOpacity(0.8),
+                          fontSize: 16,
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
                     ),
-                    suffixText: "kg",
-                    suffixStyle: TextStyle(
-                      color: Colors.black
-                          .withOpacity(0.8), // Gray text with reduced opacity
-                      fontSize: 16, // Adjust font size if needed
+                    SizedBox(height: 10),
+
+                    // Note at the bottom
+                    Text(
+                      "If the crop you want to sell is not listed, please suggest it.",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
-                  ),
-                  keyboardType: TextInputType.number,
+                  ],
                 ),
-
-                SizedBox(height: 10),
-
-                // Price input
-                TextField(
-                  controller: priceController,
-                  decoration: InputDecoration(
-                    labelText: "Price",
-                    prefixIcon: Icon(Icons.currency_rupee),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    suffixText: "/kg",
-                    suffixStyle: TextStyle(
-                      color: Colors.black
-                          .withOpacity(0.8), // Gray text with reduced opacity
-                      fontSize: 16,
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(height: 10),
-
-                // Note at the bottom
-                Text(
-                  "If the crop you want to sell is not listed, please suggest it.",
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
+              );
+            },
           ),
           actions: [
             TextButton(
@@ -221,11 +230,46 @@ class _SellScreenState extends State<SellScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Make sure the state values are used correctly when adding a crop
+                // Input Validation
+                final double? quantity =
+                    double.tryParse(quantityController.text);
+                final double? price = double.tryParse(priceController.text);
+
+                if (selectedCrop == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Please select a crop before adding."),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  return;
+                }
+
+                if (quantity == null || quantity <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Please enter a valid quantity."),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  return;
+                }
+
+                if (price == null || price <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Please enter a valid price."),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  return;
+                }
+
+                // Proceed if all validations pass
                 addNewCrop(
                   selectedCrop ?? "",
-                  double.tryParse(quantityController.text) ?? 0,
-                  double.tryParse(priceController.text) ?? 0.0,
+                  quantity,
+                  price,
                 );
                 Navigator.pop(context);
               },

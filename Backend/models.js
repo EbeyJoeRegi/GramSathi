@@ -15,6 +15,15 @@ const userSchema = new mongoose.Schema({
     raID: { type: String, unique: true, required: true }
 });
 
+const imageSchema = new mongoose.Schema({
+    id: { type: Number, unique: true },
+    name: String,
+    img: {
+        data: Buffer,
+        contentType: String
+    }
+});
+
 const announcementSchema = new mongoose.Schema({
     id: { type: Number, unique: true },    
     admin: String,
@@ -106,6 +115,7 @@ const Counter = mongoose.model('Counter', counterSchema);
 const Weather = mongoose.model('Weather', weatherSchema);
 const Sell = mongoose.model('Sell', sellSchema);
 const Buy = mongoose.model('Buy', buySchema);
+const Image = mongoose.model('Image', imageSchema);
 
 module.exports = {
     User,
@@ -119,4 +129,5 @@ module.exports = {
     Sell,
     Buy,
     Weather,
+    Image,
 };
