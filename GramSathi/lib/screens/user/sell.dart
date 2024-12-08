@@ -395,7 +395,7 @@ class _SellScreenState extends State<SellScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sell Crops")),
+      //appBar: AppBar(title: Text("Sell Crops")),
       body: Column(
         children: [
           buildDropdown(),
