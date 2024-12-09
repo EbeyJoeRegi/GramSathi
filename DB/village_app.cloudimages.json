@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "6756cb992556822f1b1ca7eb"
+  },
+  "id": 1,
+  "name": "uploads/ospxqw0r6ogv1ugskyzu",
+  "img": {
+    "data": "https://res.cloudinary.com/dky376q0f/image/upload/v1733741466/uploads/ospxqw0r6ogv1ugskyzu.png",
+    "contentType": "image/png"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6756cba82556822f1b1ca7ef"
+  },
+  "id": 2,
+  "name": "uploads/ed2gmkvk7wxcjjtdgmug",
+  "img": {
+    "data": "https://res.cloudinary.com/dky376q0f/image/upload/v1733741482/uploads/ed2gmkvk7wxcjjtdgmug.png",
+    "contentType": "image/png"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6756fb0e613b53acc79276af"
+  },
+  "id": 8,
+  "name": "uploads/izm5e1nuyme6t4owhfay",
+  "img": {
+    "data": "https://res.cloudinary.com/dky376q0f/image/upload/v1733753615/uploads/izm5e1nuyme6t4owhfay.jpg",
+    "contentType": "application/octet-stream"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67571e2a613b53acc792770c"
+  },
+  "id": 11,
+  "name": "uploads/ns0dcazvhn68gqqecsxf",
+  "img": {
+    "data": "https://res.cloudinary.com/dky376q0f/image/upload/v1733762603/uploads/ns0dcazvhn68gqqecsxf.jpg",
+    "contentType": "application/octet-stream"
+  },
+  "__v": 0
+}]

@@ -4,7 +4,7 @@
 },
 {
   "_id": "announcements",
-  "sequence_value": 36
+  "sequence_value": 37
 },
 {
   "_id": "crop",
@@ -16,11 +16,11 @@
 },
 {
   "_id": "queries",
-  "sequence_value": 24
+  "sequence_value": 27
 },
 {
   "_id": "suggestions",
-  "sequence_value": 21
+  "sequence_value": 24
 },
 {
   "_id": "users",
@@ -29,4 +29,16 @@
 {
   "_id": "weather",
   "sequence_value": 20
+},
+{
+  "_id": "Sell",
+  "sequence_value": 44
+},
+{
+  "_id": "Buy",
+  "sequence_value": 6
+},
+{
+  "_id": "image",
+  "sequence_value": 12
 }]

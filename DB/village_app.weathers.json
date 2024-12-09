@@ -4,13 +4,13 @@
   },
   "id": 11,
   "username": "user",
-  "temperature": "25.2°C",
+  "temperature": "27.4°C",
   "weatherCondition": "Clouds",
   "lastUpdated": {
-    "$date": "2024-11-26T17:27:30.578Z"
+    "$date": "2024-12-09T13:56:29.887Z"
   },
   "__v": 0,
-  "city": "Azhikkal"
+  "city": "Mangalore"
 },
 {
   "_id": {
@@ -18,11 +18,11 @@
   },
   "id": 19,
   "username": "ebeyjoeregi",
-  "temperature": "12.3°C",
-  "weatherCondition": "Rain",
-  "city": "Mountain View",
+  "temperature": "26.4°C",
+  "weatherCondition": "Clouds",
+  "city": "Mangalore",
   "lastUpdated": {
-    "$date": "2024-11-26T17:33:27.572Z"
+    "$date": "2024-12-09T17:52:07.119Z"
   },
   "__v": 0
 },
@@ -32,11 +32,11 @@
   },
   "id": 20,
   "username": "suryakumar",
-  "temperature": "12.4°C",
-  "weatherCondition": "Rain",
-  "city": "Mountain View",
+  "temperature": "30.4°C",
+  "weatherCondition": "Clouds",
+  "city": "Mangalore",
   "lastUpdated": {
-    "$date": "2024-11-26T17:38:44.656Z"
+    "$date": "2024-12-06T09:18:05.334Z"
   },
   "__v": 0
 }]

@@ -216,4 +216,43 @@
     "$date": "2024-11-23T08:27:50.234Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "675291c9133bdd180aa05be3"
+  },
+  "id": 25,
+  "username": "ebeyjoeregi",
+  "type": 1,
+  "matter": "bkjbnk",
+  "time": {
+    "$date": "2024-12-06T05:55:21.347Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752ac103eabe1236f9ab851"
+  },
+  "id": 26,
+  "username": "ebeyjoeregi",
+  "type": 1,
+  "matter": "asfsafas",
+  "time": {
+    "$date": "2024-12-06T07:47:28.829Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752ac163eabe1236f9ab856"
+  },
+  "id": 27,
+  "username": "ebeyjoeregi",
+  "type": 2,
+  "matter": "aaaaaa",
+  "time": {
+    "$date": "2024-12-06T07:47:34.253Z"
+  },
+  "__v": 0
 }]

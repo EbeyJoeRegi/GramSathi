@@ -11,4 +11,18 @@
     "$date": "2024-12-01T08:26:59.764Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752bfb3e77179a7e8ddb591"
+  },
+  "id": 6,
+  "buyername": "ebeyjoeregi",
+  "sell_id": 1,
+  "sellername": "user",
+  "buy": false,
+  "date": {
+    "$date": "2024-12-06T09:02:38.821Z"
+  },
+  "__v": 0
 }]

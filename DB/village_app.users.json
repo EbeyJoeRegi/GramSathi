@@ -12,7 +12,8 @@
   "activation": 1,
   "email": "president@villageapp.com",
   "id": 1,
-  "raID": "mglr8520"
+  "raID": "mglr8520",
+  "photoID": 2
 },
 {
   "_id": {
@@ -28,7 +29,8 @@
   "activation": 1,
   "email": "aju@gmail.com",
   "id": 2,
-  "raID": "mglr9874"
+  "raID": "mglr9874",
+  "photoID": 1
 },
 {
   "_id": {
@@ -37,14 +39,15 @@
   "username": "user",
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
   "user_type": "user",
-  "name": "User Home",
+  "name": "User",
   "phone": "1234567891",
   "address": "Mangalore (Dakshin Kannada)",
-  "job_title": "User Work",
+  "job_title": "User World",
   "activation": 1,
   "email": "user@user.co.in",
   "id": 4,
-  "raID": "mglr7410"
+  "raID": "mglr7410",
+  "photoID": 5
 },
 {
   "_id": {
@@ -60,7 +63,8 @@
   "activation": 1,
   "email": "admin@example.com",
   "id": 5,
-  "raID": "mglr7309"
+  "raID": "mglr7309",
+  "photoID": 2
 },
 {
   "_id": {
@@ -74,9 +78,10 @@
   "address": "Kannur",
   "job_title": "Farmer",
   "activation": 1,
-  "email": "ebeyjoeregi@gmail.co",
+  "email": "ebeyjoeregi@gmail.com",
   "id": 6,
-  "raID": "mglr1234"
+  "raID": "mglr1234",
+  "photoID": 12
 },
 {
   "_id": {
@@ -92,7 +97,8 @@
   "activation": 0,
   "email": "anjalita@sjec.ac.in",
   "id": 7,
-  "raID": "mglr1245"
+  "raID": "mglr1245",
+  "photoID": 1
 },
 {
   "_id": {
@@ -103,12 +109,13 @@
   "user_type": "admin",
   "name": "Veena Vijayan",
   "phone": "9874563210",
-  "address": "Thenguparambil House",
+  "address": "Kannur",
   "job_title": "Secretary",
   "activation": 1,
   "email": "secretary@villageapp.com",
   "id": 8,
-  "raID": "mglr6541"
+  "raID": "mglr6541",
+  "photoID": 12
 },
 {
   "_id": {
@@ -124,7 +131,8 @@
   "activation": 1,
   "email": "treasurer@villageapp.com",
   "id": 9,
-  "raID": "mglr6001"
+  "raID": "mglr6001",
+  "photoID": 12
 },
 {
   "_id": {
@@ -140,7 +148,8 @@
   "activation": 0,
   "email": "edwinregi@gmail.com",
   "id": 10,
-  "raID": "mglr8650"
+  "raID": "mglr8650",
+  "photoID": 1
 },
 {
   "_id": {
@@ -157,7 +166,8 @@
   "user_type": "user",
   "__v": 0,
   "id": 11,
-  "raID": "mglr6915"
+  "raID": "mglr6915",
+  "photoID": 1
 },
 {
   "_id": {
@@ -174,7 +184,8 @@
   "activation": 0,
   "user_type": "user",
   "__v": 0,
-  "raID": "mglr5624"
+  "raID": "mglr5624",
+  "photoID": 1
 },
 {
   "_id": {
@@ -191,7 +202,8 @@
   "activation": 1,
   "user_type": "user",
   "raID": "mglr8513",
-  "__v": 0
+  "__v": 0,
+  "photoID": 1
 },
 {
   "_id": {
@@ -208,7 +220,8 @@
   "activation": 0,
   "user_type": "user",
   "raID": "mglr9870",
-  "__v": 0
+  "__v": 0,
+  "photoID": 1
 },
 {
   "_id": {
@@ -225,5 +238,6 @@
   "activation": 0,
   "user_type": "user",
   "raID": "mglr9860",
-  "__v": 0
+  "__v": 0,
+  "photoID": 1
 }]

@@ -212,4 +212,17 @@
     "$date": "2024-11-26T17:39:49.190Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674c267b8518db7028370ad0"
+  },
+  "id": 37,
+  "admin": "Admin Name",
+  "title": "tosay check",
+  "content": "adDA",
+  "created_at": {
+    "$date": "2024-12-01T09:03:55.550Z"
+  },
+  "__v": 0
 }]

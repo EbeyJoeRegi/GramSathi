@@ -117,4 +117,94 @@
     "$date": "2024-11-30T12:54:30.102Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752b2bd3eabe1236f9ab8e1"
+  },
+  "id": 33,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Tomato",
+  "quantity": 10,
+  "price": 25,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-12-06T08:15:57.941Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752b81e3eabe1236f9ab908"
+  },
+  "id": 34,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Arecanut",
+  "quantity": 10,
+  "price": 25,
+  "sold": true,
+  "date_updated": {
+    "$date": "2024-12-06T08:38:54.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752bd073eabe1236f9ab948"
+  },
+  "id": 35,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Pumpkin",
+  "quantity": 10,
+  "price": 56,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-12-06T08:59:51.416Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752bd853eabe1236f9ab953"
+  },
+  "id": 36,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Lemon",
+  "quantity": 58,
+  "price": 35,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-12-06T09:01:57.697Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752bd923eabe1236f9ab957"
+  },
+  "id": 37,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Pepper",
+  "quantity": 96,
+  "price": 56,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-12-06T09:02:10.907Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67555664eae15d61faa171dd"
+  },
+  "id": 39,
+  "sellername": "ebeyjoeregi",
+  "cropname": "Tomato",
+  "quantity": 10,
+  "price": 25,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-12-08T08:18:44.499Z"
+  },
+  "__v": 0
 }]

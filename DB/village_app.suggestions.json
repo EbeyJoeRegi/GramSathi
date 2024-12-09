@@ -90,4 +90,43 @@
     "$date": "2024-11-23T08:29:41.078Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752abff3eabe1236f9ab83b"
+  },
+  "id": 22,
+  "title": "dsgsd",
+  "content": "sddss",
+  "username": "ebeyjoeregi",
+  "created_at": {
+    "$date": "2024-12-06T07:47:11.697Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752ac043eabe1236f9ab842"
+  },
+  "id": 23,
+  "title": "dgdsd",
+  "content": "dsgsgg",
+  "username": "ebeyjoeregi",
+  "created_at": {
+    "$date": "2024-12-06T07:47:16.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6752ac0b3eabe1236f9ab849"
+  },
+  "id": 24,
+  "title": "aaaaaaaaaa",
+  "content": "aaaaaaa",
+  "username": "ebeyjoeregi",
+  "created_at": {
+    "$date": "2024-12-06T07:47:23.644Z"
+  },
+  "__v": 0
 }]

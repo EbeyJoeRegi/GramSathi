@@ -305,6 +305,7 @@ app.post('/login', async (req, res) => {
     const { name, phone, address, jobTitle, email, password, raID } = req.body; // Include RaID
     let username = name.toLowerCase().replace(/\s+/g, ''); // Generate username
     const userType = 'user'; // Default user type
+    const imageID = 1;
   
     try {
       const existingUser = await User.findOne({ raID }); // Check for existing RaID
@@ -332,6 +333,7 @@ app.post('/login', async (req, res) => {
         password: hashedPassword,
         user_type: userType,
         raID,
+        photoID:imageID,
       });
   
       await newUser.save();
