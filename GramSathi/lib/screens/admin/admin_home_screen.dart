@@ -168,9 +168,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         children: [
           // Background image with opacity
           Opacity(
-            opacity: 0.5, // Adjust the opacity value as needed
+            opacity: 0.9, // Adjust the opacity value as needed
             child: Image.asset(
-              'assets/images/admin.png',
+              'assets/images/bgvillage9.jpeg',
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
@@ -212,7 +212,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         ],
                       ),
                       backgroundColor:
-                          Colors.teal, // Set background to transparent
+                          Colors.white, // Set background to transparent
                       elevation: 0, // Remove shadow
                       automaticallyImplyLeading: false, // Disable back button
                     )
@@ -259,7 +259,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.teal,
+        selectedItemColor: Color(0xff005F3D),
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
@@ -285,35 +285,65 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           itemBuilder: (context, index) {
                             final user = _pendingUsers[index];
                             return Card(
+                              color: Colors
+                                  .transparent, // Make the card transparent
+                              elevation: 4, // Add shadow for better visibility
                               margin: EdgeInsets.symmetric(vertical: 8.0),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.all(16.0),
-                                title: Text(user['name']),
-                                subtitle:
-                                    Text('Occupation: ${user['job_title']}'),
-                                onTap: () {
-                                  _showUserDetails(
-                                      user); // Show the details in a dialog
-                                },
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.check,
-                                          color: Colors.green),
-                                      onPressed: () {
-                                        _updateUserActivation(user['id'], true);
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon:
-                                          Icon(Icons.close, color: Colors.red),
-                                      onPressed: () {
-                                        _updateUserActivation(
-                                            user['id'], false);
-                                      },
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Rounded corners
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(
+                                      0.8), // Semi-transparent white background
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
                                     ),
                                   ],
+                                ),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.all(16.0),
+                                  title: Text(
+                                    user['name'],
+                                    style: TextStyle(
+                                        color:
+                                            Colors.black), // Adjust text color
+                                  ),
+                                  subtitle: Text(
+                                    'Occupation: ${user['job_title']}',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  onTap: () {
+                                    _showUserDetails(
+                                        user); // Show the details in a dialog
+                                  },
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.check,
+                                            color: Colors.green),
+                                        onPressed: () {
+                                          _updateUserActivation(
+                                              user['id'], true);
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.close,
+                                            color: Colors.red),
+                                        onPressed: () {
+                                          _updateUserActivation(
+                                              user['id'], false);
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
