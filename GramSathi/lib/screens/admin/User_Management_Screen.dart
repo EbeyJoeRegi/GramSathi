@@ -121,7 +121,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('User Management'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xff015F3E),
       ),
       body: Stack(
         children: [

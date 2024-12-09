@@ -96,7 +96,7 @@ class _BuyScreenState extends State<BuyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Buy Crops")),
+      // appBar: AppBar(title: Text("Buy Crops")),
       body: Column(
         children: [
           // Dropdown for filtering

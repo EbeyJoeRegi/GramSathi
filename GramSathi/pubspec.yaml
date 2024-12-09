@@ -75,7 +75,8 @@ flutter:
     - assets\images\bg.jpg
     - assets\images\admin.png
     - assets\images\user.png
-    - assets\images\admin.png 
+    - assets\images\admin.png
+    - assets/images/admin2.jpg
     - assets/vegetables/arecaunut.jpg   
     - assets/images/bgleaf.jpg
     - assets/images/bgvillage.webp

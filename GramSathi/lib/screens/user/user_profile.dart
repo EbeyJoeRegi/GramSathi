@@ -112,12 +112,18 @@ class _UserProfilePageState extends State<UserProfilePage> {
       resizeToAvoidBottomInset:
           true, // Adjusts the body to avoid the keyboard overlay
       appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: Colors.teal,
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.white), // Set the text color to white
+        ),
+        backgroundColor: Color(0xff015F3E),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(_isEditing ? Icons.save : Icons.edit),
+            icon: Icon(
+              _isEditing ? Icons.save : Icons.edit,
+              color: Colors.white, // Set the color to white
+            ),
             onPressed: () {
               if (_isEditing) {
                 _updateUserData();
@@ -129,7 +135,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -161,16 +170,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   as ImageProvider,
                         ),
                         SizedBox(height: 16.0),
-                        _buildTextField('Name', _nameController,
-                            Color.fromARGB(255, 51, 138, 128)),
+                        _buildTextField(
+                            'Name', _nameController, Color(0xff015F3E), true),
                         _buildTextField('Phone Number', _phoneController,
-                            Color.fromARGB(255, 51, 138, 128)),
+                            Color(0xff015F3E), false),
                         _buildTextField('Address', _addressController,
-                            Color.fromARGB(255, 51, 138, 128)),
+                            Color(0xff015F3E), false),
                         _buildTextField('Job Title', _jobTitleController,
-                            Color.fromARGB(255, 51, 138, 128)),
+                            Color(0xff015F3E), true),
                         _buildTextField('Email', _emailController,
-                            Color.fromARGB(255, 51, 138, 128)),
+                            Color(0xff015F3E), false),
                       ],
                     ),
                   ),
@@ -178,8 +187,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget _buildTextField(
-      String label, TextEditingController controller, Color color) {
+  Widget _buildTextField(String label, TextEditingController controller,
+      Color color, bool isEditable) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
@@ -189,7 +198,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           labelStyle: TextStyle(color: color), // Change label color
           border: OutlineInputBorder(),
         ),
-        enabled: _isEditing,
+        enabled: isEditable ? _isEditing : false,
         style: TextStyle(color: color), // Change text color
       ),
     );
