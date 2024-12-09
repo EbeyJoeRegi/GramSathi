@@ -5,7 +5,8 @@ import 'dart:convert';
 import '/config.dart';
 
 class ImportantContactsScreen extends StatefulWidget {
-  const ImportantContactsScreen({super.key});
+  final String username;
+  ImportantContactsScreen({required this.username});
 
   @override
   _ImportantContactsScreenState createState() =>
@@ -23,7 +24,8 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
 
   Future<void> _fetchAdminContacts() async {
     try {
-      final response = await http.get(Uri.parse('${AppConfig.baseUrl}/admins'));
+      final response = await http.get(
+          Uri.parse('${AppConfig.baseUrl}/admins?username=${widget.username}'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -47,6 +49,10 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  String _getProfileImageUrl(int photoId) {
+    return '${AppConfig.baseUrl}/image/$photoId';
   }
 
   @override
@@ -84,15 +90,25 @@ class _ImportantContactsScreenState extends State<ImportantContactsScreen> {
                 ),
               ),
               ...adminContacts.map((admin) {
+                final int? photoId = admin['photoID'];
                 return Card(
                   margin: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     height: 80, // Increase the height as needed
                     child: Center(
                       child: ListTile(
-                        leading: const Icon(Icons.person,
-                            color: Color(0xff015F3E), size: 40), // Random icon
-                        title: Text(admin['name']),
+                        leading: CircleAvatar(
+                          radius: 25, // Slightly increased the radius
+                          backgroundColor: Colors.grey[200],
+                          backgroundImage: photoId != null
+                              ? NetworkImage(_getProfileImageUrl(photoId))
+                              : null,
+                          child: photoId == null
+                              ? const Icon(Icons.person,
+                                  color: Color(0xff015F3E), size: 40)
+                              : null,
+                        ),
+                        title: Text(admin['name'] ?? 'No Name'),
                         subtitle: Text(admin['job_title'] ?? 'No Job Title'),
                         onTap: () => _makePhoneCall(admin['phone']),
                         contentPadding:

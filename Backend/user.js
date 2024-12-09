@@ -343,14 +343,31 @@ router.get('/queries', async (req, res) => {
 // Fetch all admins
 router.get('/admins', async (req, res) => {
   try {
-    // Assuming there is a 'users' collection with a 'user_type' field for admins
-    const admins = await User.find({ user_type: 'admin' }).select('name phone job_title');
+    // Assuming 'username' is passed as a query parameter, and 'address' is associated with the user in the database
+    const { username } = req.query;
+    
+    // Fetch the user with the given username to get their address
+    const user = await User.findOne({ username });
+    
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Assuming there's an 'address' field associated with the user
+    const { address } = user;
+
+    // Now query admins for the same address
+    const admins = await User.find({ user_type: 'admin', address })
+      .select('name phone job_title photoID');
+
+    // Send the response
     res.json(admins);
   } catch (err) {
     console.error('Error fetching admin contacts:', err);
     res.status(500).send('Server error');
   }
 });
+
 
 // User profile endpoint
 router.get('/user/profile', async (req, res) => {
@@ -367,14 +384,59 @@ router.get('/user/profile', async (req, res) => {
 
 // Update user profile endpoint
 router.put('/user/profile/update', async (req, res) => {
-  const { username, name, phone, address, jobTitle, email } = req.body;
+  const { username, name, jobTitle } = req.query;
+
+  if (!username || !name || !jobTitle) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
 
   try {
-    await User.findOneAndUpdate({ username }, { name, phone, address, job_title: jobTitle, email });
-    res.status(200).json({ message: 'Profile updated successfully' });
+    const updatedUser = await User.findOneAndUpdate(
+      { username },
+      { name, job_title: jobTitle },
+      { new: true } // Return updated user
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.status(200).json({message: "user profile updated"});
   } catch (err) {
-    console.error('Error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.put('/user/profile/photo', async (req, res) => {
+  try {
+      const { username, newImageID } = req.body;
+
+      if (!username || !newImageID) {
+          return res.status(400).json({ error: "Username and newImageID are required" });
+      }
+
+      // Fetch the user profile
+      const user = await User.findOne({ username });
+      if (!user) {
+          return res.status(404).json({ error: "User not found" });
+      }
+
+      const currentPhotoID = user.photoID;
+
+      if (currentPhotoID !== 2) {
+          // Delete the old image from the database
+          await Image.deleteOne({ id: currentPhotoID });
+      }
+
+      // Update user's profile with the new image ID
+      user.photoID = newImageID;
+      await user.save();
+
+      res.status(200).json({ message: "User profile updated with new photoID" });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to update user profile" });
   }
 });
 

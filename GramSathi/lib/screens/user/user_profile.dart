@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import '/config.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -14,9 +16,9 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   bool _isEditing = false;
-  Map<String, dynamic> _userData = {};
   bool _isLoading = true;
   String _errorMessage = '';
+  ImageProvider? _profileImage;
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -30,100 +32,211 @@ class _UserProfilePageState extends State<UserProfilePage> {
     _fetchUserData();
   }
 
+  Future<void> updateProfilePicture(String username, int newImageID) async {
+    try {
+      final response = await http.put(
+        Uri.parse('${AppConfig.baseUrl}/user/profile/photo'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'username': username,
+          'newImageID': newImageID,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Profile picture updated successfully');
+      } else {
+        print('Failed to update profile picture: ${response.body}');
+      }
+    } catch (e) {
+      print('Error updating profile picture: $e');
+    }
+  }
+
   Future<void> _fetchUserData() async {
     try {
-      print('Fetching data for username: ${widget.username}');
       final response = await http.get(
         Uri.parse(
             '${AppConfig.baseUrl}/user/profile?username=${widget.username}'),
       );
 
-      print('Response status: ${response.statusCode}');
-      //print('Response body: ${response.body}');
-
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+
         setState(() {
-          _userData = data;
           _nameController.text = data['name'] ?? '';
           _phoneController.text = data['phone'] ?? '';
           _addressController.text = data['address'] ?? '';
           _jobTitleController.text = data['job_title'] ?? '';
           _emailController.text = data['email'] ?? '';
-          _isLoading = false;
         });
+
+        if (data['photoID'] != null) {
+          await _fetchUserProfileImage(data['photoID']);
+        }
       } else if (response.statusCode == 404) {
         setState(() {
           _errorMessage = 'User not found. Please check the username.';
-          _isLoading = false;
         });
       } else {
         setState(() {
           _errorMessage = 'Failed to load user data: ${response.statusCode}';
-          _isLoading = false;
         });
       }
     } catch (e) {
-      print('Error fetching user data: $e');
       setState(() {
         _errorMessage = 'An error occurred while fetching user data: $e';
+      });
+    } finally {
+      setState(() {
         _isLoading = false;
       });
     }
   }
 
-  Future<void> _updateUserData() async {
+  //fetching from DB
+  Future<void> _fetchUserProfileImage(int photoID) async {
     try {
-      final response = await http.put(
-        Uri.parse('${AppConfig.baseUrl}/user/profile/update'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'username': widget.username,
-          'name': _nameController.text,
-          'phone': _phoneController.text,
-          'address': _addressController.text,
-          'job_title': _jobTitleController.text,
-          'email': _emailController.text,
-        }),
+      final response = await http.get(
+        Uri.parse('${AppConfig.baseUrl}/image/$photoID'),
       );
 
       if (response.statusCode == 200) {
         setState(() {
-          _isEditing = false;
-          _fetchUserData(); // Refresh user data
-        });
-      } else {
-        setState(() {
-          _errorMessage = 'Failed to update user data: ${response.statusCode}';
+          _profileImage = MemoryImage(response.bodyBytes);
         });
       }
     } catch (e) {
-      setState(() {
-        _errorMessage = 'An error occurred while updating user data: $e';
-      });
+      print('Error fetching profile image: $e');
+    }
+  }
+
+  //fetching from Cloudinary url
+  // Future<void> _fetchUserProfileImage(int photoID) async {
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse('${AppConfig.baseUrl}/cloud_image/$photoID'),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       if (response.headers['content-type']?.startsWith('application/json') ??
+  //           false) {
+  //         final data = jsonDecode(response.body);
+  //         final imageUrl =
+  //             data['url']; // Assuming the 'url' is part of the response
+
+  //         // Fetch the image from the URL in case of the second API format
+  //         final imageResponse = await http.get(Uri.parse(imageUrl));
+  //         if (imageResponse.statusCode == 200) {
+  //           setState(() {
+  //             _profileImage = MemoryImage(
+  //                 imageResponse.bodyBytes); // Use image bytes from URL
+  //           });
+  //         } else {
+  //           print('Failed to fetch image from URL');
+  //         }
+  //       }
+  //     } else {
+  //       print('Failed to fetch image: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching profile image: $e');
+  //   }
+  // }
+
+  Future<void> _updateUserData() async {
+    try {
+      final uri = Uri.parse('${AppConfig.baseUrl}/user/profile/update'
+          '?username=${Uri.encodeComponent(widget.username)}'
+          '&name=${Uri.encodeComponent(_nameController.text)}'
+          '&jobTitle=${Uri.encodeComponent(_jobTitleController.text)}');
+
+      final response = await http.put(uri);
+
+      if (response.statusCode == 200) {
+        await _fetchUserData();
+        setState(() {
+          _isEditing = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User data updated successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update user data')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An unexpected error occurred')),
+      );
+    }
+  }
+
+  Future<void> _pickAndUploadImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final file = File(pickedFile.path);
+
+      try {
+        //Upload the image to DB
+        final request = http.MultipartRequest(
+          'POST',
+          Uri.parse('${AppConfig.baseUrl}/upload'),
+        );
+
+        //Upload the image to Cloudinary
+        // final request = http.MultipartRequest(
+        //   'POST',
+        //   Uri.parse('${AppConfig.baseUrl}/cloud_upload'),
+        // );
+
+        request.files.add(
+          await http.MultipartFile.fromPath(
+              'image', file.path), // Ensure the field name matches the backend
+        );
+
+        final response = await request.send();
+
+        if (response.statusCode == 200) {
+          final responseBody = await response.stream.bytesToString();
+          final responseData = json.decode(responseBody);
+          final newImageID = responseData['imageId'];
+
+          // Step 2: Call the updateProfilePicture function
+          await updateProfilePicture(widget.username, newImageID);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Profile picture updated successfully')),
+          );
+
+          // Step 3: Refresh user data to reflect the changes
+          await _fetchUserData();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to upload profile picture')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred during upload: $e')),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset:
-          true, // Adjusts the body to avoid the keyboard overlay
       appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: TextStyle(color: Colors.white), // Set the text color to white
-        ),
+        title: Text('Profile', style: TextStyle(color: Colors.white)),
         backgroundColor: Color(0xff015F3E),
-        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(
-              _isEditing ? Icons.save : Icons.edit,
-              color: Colors.white, // Set the color to white
-            ),
+            icon:
+                Icon(_isEditing ? Icons.save : Icons.edit, color: Colors.white),
             onPressed: () {
               if (_isEditing) {
                 _updateUserData();
@@ -135,10 +248,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             },
           ),
           IconButton(
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
-            ),
+            icon: Icon(Icons.home, color: Colors.white),
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -162,12 +272,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 75, // Increased size
-                          backgroundImage: _userData['dpUrl'] != null
-                              ? NetworkImage(_userData['dpUrl'])
-                              : AssetImage('assets/images/user.jpg')
-                                  as ImageProvider,
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            CircleAvatar(
+                              radius: 75,
+                              backgroundImage: _profileImage ??
+                                  AssetImage('assets/images/user.jpg'),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.camera_alt, color: Colors.white),
+                              onPressed: _pickAndUploadImage,
+                            ),
+                          ],
                         ),
                         SizedBox(height: 16.0),
                         _buildTextField(
@@ -195,11 +312,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: color), // Change label color
+          labelStyle: TextStyle(color: color),
           border: OutlineInputBorder(),
         ),
         enabled: isEditable ? _isEditing : false,
-        style: TextStyle(color: color), // Change text color
+        style: TextStyle(color: color),
       ),
     );
   }

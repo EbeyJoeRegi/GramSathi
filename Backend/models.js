@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
     password: String,
     activation: { type: Number, default: 0 },
     user_type: { type: String, default: 'user' },
-    raID: { type: String, unique: true, required: true }
+    raID: { type: String, unique: true, required: true },
+    photoID: Number
 });
 
 const imageSchema = new mongoose.Schema({

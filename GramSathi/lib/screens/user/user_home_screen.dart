@@ -302,7 +302,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           MarketUpdatesScreen(username: widget.username),
           FeedbackHub(username: widget.username),
           ExchangeZone(username: widget.username),
-          ImportantContactsScreen(),
+          ImportantContactsScreen(username: widget.username),
         ],
       ),
       bottomNavigationBar: Container(
