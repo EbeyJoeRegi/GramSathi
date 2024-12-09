@@ -25,10 +25,12 @@ mongoose.connect('mongodb://localhost:27017/village_app')
 // Import routes
 const userRoutes = require('./user');
 const adminRoutes = require('./admin');
+const imageRoutes = require('./image');
 
 // Use routes
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
+app.use('/', imageRoutes);
 
 const getNextSequenceValue = async (sequenceName) => {
     const sequenceDocument = await Counter.findById(sequenceName);

@@ -1,8 +1,6 @@
 const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
-const multer = require('multer');
-const fs = require('fs');
 const router = express.Router();
 const { User, Announcement, Suggestion, Query, Place, Crop, Price, Counter, Weather, Sell, Buy, Image } = require('./models');
 
@@ -706,59 +704,6 @@ router.delete('/notify/:id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
-  }
-});
-
-// Multer Configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
-const upload = multer({ storage });
-
-// API Endpoint to Accept and Store Image
-router.post('/upload', upload.single('image'), async (req, res) => {
-  try {
-    const { filename, mimetype, path } = req.file;
-    const imageId = await getNextSequenceValue('image');
-    // Save to MongoDB
-    const img = new Image({
-      id: imageId,
-      name: filename,
-      img: {
-        data: fs.readFileSync(path),
-        contentType: mimetype
-      }
-    });
-
-    await img.save();
-
-    // Delete file from local storage after saving to MongoDB
-    fs.unlinkSync(path);
-
-    res.status(200).json({ message: "Image uploaded and stored in MongoDB", imageId: img.id });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to upload image" });
-  }
-});
-
-// Retrieve an Image
-router.get('/image/:id', async (req, res) => {
-  try {
-    const image = await Image.findById(req.params.id);
-    if (!image) return res.status(404).json({ error: "Image not found" });
-
-    res.set('Content-Type', image.img.contentType);
-    res.send(image.img.data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to retrieve image" });
   }
 });
 
