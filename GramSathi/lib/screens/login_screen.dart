@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'admin/admin_home_screen.dart';
+import 'administrator/Village_Admin.dart';
 import 'user/user_home_screen.dart';
 import 'signup_screen.dart';
 import '/config.dart';
@@ -72,6 +73,13 @@ class _LoginScreenState extends State<LoginScreen>
               context,
               MaterialPageRoute(
                 builder: (context) => AdminHomeScreen(username: username),
+              ),
+            );
+          } else if (userType == 'administrator') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VillageAdminPage(username: username),
               ),
             );
           } else {
