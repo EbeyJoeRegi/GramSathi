@@ -7,7 +7,7 @@
   "user_type": "admin",
   "name": "Alexander",
   "phone": "9874563210",
-  "address": "Village Home",
+  "address": "Bangalore",
   "job_title": "President",
   "activation": 1,
   "email": "president@villageapp.com",
@@ -21,10 +21,10 @@
   },
   "username": "aju",
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
-  "user_type": "user",
+  "user_type": "administrator",
   "name": "Aju Thomas",
   "phone": "9874563210",
-  "address": "Mary Hill",
+  "address": "Karnataka",
   "job_title": "Student",
   "activation": 1,
   "email": "aju@gmail.com",
@@ -59,7 +59,7 @@
   "name": "Admin Name",
   "phone": "1234567890",
   "address": "Mangalore (Dakshin Kannada)",
-  "job_title": "Administrator",
+  "job_title": "President",
   "activation": 1,
   "email": "admin@example.com",
   "id": 5,
@@ -75,7 +75,7 @@
   "user_type": "user",
   "name": "Ebey Joe Regi",
   "phone": "9497698743",
-  "address": "Kannur",
+  "address": "Bangalore",
   "job_title": "Farmer",
   "activation": 1,
   "email": "ebeyjoeregi@gmail.com",
@@ -92,7 +92,7 @@
   "user_type": "user",
   "name": "Anjalita",
   "phone": "987456321",
-  "address": "Surathkal",
+  "address": "Shimoga",
   "job_title": "Farmer",
   "activation": 0,
   "email": "anjalita@sjec.ac.in",
@@ -109,8 +109,8 @@
   "user_type": "admin",
   "name": "Veena Vijayan",
   "phone": "9874563210",
-  "address": "Kannur",
-  "job_title": "Secretary",
+  "address": "Shimoga",
+  "job_title": "President",
   "activation": 1,
   "email": "secretary@villageapp.com",
   "id": 8,
@@ -126,8 +126,8 @@
   "user_type": "admin",
   "name": "Sara Blonda",
   "phone": "9874563210",
-  "address": "Village House",
-  "job_title": "Treasurer",
+  "address": "Surathkal",
+  "job_title": "President",
   "activation": 1,
   "email": "treasurer@villageapp.com",
   "id": 9,
@@ -143,7 +143,7 @@
   "user_type": "user",
   "name": "Edwin Regi",
   "phone": "9874563210",
-  "address": "Kannur",
+  "address": "Surathkal",
   "job_title": "Student",
   "activation": 0,
   "email": "edwinregi@gmail.com",
@@ -158,7 +158,7 @@
   "username": "Chinmayee",
   "name": "Chinmayee N",
   "phone": "7889654123",
-  "address": "asdf1973",
+  "address": "Bangalore",
   "job_title": "Student",
   "email": "chinmayee@sjec.ac.in",
   "password": "$2b$10$Pak3ELin5RJfJHW2NYgYfuGV.Te2TsItlMBblL/EI6ypK4rmUtQdS",
@@ -177,7 +177,7 @@
   "username": "mebin",
   "name": "Mebin Regi",
   "phone": "9874563210",
-  "address": "Kannur",
+  "address": "Bangalore",
   "job_title": "Student",
   "email": "mebin@village.in",
   "password": "$2b$10$voiHLPyjKcczMAWVVpHEY.D/bIohjhGHeoBOYZNwsWpdKt8xLcH02",
@@ -240,4 +240,379 @@
   "raID": "mglr9860",
   "__v": 0,
   "photoID": 1
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df2"
+  },
+  "username": "john_bagalkot",
+  "password": "$2b$10$OxZbLPOt1p9azJdpXGhJCOwH5lQymrJGiIhJ6h/Ul6bJgdqzvxYfC",
+  "user_type": "admin",
+  "name": "John Bagalkot",
+  "phone": "9345678910",
+  "address": "Bagalkot",
+  "job_title": "President",
+  "activation": 1,
+  "email": "john_bagalkot@villageapp.com",
+  "id": 20,
+  "raID": "bagl2001",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df3"
+  },
+  "username": "david_belgaum",
+  "password": "$2b$10$ZwtF7O0YvQz7IVlB4s1iU5jcvDJ8jUkFniUItYpnHoOVahTCUkm22",
+  "user_type": "admin",
+  "name": "David Belgaum",
+  "phone": "9823456789",
+  "address": "Belgaum",
+  "job_title": "President",
+  "activation": 1,
+  "email": "david_belgaum@villageapp.com",
+  "id": 21,
+  "raID": "blgm2002",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df4"
+  },
+  "username": "emily_bellary",
+  "password": "$2b$10$2lfIVqQ6jWpu93spKoER0oXwVYJ2zX1kvUnfKVA0FcN67wv2jWjpS",
+  "user_type": "admin",
+  "name": "Emily Bellary",
+  "phone": "9712345678",
+  "address": "Bellary",
+  "job_title": "President",
+  "activation": 1,
+  "email": "emily_bellary@villageapp.com",
+  "id": 22,
+  "raID": "blry2003",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df5"
+  },
+  "username": "michael_bijapur",
+  "password": "$2b$10$9H1gsJ7oXDCYHZhVmETfiTTqR5Hzdbz5Oh7Qkd9a0JKFzZbUosQyO",
+  "user_type": "admin",
+  "name": "Michael Bijapur",
+  "phone": "9956234789",
+  "address": "Bijapur",
+  "job_title": "President",
+  "activation": 1,
+  "email": "michael_bijapur@villageapp.com",
+  "id": 23,
+  "raID": "bjpr2004",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df6"
+  },
+  "username": "sarah_chamrajnagar",
+  "password": "$2b$10$AW9JjNmkqybRiGR4iwlQtuZpXBa94kIjEqe.Mjp8OGKryNc2khuD2",
+  "user_type": "admin",
+  "name": "Sarah Chamrajnagar",
+  "phone": "9967452341",
+  "address": "Chamrajnagar",
+  "job_title": "President",
+  "activation": 1,
+  "email": "sarah_chamrajnagar@villageapp.com",
+  "id": 24,
+  "raID": "chmr2005",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df7"
+  },
+  "username": "william_chikmagalur",
+  "password": "$2b$10$Aln7xop9U45b43Zk7BFGCwgbGHgD1enSTNgtYdb9e4BbLQYy3wGFp",
+  "user_type": "admin",
+  "name": "William Chikmagalur",
+  "phone": "9987561234",
+  "address": "Chikmagalur",
+  "job_title": "President",
+  "activation": 1,
+  "email": "william_chikmagalur@villageapp.com",
+  "id": 25,
+  "raID": "chkm2006",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df8"
+  },
+  "username": "anna_davangere",
+  "password": "$2b$10$BQdMquYpmIH99kJlXvC84d76e4RQnpTIHws3rHpgmbWw60ZfTjk1G",
+  "user_type": "admin",
+  "name": "Anna Davangere",
+  "phone": "9123456780",
+  "address": "Davangere",
+  "job_title": "President",
+  "activation": 1,
+  "email": "anna_davangere@villageapp.com",
+  "id": 26,
+  "raID": "dvgr2007",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44df9"
+  },
+  "username": "james_dharwad",
+  "password": "$2b$10$H7GbFbdcIFZnlV3A9i5u6jUG4Owvpc5CuA4Ev5aT8P8e2yKOh.HYy",
+  "user_type": "admin",
+  "name": "James Dharwad",
+  "phone": "9773450987",
+  "address": "Dharwad",
+  "job_title": "President",
+  "activation": 1,
+  "email": "james_dharwad@villageapp.com",
+  "id": 27,
+  "raID": "dhrw2008",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44dfa"
+  },
+  "username": "susan_gadag",
+  "password": "$2b$10$9wiywd7g9WbCZpnb0n8Z3h64yB5yxqGcCmAv5Z8jvqDZ50cQbsWS6",
+  "user_type": "admin",
+  "name": "Susan Gadag",
+  "phone": "9348786542",
+  "address": "Gadag",
+  "job_title": "President",
+  "activation": 1,
+  "email": "susan_gadag@villageapp.com",
+  "id": 28,
+  "raID": "gdag2009",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44dfb"
+  },
+  "username": "robert_hassan",
+  "password": "$2b$10$VfMHT2d0gFqrV8Z3vv3w5A6ZRdv5P7A91l6xa8waWqAGz.EktscV6",
+  "user_type": "admin",
+  "name": "Robert Hassan",
+  "phone": "9387450293",
+  "address": "Hassan",
+  "job_title": "President",
+  "activation": 1,
+  "email": "robert_hassan@villageapp.com",
+  "id": 29,
+  "raID": "hssn2010",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44dfc"
+  },
+  "username": "olivia_kalburgi",
+  "password": "$2b$10$0glA5bb5H7D0cQxhhdQzz6oKBV82HOBbe4VXGEaZG9bB6rpikf8jK",
+  "user_type": "admin",
+  "name": "Olivia Kalburgi",
+  "phone": "9543456780",
+  "address": "Kalburgi",
+  "job_title": "President",
+  "activation": 1,
+  "email": "olivia_kalburgi@villageapp.com",
+  "id": 30,
+  "raID": "klbg2011",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44dfd"
+  },
+  "username": "matthew_kolar",
+  "password": "$2b$10$6xJp8jfTdzakpfpWy.VOG6fiKbQcf9Ri0wFzB09HhLnkT0wztEK.C",
+  "user_type": "admin",
+  "name": "Matthew Kolar",
+  "phone": "9631254789",
+  "address": "Kolar",
+  "job_title": "President",
+  "activation": 1,
+  "email": "matthew_kolar@villageapp.com",
+  "id": 31,
+  "raID": "klr2012",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44dfe"
+  },
+  "username": "lucas_koppal",
+  "password": "$2b$10$57RJYEqKrsloz2fDxnLHKLMJ5o03ZqZwV7Zq4crcuUUPY5ksIHHTO",
+  "user_type": "admin",
+  "name": "Lucas Koppal",
+  "phone": "9734678954",
+  "address": "Koppal",
+  "job_title": "President",
+  "activation": 1,
+  "email": "lucas_koppal@villageapp.com",
+  "id": 32,
+  "raID": "kpl2013",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44dff"
+  },
+  "username": "elizabeth_mandya",
+  "password": "$2b$10$g4JcV5yfI9tP1LoTZg0QlD7JXhLgOZjDOdbFVvdkjkc3sOjGbTCGe",
+  "user_type": "admin",
+  "name": "Elizabeth Mandya",
+  "phone": "9845639217",
+  "address": "Mandya",
+  "job_title": "President",
+  "activation": 1,
+  "email": "elizabeth_mandya@villageapp.com",
+  "id": 33,
+  "raID": "mdya2014",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44e00"
+  },
+  "username": "sophia_mysore",
+  "password": "$2b$10$MwL4mQo.FB7TqPHv4alAkhLf7GgxwEttvU9AW5z.Ay4jl2KqzyGvi",
+  "user_type": "admin",
+  "name": "Sophia Mysore",
+  "phone": "9123450987",
+  "address": "Mysore",
+  "job_title": "President",
+  "activation": 1,
+  "email": "sophia_mysore@villageapp.com",
+  "id": 34,
+  "raID": "mysr2015",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "67593482fa2ba47c32a44e01"
+  },
+  "username": "noah_raichur",
+  "password": "$2b$10$FGx3cThz1syOdLVzkV4FrTz5oA8gYkmHG9TXs1xqJfi5lK.dGrI0G",
+  "user_type": "admin",
+  "name": "Noah Raichur",
+  "phone": "9397645201",
+  "address": "Raichur",
+  "job_title": "President",
+  "activation": 1,
+  "email": "noah_raichur@villageapp.com",
+  "id": 35,
+  "raID": "raic2016",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "675935acfa2ba47c32a44e13"
+  },
+  "username": "prathap_tumkur",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Prathap Kumar",
+  "phone": "9876543210",
+  "address": "Tumkur",
+  "job_title": "President",
+  "activation": 1,
+  "email": "prathap_tumkur@villageapp.com",
+  "id": 36,
+  "raID": "tumkur2471",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "675935acfa2ba47c32a44e14"
+  },
+  "username": "nisha_udupi",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Nisha Shenoy",
+  "phone": "9845678901",
+  "address": "Udupi",
+  "job_title": "President",
+  "activation": 1,
+  "email": "nisha_udupi@villageapp.com",
+  "id": 37,
+  "raID": "udupi1234",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "675935acfa2ba47c32a44e15"
+  },
+  "username": "arun_chitradurga",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Arun Patil",
+  "phone": "9888888888",
+  "address": "Chitradurga",
+  "job_title": "President",
+  "activation": 1,
+  "email": "arun_chitradurga@villageapp.com",
+  "id": 38,
+  "raID": "chitradurga5678",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "675935acfa2ba47c32a44e16"
+  },
+  "username": "shivani_madikeri",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Shivani Reddy",
+  "phone": "9999123456",
+  "address": "Madikeri",
+  "job_title": "President",
+  "activation": 1,
+  "email": "shivani_madikeri@villageapp.com",
+  "id": 39,
+  "raID": "madikeri9032",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "675935acfa2ba47c32a44e17"
+  },
+  "username": "vikram_karwar",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Vikram Desai",
+  "phone": "9888777666",
+  "address": "Karwar",
+  "job_title": "President",
+  "activation": 1,
+  "email": "vikram_karwar@villageapp.com",
+  "id": 40,
+  "raID": "karwar1920",
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "6759800f3321154b53246997"
+  },
+  "id": 43,
+  "username": "ebey43",
+  "name": "Ebey Joe Regi",
+  "phone": "asdf",
+  "address": "Kannur",
+  "job_title": "President",
+  "email": "ebeyjoeregi@gmail.com",
+  "password": "$2b$10$NeYAzGjmXwbit0bEAJvGjuSEmaRYTKxOk4wCjC5domVQBLPGuYmxi",
+  "activation": 1,
+  "user_type": "admin",
+  "raID": "knr1973",
+  "photoID": 2,
+  "__v": 0
 }]

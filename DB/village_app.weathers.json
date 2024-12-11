@@ -4,10 +4,10 @@
   },
   "id": 11,
   "username": "user",
-  "temperature": "27.4°C",
-  "weatherCondition": "Clouds",
+  "temperature": "30.4°C",
+  "weatherCondition": "Haze",
   "lastUpdated": {
-    "$date": "2024-12-09T13:56:29.887Z"
+    "$date": "2024-12-11T12:22:47.668Z"
   },
   "__v": 0,
   "city": "Mangalore"
@@ -18,11 +18,11 @@
   },
   "id": 19,
   "username": "ebeyjoeregi",
-  "temperature": "26.4°C",
+  "temperature": "30.4°C",
   "weatherCondition": "Clouds",
   "city": "Mangalore",
   "lastUpdated": {
-    "$date": "2024-12-09T17:52:07.119Z"
+    "$date": "2024-12-11T06:12:52.247Z"
   },
   "__v": 0
 },
@@ -33,10 +33,24 @@
   "id": 20,
   "username": "suryakumar",
   "temperature": "30.4°C",
+  "weatherCondition": "Haze",
+  "city": "Mangalore",
+  "lastUpdated": {
+    "$date": "2024-12-11T12:26:22.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "675915df599896fb02d27d63"
+  },
+  "id": 21,
+  "username": "aju",
+  "temperature": "32.5°C",
   "weatherCondition": "Clouds",
   "city": "Mangalore",
   "lastUpdated": {
-    "$date": "2024-12-06T09:18:05.334Z"
+    "$date": "2024-12-11T09:01:17.363Z"
   },
   "__v": 0
 }]

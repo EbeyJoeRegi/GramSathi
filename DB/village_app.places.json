@@ -80,7 +80,7 @@
     "$oid": "66ebe9c7b39ecf7d31b439ca"
   },
   "id": 12,
-  "place_name": "Kannur"
+  "place_name": "Surathkal"
 },
 {
   "_id": {
@@ -164,12 +164,20 @@
     "$oid": "66ebe9c7b39ecf7d31b439d6"
   },
   "id": 27,
-  "place_name": "Madikeri (Kodagu)"
+  "place_name": "Madikeri"
 },
 {
   "_id": {
     "$oid": "66ebe9c7b39ecf7d31b439d7"
   },
   "id": 29,
-  "place_name": "Karwar (Uttar Kannada)"
+  "place_name": "Karwar"
+},
+{
+  "_id": {
+    "$oid": "6759800f3321154b53246991"
+  },
+  "id": 34,
+  "place_name": "Kannur",
+  "__v": 0
 }]
