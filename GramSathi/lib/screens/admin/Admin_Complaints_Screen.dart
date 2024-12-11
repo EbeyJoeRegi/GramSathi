@@ -14,44 +14,40 @@ class AdminComplaintScreen extends StatefulWidget {
 }
 
 class _AdminComplaintScreenState extends State<AdminComplaintScreen> {
-  List<Map<String, dynamic>> _complaints = [];
+  List<Map<String, dynamic>> _queries = [];
   final TextEditingController _responseController = TextEditingController();
-  String _selectedStatus = 'All'; // Filter by status (All, Pending, Resolved)
 
   @override
   void initState() {
     super.initState();
-    _fetchComplaints();
+    _fetchQueries();
   }
 
-  Future<void> _fetchComplaints() async {
+  Future<void> _fetchQueries() async {
     try {
-      final response = await http.get(
-        Uri.parse(
-          '${AppConfig.baseUrl}/admin/complaints?username=${widget.username}&status=$_selectedStatus',
-        ),
-      );
+      final response = await http.get(Uri.parse(
+          '${AppConfig.baseUrl}/admin/queries?username=${widget.username}&type=2'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
-          _complaints =
+          _queries =
               data.map((dynamic item) => item as Map<String, dynamic>).toList();
         });
       } else {
-        print('Failed to load complaints. Status code: ${response.statusCode}');
+        print('Failed to load queries. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching complaints: $e');
+      print('Error fetching queries: $e');
     }
   }
 
-  Future<void> _respondToComplaint(int id) async {
+  Future<void> _respondToQuery(int id) async {
     final responseText = _responseController.text;
 
     try {
       final res = await http.put(
-        Uri.parse('${AppConfig.baseUrl}/admin/respondComplaint/$id'),
+        Uri.parse('${AppConfig.baseUrl}/admin/respondQuery/$id'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -61,53 +57,74 @@ class _AdminComplaintScreenState extends State<AdminComplaintScreen> {
       );
 
       if (res.statusCode == 200) {
-        _responseController.clear();
         setState(() {
-          final index =
-              _complaints.indexWhere((complaint) => complaint['id'] == id);
+          _responseController.clear();
+          final index = _queries.indexWhere((query) => query['id'] == id);
           if (index != -1) {
-            _complaints[index]['response'] = responseText;
-            _complaints[index]['status'] = 'Resolved'; // Mark as resolved
+            _queries[index]['admin_response'] = responseText; // Update response
           }
         });
-        Navigator.of(context).pop(); // Close dialog after update
+        Navigator.of(context).pop(); // Close the dialog after successful update
       } else {
-        print('Failed to respond to complaint. Status code: ${res.statusCode}');
+        print('Failed to respond to query. Status code: ${res.statusCode}');
       }
     } catch (e) {
-      print('Error responding to complaint: $e');
+      print('Error responding to query: $e');
     }
   }
 
-  void _showResponseDialog(int complaintId, String currentResponse) {
+  void _showResponseDialog(int queryId, String currentResponse) {
     _responseController.text = currentResponse;
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Respond to Complaint'),
-          content: TextField(
-            controller: _responseController,
-            decoration: InputDecoration(
-              labelText: 'Enter your response',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Text(
+            'Respond to Complaint',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Container(
+            width: double.maxFinite,
+            child: TextField(
+              controller: _responseController,
+              decoration: InputDecoration(
+                labelText: 'Enter your response',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                filled: true,
+                fillColor: Colors.grey[100],
+              ),
+              maxLines: 4,
             ),
-            maxLines: 4,
           ),
           actions: [
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 if (_responseController.text.isNotEmpty) {
-                  _respondToComplaint(complaintId);
+                  _respondToQuery(queryId);
                 }
               },
-              child: Text('Submit Response'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
+              child: Text(
+                'Submit',
+                style: TextStyle(
+                  color: Color(0xFF015F3E), // Green color for Submit button
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.red, // Red color for Cancel button
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         );
@@ -118,87 +135,65 @@ class _AdminComplaintScreenState extends State<AdminComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // Status Filter Dropdown
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: DropdownButton<String>(
-              value: _selectedStatus,
-              items: ['All', 'Pending', 'Resolved'].map((String status) {
-                return DropdownMenuItem<String>(
-                  value: status,
-                  child: Text(status),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedStatus = newValue!;
-                  _fetchComplaints(); // Refresh data based on the selected filter
-                });
-              },
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _complaints.length,
-              itemBuilder: (context, index) {
-                final complaint = _complaints[index];
-                final adminResponse = complaint['response'] ?? '';
-                final hasResponse = adminResponse.isNotEmpty;
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: _queries.length,
+          itemBuilder: (context, index) {
+            final query = _queries[index];
+            final adminResponse =
+                query['admin_response']; // Access admin_response directly
+            final hasResponse = adminResponse != null &&
+                adminResponse.isNotEmpty; // Check for valid response
 
-                return GestureDetector(
-                  onTap: () {
-                    _showResponseDialog(complaint['id'], adminResponse);
-                  },
-                  child: Card(
-                    margin:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            complaint['matter'] ?? 'No Matter',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'By ${complaint['username'] ?? 'Unknown'} on ${DateFormat.yMMMd().format(DateTime.parse(complaint['time'] ?? DateTime.now().toIso8601String()))}',
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            hasResponse
-                                ? 'Response: $adminResponse'
-                                : 'Response Awaiting',
-                            style: TextStyle(
-                              color: hasResponse ? Colors.black : Colors.red,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Status: ${complaint['status'] ?? 'Pending'}',
-                            style: TextStyle(
-                              color: complaint['status'] == 'Resolved'
-                                  ? Colors.green
-                                  : Colors.orange,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+            return GestureDetector(
+              onTap: () {
+                _showResponseDialog(query['id'], adminResponse ?? '');
               },
-            ),
-          ),
-        ],
+              child: Card(
+                color: Color(0xFFE6F4E3), // Set the card color
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Color(0xFF015F3E), // Set the border color
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                margin: EdgeInsets.only(bottom: 16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        query['matter'] ?? 'No Matter',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'By ${query['username'] ?? 'Unknown'} on ${DateFormat.yMMMd().format(DateTime.parse(query['time'] ?? DateTime.now().toIso8601String()))}',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        hasResponse
+                            ? 'Admin: $adminResponse'
+                            : 'Response Awaiting', // Display appropriate message
+                        style: TextStyle(
+                          color: hasResponse ? Colors.black : Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

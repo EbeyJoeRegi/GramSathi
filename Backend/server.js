@@ -26,11 +26,13 @@ mongoose.connect('mongodb://localhost:27017/village_app')
 const userRoutes = require('./user');
 const adminRoutes = require('./admin');
 const imageRoutes = require('./image');
+const administratorRoutes = require('./administrator');
 
 // Use routes
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 app.use('/', imageRoutes);
+app.use('/', administratorRoutes);
 
 const getNextSequenceValue = async (sequenceName) => {
     const sequenceDocument = await Counter.findById(sequenceName);

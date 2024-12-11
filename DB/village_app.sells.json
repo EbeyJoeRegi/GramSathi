@@ -60,21 +60,6 @@
 },
 {
   "_id": {
-    "$oid": "674ae6a6ab58c7d2bf6457f7"
-  },
-  "id": 23,
-  "sellername": "user",
-  "cropname": "Carrot",
-  "quantity": 10,
-  "price": 256,
-  "sold": false,
-  "date_updated": {
-    "$date": "2024-11-30T10:19:18.023Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
     "$oid": "674ae77b05c586fbc1e9c3fa"
   },
   "id": 25,
@@ -205,6 +190,21 @@
   "sold": false,
   "date_updated": {
     "$date": "2024-12-08T08:18:44.499Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67590a9f3ca34fbf9d751dad"
+  },
+  "id": 45,
+  "sellername": "suryakumar",
+  "cropname": "Carrot",
+  "quantity": 5,
+  "price": 35,
+  "sold": false,
+  "date_updated": {
+    "$date": "2024-12-11T03:44:31.858Z"
   },
   "__v": 0
 }]

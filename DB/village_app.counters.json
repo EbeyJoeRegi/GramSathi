@@ -1,10 +1,10 @@
 [{
   "_id": "places",
-  "sequence_value": 29
+  "sequence_value": 34
 },
 {
   "_id": "announcements",
-  "sequence_value": 37
+  "sequence_value": 38
 },
 {
   "_id": "crop",
@@ -16,7 +16,7 @@
 },
 {
   "_id": "queries",
-  "sequence_value": 27
+  "sequence_value": 30
 },
 {
   "_id": "suggestions",
@@ -24,19 +24,19 @@
 },
 {
   "_id": "users",
-  "sequence_value": 19
+  "sequence_value": 43
 },
 {
   "_id": "weather",
-  "sequence_value": 20
+  "sequence_value": 21
 },
 {
   "_id": "Sell",
-  "sequence_value": 44
+  "sequence_value": 45
 },
 {
   "_id": "Buy",
-  "sequence_value": 6
+  "sequence_value": 16
 },
 {
   "_id": "image",
