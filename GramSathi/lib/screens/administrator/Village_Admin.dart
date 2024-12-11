@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:GramSathi/screens/admin/admin_announcements_screen.dart';
-import 'Village.dart';
+import 'village_announcements_screen.dart';
+import 'Village_Infos.dart';
 
 class VillageAdminPage extends StatefulWidget {
   final String username;
@@ -22,7 +22,7 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
 
     // Initialize the _pages list inside initState
     _pages = [
-      AdminAnnouncementPage(
+      VillageAnnouncementPage(
           username: widget.username), // Same as that of admin announcement
       VillagePage(),
     ];
