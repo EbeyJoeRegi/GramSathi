@@ -123,9 +123,9 @@ class _ExchangeZoneState extends State<ExchangeZone>
                               ),
                               content: SizedBox(
                                 width: double.maxFinite,
-                                height: notifications.length <= 3
+                                height: notifications.length <= 5
                                     ? notifications.length * 120.0
-                                    : 340.0, // Adjust based on the number of notifications
+                                    : 350.0, // Adjust based on the number of notifications
                                 child: notifications.isNotEmpty
                                     ? ListView.builder(
                                         itemCount: notifications.length,
@@ -135,7 +135,7 @@ class _ExchangeZoneState extends State<ExchangeZone>
 
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 12),
+                                                vertical: 8, horizontal: 15),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -143,11 +143,11 @@ class _ExchangeZoneState extends State<ExchangeZone>
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 15),
+                                                          left: 10),
                                                   child: Text(
                                                     '${notification['buyername']} is interested in ${notification['cropname']}.',
                                                     style: TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                     ),

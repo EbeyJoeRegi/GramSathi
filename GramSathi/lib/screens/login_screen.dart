@@ -22,9 +22,10 @@ class _LoginScreenState extends State<LoginScreen>
   String name = '';
 
   late AnimationController _animationController;
-  late Animation<double> _fadeAnimation; // Opacity animation
+  late Animation<double> _fadeAnimation;
 
   bool _isLoading = false;
+  bool _isPasswordVisible = false; // Track password visibility
 
   @override
   void initState() {
@@ -147,12 +148,9 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset:
-      // Prevent bottom overflow when keyboard appears
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Background image covering the top half
           Container(
             height: MediaQuery.of(context).size.height * 0.55,
             decoration: BoxDecoration(
@@ -162,13 +160,11 @@ class _LoginScreenState extends State<LoginScreen>
               ),
             ),
           ),
-          // Semi-transparent overlay
           Container(
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.3),
             ),
           ),
-          // Overlay text on background image
           Positioned(
             top: 95,
             left: 20,
@@ -192,7 +188,6 @@ class _LoginScreenState extends State<LoginScreen>
                   ),
                 ),
                 SizedBox(height: 2),
-                // Tagline with only opacity animation
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: Text(
@@ -214,11 +209,10 @@ class _LoginScreenState extends State<LoginScreen>
               ],
             ),
           ),
-          // White container for the login form on the bottom half
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.47,
+              height: MediaQuery.of(context).size.height * 0.462,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.68),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
@@ -227,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 14),
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -247,13 +241,25 @@ class _LoginScreenState extends State<LoginScreen>
                       contentPadding: EdgeInsets.all(24),
                     ),
                   ),
-                  SizedBox(height: 14),
+                  SizedBox(height: 13),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
+                    obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       hintText: 'Password',
                       prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xFFE0E3E7), width: 2),
@@ -268,7 +274,6 @@ class _LoginScreenState extends State<LoginScreen>
                       contentPadding: EdgeInsets.all(24),
                     ),
                   ),
-                  // Forgot Password button moved here, directly below the password field
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
@@ -288,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                     ),
                   ),
-                  SizedBox(height: 3),
+                  SizedBox(height: 2),
                   _isLoading
                       ? CircularProgressIndicator()
                       : ElevatedButton(
@@ -298,8 +303,7 @@ class _LoginScreenState extends State<LoginScreen>
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Color(0xff015F3E), // Background color
+                            backgroundColor: Color(0xff015F3E),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 15),
                             shape: RoundedRectangleBorder(
@@ -308,7 +312,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                   if (_errorMessage.isNotEmpty) ...[
-                    SizedBox(height: 5),
+                    SizedBox(height: 9),
                     Text(
                       _errorMessage,
                       style: TextStyle(
@@ -317,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                     ),
                   ],
-                  SizedBox(height: 5),
+                  SizedBox(height: 1),
                   TextButton(
                     onPressed: () {
                       Navigator.push(

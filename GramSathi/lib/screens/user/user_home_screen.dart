@@ -361,14 +361,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   Widget _buildHomePage() {
     return Scaffold(
       appBar: AppBar(
+        leading: null,
         title: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: 7.0),
               child: Image.asset(
                 'assets/images/icon.png',
-                height: 55.0,
-                width: 54.0,
+                height: 54.0,
+                width: 53.0,
               ),
             ),
             AnimatedTextKit(
@@ -426,7 +427,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     bottom: Radius.circular(25.0),
                   ), // Rounded borders
                 ),
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(17.0),
                 child: _buildWeatherWidget(),
               ),
             ),

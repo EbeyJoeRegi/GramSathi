@@ -27,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen>
       List.generate(6, (_) => TextEditingController());
 
   bool _isLoading = false;
+  bool _isPasswordVisible = false;
   bool _isEmailOTPFieldVisible = false;
   bool _isOTPFieldVisible = false; // To show/hide OTP field
   String? _rationCardError;
@@ -757,9 +758,13 @@ class _SignupScreenState extends State<SignupScreen>
                         ),
 
                         // Password Text Field
+                        // bool _isPasswordVisible = false; // Declare this variable at the class level
+
+// Updated TextField
                         TextField(
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText:
+                              !_isPasswordVisible, // Toggle password visibility
                           decoration: InputDecoration(
                             hintText: 'Password',
                             errorText: _passwordError,
@@ -789,6 +794,19 @@ class _SignupScreenState extends State<SignupScreen>
                                 .withOpacity(0.7), // Opacity for the background
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 19, horizontal: 20),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Color(0xff015F3E),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                            ),
                           ),
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
