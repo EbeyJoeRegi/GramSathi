@@ -135,6 +135,7 @@ class _AdminComplaintScreenState extends State<AdminComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(

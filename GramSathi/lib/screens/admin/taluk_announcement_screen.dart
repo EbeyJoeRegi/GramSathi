@@ -42,9 +42,27 @@ class _TalukAnnouncementsScreenState extends State<TalukAnnouncementsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Taluk Announcements'),
-        backgroundColor: Color(0xFF015F3E), // Green color for AppBar
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 7.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 54.0,
+                width: 53.0,
+              ),
+            ),
+            Text(
+              'Taluk Announcements',
+              style: TextStyle(
+                fontWeight: FontWeight.bold, // Makes the text bold
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.white, // Green color for AppBar
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -59,6 +77,7 @@ class _TalukAnnouncementsScreenState extends State<TalukAnnouncementsScreen> {
                       DateFormat.yMMMd().add_jm().format(createdAt);
 
                   return Card(
+                    color: Color(0xffE6F4E3),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         color: Color(0xFF015F3E), // Border color

@@ -248,7 +248,12 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
               ),
             ),
             // Title text
-            const Text('Announcements'),
+            Text(
+              'Announcements',
+              style: TextStyle(
+                fontWeight: FontWeight.bold, // Makes the text bold
+              ),
+            ),
           ],
         ),
         backgroundColor: Colors.white, // Set AppBar color
