@@ -229,17 +229,54 @@ class _BuyScreenState extends State<BuyScreen> {
         final isPurchase =
             purchase.containsKey('sell_info'); // Check if this is a purchase
         final cropInfo = isPurchase ? purchase['sell_info'] : purchase;
+        final cropName = cropInfo['cropname']
+            ?.toLowerCase(); // Convert crop name to lowercase for matching
+
+        // Get the image path from the map based on the crop name
+        final imagePath = cropImageMap[cropName] ??
+            'assets/vegetables/default1.jpg'; // Fallback image if no match
+
         return Card(
+          margin: EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 12.0), // Reduced margin to make the card smaller
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(10), // Rounded corners for the card
+          ),
+          elevation: 5, // Add box shadow to the card
+          shadowColor:
+              Colors.grey.withOpacity(0.5), // Grey color for the shadow
+          color:
+              Color(0xFFF7F2FA), // Background color for the card (light purple)
           child: ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text(cropInfo['cropname'] ?? 'Unknown Crop'),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 12.0), // Reduced padding inside the ListTile
+            leading: ClipOval(
+              child: Image.asset(
+                imagePath,
+                width: 60, // Reduced size of the image
+                height: 60,
+                fit: BoxFit.cover, // Ensure the image covers the circular area
+              ),
+            ),
+            title: Text(
+              cropInfo['cropname'] ?? 'Unknown Crop',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              // Reduced font size for the title
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Price: ₹${cropInfo['price']}"),
-                Text("Quantity: ${cropInfo['quantity']}"),
-                Text("Seller: ${purchase['sellername']}"),
-                Text("Village: ${cropInfo['address']}"),
+                Text("Price: ₹${cropInfo['price']} /Kg",
+                    style: TextStyle(fontSize: 14)), // Reduced font size
+                Text("Quantity: ${cropInfo['quantity']} Kg",
+                    style: TextStyle(fontSize: 14)), // Reduced font size
+                Text("Seller: ${purchase['sellername']}",
+                    style: TextStyle(fontSize: 14)), // Reduced font size
+                Text("Village: ${cropInfo['address']}",
+                    style: TextStyle(fontSize: 14)), // Reduced font size
               ],
             ),
           ),
