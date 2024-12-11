@@ -231,12 +231,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile', style: TextStyle(color: Colors.white)),
-        backgroundColor: Color(0xff015F3E),
+        title: Text('Profile', style: TextStyle(color: Colors.black)),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        leading: null, // Removes the back arrow button
+        automaticallyImplyLeading: false, // Ensures no back button is added
         actions: [
           IconButton(
             icon:
-                Icon(_isEditing ? Icons.save : Icons.edit, color: Colors.white),
+                Icon(_isEditing ? Icons.save : Icons.edit, color: Colors.black),
             onPressed: () {
               if (_isEditing) {
                 _updateUserData();
@@ -248,7 +250,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.home, color: Colors.white),
+            icon: Icon(Icons.home, color: const Color.fromARGB(255, 0, 0, 0)),
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -281,7 +283,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   AssetImage('assets/images/user.jpg'),
                             ),
                             IconButton(
-                              icon: Icon(Icons.camera_alt, color: Colors.white),
+                              icon: Icon(Icons.camera_alt,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255)),
                               onPressed: _pickAndUploadImage,
                             ),
                           ],
