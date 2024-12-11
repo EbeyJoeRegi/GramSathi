@@ -101,77 +101,141 @@ class _AddVillageScreenState extends State<AddVillageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Add New Village'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: villageNameController,
-                decoration: InputDecoration(labelText: 'Village Name'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter village name' : null,
-              ),
-              TextFormField(
-                controller: adminNameController,
-                decoration: InputDecoration(labelText: 'Admin Name'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter admin name' : null,
-              ),
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter password';
-                  } else if (value.length < 8) {
-                    return 'Password must be at least 8 characters';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: phoneNumberController,
-                decoration: InputDecoration(labelText: 'Phone Number'),
-                keyboardType: TextInputType.phone,
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter phone number' : null,
-              ),
-              TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) => value!.isEmpty ? 'Enter email' : null,
-              ),
-              TextFormField(
-                controller: rationCardController,
-                decoration: InputDecoration(labelText: 'Ration Card Number'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter ration card number' : null,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submitForm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF55947E), // Background color
-                  minimumSize: Size(100, 50), // Set the width and height
-                ),
-                child: Text(
-                  'Submit',
-                  style: TextStyle(
-                    color: Color(0xFF001F14), // Text color
-                  ),
-                ),
-              )
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Add New Village'),
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                TextFormField(
+                  controller: villageNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Village Name',
+                    labelStyle:
+                        TextStyle(color: Colors.black), // Label text color
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color(0xFF015F3E)), // Underline when focused
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Color(0xFF015F3E)), // Underline when not focused
+                    ),
+                  ),
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter village name' : null,
+                  cursorColor: Color(0xFF015F3E), // Set cursor color here
+                ),
+                TextFormField(
+                  controller: adminNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Admin Name',
+                    labelStyle: TextStyle(color: Colors.black),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                  ),
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter admin name' : null,
+                  cursorColor: Color(0xFF015F3E),
+                ),
+                TextFormField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.black),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter password';
+                    } else if (value.length < 8) {
+                      return 'Password must be at least 8 characters';
+                    }
+                    return null;
+                  },
+                  cursorColor: Color(0xFF015F3E),
+                ),
+                TextFormField(
+                  controller: phoneNumberController,
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    labelStyle: TextStyle(color: Colors.black),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter phone number' : null,
+                  cursorColor: Color(0xFF015F3E),
+                ),
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.black),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) => value!.isEmpty ? 'Enter email' : null,
+                  cursorColor: Color(0xFF015F3E),
+                ),
+                TextFormField(
+                  controller: rationCardController,
+                  decoration: InputDecoration(
+                    labelText: 'Ration Card Number',
+                    labelStyle: TextStyle(color: Colors.black),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF015F3E)),
+                    ),
+                  ),
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter ration card number' : null,
+                  cursorColor: Color(0xFF015F3E),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _submitForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF015F3E), // Background color
+                    minimumSize: Size(100, 50), // Set the width and height
+                  ),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16, // Text color
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }

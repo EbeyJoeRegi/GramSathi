@@ -239,20 +239,10 @@ class _VillageAnnouncementPageState extends State<VillageAnnouncementPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start, // Aligning to the left
           children: [
-            // Padding for the image on the left
-            Padding(
-              padding: const EdgeInsets.only(right: 7.0),
-              child: Image.asset(
-                'assets/images/icon.png',
-                height: 54.0,
-                width: 53.0,
-              ),
-            ),
-            // Title text
             Text(
               'Announcements',
               style: TextStyle(
-                fontWeight: FontWeight.bold, // Makes the text bold
+                fontWeight: FontWeight.w500, // Makes the text bold
               ),
             ),
           ],

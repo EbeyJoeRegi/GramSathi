@@ -40,7 +40,24 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Village Administrator'),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 6.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 53.0,
+                width: 52.0,
+              ),
+            ),
+            Text(
+              'Village Administrator',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600), // Optional: change text color
+            ),
+          ],
+        ),
         backgroundColor: Colors.white,
         actions: [
           IconButton(
@@ -77,6 +94,7 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onTabSelected,
+        selectedItemColor: Color(0xFF015F3E), // Custom color for selected index
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
