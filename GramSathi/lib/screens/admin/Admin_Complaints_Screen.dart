@@ -118,11 +118,6 @@ class _AdminComplaintScreenState extends State<AdminComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Admin Complaints'),
-        backgroundColor: Colors.teal,
-        automaticallyImplyLeading: false,
-      ),
       body: Column(
         children: [
           // Status Filter Dropdown

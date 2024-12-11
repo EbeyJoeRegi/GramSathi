@@ -40,7 +40,9 @@ class _FeedbackHubState extends State<FeedbackHub>
             Tab(text: 'Enquiry'),
             Tab(text: 'Complaints'),
           ],
-          indicatorColor: Colors.white,
+          labelColor: Color(0xFF015F3E), // Color for the selected tab
+          unselectedLabelColor: Colors.grey, // Color for unselected tabs
+          indicatorColor: Color(0xFF015F3E), // Color for the tab indicator
         ),
       ),
       body: TabBarView(

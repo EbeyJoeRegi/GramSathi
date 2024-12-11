@@ -167,13 +167,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       body: Stack(
         children: [
           // Background image with opacity
-          Opacity(
-            opacity: 0.9, // Adjust the opacity value as needed
-            child: Image.asset(
-              'assets/images/bgvillage9.jpeg',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/icon.png'),
+                  fit: BoxFit
+                      .contain, // This will scale the image while keeping it contained
+                  colorFilter: ColorFilter.mode(
+                    Colors.white.withOpacity(
+                        0.5), // Apply opacity to the white color filter
+                    BlendMode
+                        .overlay, // You can change this BlendMode if needed
+                  ),
+                ),
+              ),
             ),
           ),
           // Main content
@@ -296,7 +304,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(
-                                      0.8), // Semi-transparent white background
+                                      0.75), // Semi-transparent white background
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
