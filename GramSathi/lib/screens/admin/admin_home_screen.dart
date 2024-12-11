@@ -164,26 +164,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Background image with opacity
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/icon.png'),
-                  fit: BoxFit
-                      .contain, // This will scale the image while keeping it contained
-                  colorFilter: ColorFilter.mode(
-                    Colors.white.withOpacity(
-                        0.5), // Apply opacity to the white color filter
-                    BlendMode
-                        .overlay, // You can change this BlendMode if needed
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Background image with opacit
           // Main content
           Column(
             children: [
@@ -203,7 +187,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             ),
                           ),
                           // Title text
-                          Text('Village Connect Admin'),
+                          Text(
+                            'Village Connect Admin',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500, // Make the text bold
+                            ),
+                          ),
                           Row(
                             children: [
                               IconButton(
@@ -313,13 +303,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(
-                                      0.75), // Semi-transparent white background
+                                  color: Color(0xffE6F4E3).withOpacity(
+                                      0.9), // Semi-transparent white background
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 2,
+                                      color: Color(0xff015F3E).withOpacity(0.4),
+                                      spreadRadius: 3,
                                       blurRadius: 5,
                                       offset: Offset(0, 3),
                                     ),
@@ -346,7 +336,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                     children: [
                                       IconButton(
                                         icon: Icon(Icons.check,
-                                            color: Colors.green),
+                                            color: Color(0xff015F3E)),
                                         onPressed: () {
                                           _updateUserActivation(
                                               user['id'], true);

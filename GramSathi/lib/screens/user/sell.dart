@@ -395,6 +395,7 @@ class _SellScreenState extends State<SellScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       //appBar: AppBar(title: Text("Sell Crops")),
       body: Column(
         children: [
@@ -418,8 +419,17 @@ class _SellScreenState extends State<SellScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showAddCropPopup(context),
-        label: Text("Add Crop"),
-        icon: Icon(Icons.add),
+        label: Text(
+          "Add Crop",
+          style: TextStyle(
+            color: Color(0xFF001F14), // Text color
+          ),
+        ),
+        icon: Icon(
+          Icons.add,
+          color: Color(0xFF001F14), // Icon color
+        ),
+        backgroundColor: Color(0xff55947E), // Background color with opacity
       ),
     );
   }

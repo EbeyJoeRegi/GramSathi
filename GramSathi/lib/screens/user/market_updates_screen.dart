@@ -163,18 +163,9 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
           ),
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xfff0f0f0), // Light gray for the background
-              Colors.white, // White for the foreground
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Padding(
+      body: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,8 +179,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                     color: Color(0xff005F3D).withOpacity(0.5), // Soft border
                     width: 1.5,
                   ),
-                  color:
-                      Colors.white.withOpacity(0.9), // Semi-transparent white
+                  color: Colors.white, // Semi-transparent white
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,

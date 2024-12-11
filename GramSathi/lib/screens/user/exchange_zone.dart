@@ -87,19 +87,31 @@ class _ExchangeZoneState extends State<ExchangeZone>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Exchange Zone',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+        backgroundColor: Colors.white,
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 7.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 54.0,
+                width: 53.0,
+              ),
+            ),
+            Text(
+              'Exchange Zone',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
-        backgroundColor: Color(0xff005F3D),
         actions: [
           Stack(
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.white),
+                icon: Icon(Icons.notifications, color: Color(0xff015F3E)),
                 onPressed: () {
                   if (notifications.isNotEmpty) {
                     // Show the list of notifications as before
@@ -132,7 +144,6 @@ class _ExchangeZoneState extends State<ExchangeZone>
                                         itemBuilder: (context, index) {
                                           final notification =
                                               notifications[index];
-
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 8, horizontal: 15),
@@ -284,17 +295,25 @@ class _ExchangeZoneState extends State<ExchangeZone>
             Tab(
               child: Text(
                 'Sell',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: _tabController.index == 0
+                      ? Color(0xFF015F3E) // Active tab color
+                      : Color(0xFF015F3E), // Default color (same as active)
+                ),
               ),
             ),
             Tab(
               child: Text(
                 'Buy',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: _tabController.index == 1
+                      ? Color(0xFF015F3E) // Active tab color
+                      : Color(0xFF015F3E), // Default color (same as active)
+                ),
               ),
             ),
           ],
-          indicatorColor: Colors.white,
+          indicatorColor: Color(0xFF015F3E), // Tab indicator color
         ),
       ),
       body: TabBarView(

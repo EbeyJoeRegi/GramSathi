@@ -32,6 +32,7 @@ class _FeedbackHubState extends State<FeedbackHub>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Row(
           children: [
             // Padding for the image on the left
@@ -44,7 +45,12 @@ class _FeedbackHubState extends State<FeedbackHub>
               ),
             ),
             // Title text
-            Text('Feedback Hub'),
+            Text(
+              'Feedback Hub',
+              style: TextStyle(
+                fontWeight: FontWeight.bold, // Makes the text bold
+              ),
+            ),
           ],
         ),
         bottom: TabBar(
