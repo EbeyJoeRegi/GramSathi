@@ -86,8 +86,9 @@ class _VillagePageState extends State<VillagePage> {
                     builder: (context) => AddVillageScreen(),
                   ),
                 ).then((shouldRefresh) {
-                  if (shouldRefresh) {
-                    _fetchVillages(); // Refresh villages when returning
+                  // Default shouldRefresh to false if it is null
+                  if (shouldRefresh == null || shouldRefresh) {
+                    _fetchVillages(); // Refresh villages when returning or if no value was passed
                   }
                 });
               },
