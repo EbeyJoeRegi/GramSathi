@@ -79,29 +79,52 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Respond to Query'),
-          content: TextField(
-            controller: _responseController,
-            decoration: InputDecoration(
-              labelText: 'Enter your response',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Text(
+            'Respond to Query',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Container(
+            width: double.maxFinite,
+            child: TextField(
+              controller: _responseController,
+              decoration: InputDecoration(
+                labelText: 'Enter your response',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                filled: true,
+                fillColor: Colors.grey[100],
+              ),
+              maxLines: 4,
             ),
-            maxLines: 4,
           ),
           actions: [
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 if (_responseController.text.isNotEmpty) {
                   _respondToQuery(queryId);
                 }
               },
-              child: Text('Submit Response'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
+              child: Text(
+                'Submit',
+                style: TextStyle(
+                  color: Color(0xFF015F3E), // Green color for Submit button
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.red, // Red color for Cancel button
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         );
@@ -112,77 +135,65 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Admin Enquiries'),
-        backgroundColor: Colors.teal,
-        automaticallyImplyLeading: false,
-      ),
-      body: Stack(
-        children: [
-          // Background image with opacity
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.5,
-              child: Image.asset(
-                'assets/images/admin.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Main content
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ListView.builder(
-              itemCount: _queries.length,
-              itemBuilder: (context, index) {
-                final query = _queries[index];
-                final adminResponse =
-                    query['admin_response']; // Access admin_response directly
-                final hasResponse = adminResponse != null &&
-                    adminResponse.isNotEmpty; // Check for valid response
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: _queries.length,
+          itemBuilder: (context, index) {
+            final query = _queries[index];
+            final adminResponse =
+                query['admin_response']; // Access admin_response directly
+            final hasResponse = adminResponse != null &&
+                adminResponse.isNotEmpty; // Check for valid response
 
-                return GestureDetector(
-                  onTap: () {
-                    _showResponseDialog(query['id'], adminResponse ?? '');
-                  },
-                  child: Card(
-                    margin: EdgeInsets.only(bottom: 16.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            query['matter'] ?? 'No Matter',
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'By ${query['username'] ?? 'Unknown'} on ${DateFormat.yMMMd().format(DateTime.parse(query['time'] ?? DateTime.now().toIso8601String()))}',
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            hasResponse
-                                ? 'Admin: $adminResponse'
-                                : 'Response Awaiting', // Display appropriate message
-                            style: TextStyle(
-                              color: hasResponse ? Colors.black : Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+            return GestureDetector(
+              onTap: () {
+                _showResponseDialog(query['id'], adminResponse ?? '');
               },
-            ),
-          ),
-        ],
+              child: Card(
+                color: Color(0xFFE6F4E3), // Set the card color
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Color(0xFF015F3E), // Set the border color
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                margin: EdgeInsets.only(bottom: 16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        query['matter'] ?? 'No Matter',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'By ${query['username'] ?? 'Unknown'} on ${DateFormat.yMMMd().format(DateTime.parse(query['time'] ?? DateTime.now().toIso8601String()))}',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        hasResponse
+                            ? 'Admin: $adminResponse'
+                            : 'Response Awaiting', // Display appropriate message
+                        style: TextStyle(
+                          color: hasResponse ? Colors.black : Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

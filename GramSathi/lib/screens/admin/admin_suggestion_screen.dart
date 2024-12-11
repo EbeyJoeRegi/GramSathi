@@ -75,27 +75,60 @@ class _AdminSuggestionsScreenState extends State<AdminSuggestionsScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Respond to Suggestion'),
-          content: TextField(
-            controller: _responseController,
-            decoration: InputDecoration(labelText: 'Response'),
-            maxLines: 4,
+          contentPadding:
+              EdgeInsets.all(12.0), // Adjust this padding to reduce the gap
+          content: Column(
+            mainAxisSize: MainAxisSize
+                .min, // Ensures the dialog doesn't take up extra space
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Aligns the TextField to the left
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.grey, width: 1.5), // Border to create a box
+                  borderRadius:
+                      BorderRadius.circular(8.0), // Rounded corners for the box
+                ),
+                padding: EdgeInsets.all(8.0), // Padding inside the box
+                child: Center(
+                  child: TextField(
+                    controller: _responseController,
+                    decoration: InputDecoration(
+                      labelText: 'Response',
+
+                      border: InputBorder
+                          .none, // Removes the default border around the TextField
+                    ),
+                    maxLines: 4,
+                    keyboardType: TextInputType.multiline,
+                  ),
+                ),
+              ),
+            ],
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Submit'),
-              onPressed: () {
-                final responseText = _responseController.text;
-                if (responseText.isNotEmpty) {
-                  _postResponse(suggestion, responseText);
-                }
-                Navigator.of(context).pop();
-              },
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween, // Ensures buttons are aligned
+              children: [
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Submit'),
+                  onPressed: () {
+                    final responseText = _responseController.text;
+                    if (responseText.isNotEmpty) {
+                      _postResponse(suggestion, responseText);
+                    }
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             ),
           ],
         );
@@ -106,76 +139,70 @@ class _AdminSuggestionsScreenState extends State<AdminSuggestionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Admin Suggestions'),
-        backgroundColor: Colors.teal,
-        automaticallyImplyLeading: false, // Remove the back arrow button
-      ),
-      body: Stack(
-        children: [
-          // Background image with opacity
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.5,
-              child: Image.asset(
-                'assets/images/admin.png', // Update path if needed
-                fit: BoxFit.cover,
+      backgroundColor: Colors.white, // Set background color to white
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: _suggestions.length,
+          itemBuilder: (context, index) {
+            final suggestion = _suggestions[index];
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color(0xFF015F3E), // Border color
+                  width: 2.0,
+                ),
+                borderRadius:
+                    BorderRadius.circular(8.0), // Optional: Add rounded corners
               ),
-            ),
-          ),
-          // Main content
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ListView.builder(
-              itemCount: _suggestions.length,
-              itemBuilder: (context, index) {
-                final suggestion = _suggestions[index];
-                return Card(
-                  margin: EdgeInsets.only(bottom: 16.0),
-                  child: ListTile(
-                    title: Text(
-                      suggestion['title'] ?? 'No Title',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+              margin: EdgeInsets.only(bottom: 16.0),
+              child: Card(
+                color: Color(0xFFE6F4E3),
+                margin: EdgeInsets.zero,
+                //Ensure Card background is transparent to show container color
+                child: ListTile(
+                  title: Text(
+                    suggestion['title'] ?? 'No Title',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'By ${suggestion['username'] ?? 'Unknown'} on ${DateFormat.yMMMd().format(DateTime.parse(suggestion['created_at'] ?? DateTime.now().toIso8601String()))}',
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          suggestion['content'] ?? 'No Content',
-                          textAlign: TextAlign.justify, // Justify the text
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          suggestion['response'] == null ||
-                                  suggestion['response'].isEmpty
-                              ? 'Waiting for admin response'
-                              : 'Admin : ${suggestion['response']}',
-                          textAlign: TextAlign.justify, // Justify the text
-                          style: TextStyle(
-                            color: suggestion['response'] == null ||
-                                    suggestion['response'].isEmpty
-                                ? Colors.red
-                                : Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () => _showResponseDialog(suggestion),
                   ),
-                );
-              },
-            ),
-          ),
-        ],
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'By ${suggestion['username'] ?? 'Unknown'} on ${DateFormat.yMMMd().format(DateTime.parse(suggestion['created_at'] ?? DateTime.now().toIso8601String()))}',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        suggestion['content'] ?? 'No Content',
+                        textAlign: TextAlign.justify, // Justify the text
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        suggestion['response'] == null ||
+                                suggestion['response'].isEmpty
+                            ? 'Waiting for admin response'
+                            : 'Admin : ${suggestion['response']}',
+                        textAlign: TextAlign.justify, // Justify the text
+                        style: TextStyle(
+                          color: suggestion['response'] == null ||
+                                  suggestion['response'].isEmpty
+                              ? Colors.red
+                              : Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () => _showResponseDialog(suggestion),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
