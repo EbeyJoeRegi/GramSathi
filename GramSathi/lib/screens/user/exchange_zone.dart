@@ -112,94 +112,121 @@ class _ExchangeZoneState extends State<ExchangeZone>
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              title: Text(
-                                'Notifications',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                              title: Center(
+                                child: Text(
+                                  'Notifications',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
                               ),
                               content: SizedBox(
                                 width: double.maxFinite,
-                                height: 300,
-                                child: ListView.builder(
-                                  itemCount: notifications.length,
-                                  itemBuilder: (context, index) {
-                                    final notification = notifications[index];
-                                    return Card(
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 0),
-                                      elevation: 3,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: ListTile(
-                                        title: Text(
-                                          '${notification['buyername']} is interested in ${notification['cropname']}.',
+                                height: 100,
+                                child: notifications.isNotEmpty
+                                    ? ListView.builder(
+                                        itemCount: notifications.length,
+                                        itemBuilder: (context, index) {
+                                          final notification =
+                                              notifications[index];
+
+                                          return Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 12),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: Text(
+                                                    '${notification['buyername']} is interested in ${notification['cropname']}.',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 8),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    IconButton(
+                                                      icon: Icon(Icons.phone,
+                                                          color: Colors.blue),
+                                                      onPressed: () async {
+                                                        final String
+                                                            phoneNumber =
+                                                            notification[
+                                                                'buyerphone'];
+                                                        if (phoneNumber
+                                                            .isNotEmpty) {
+                                                          await makePhoneCall(
+                                                              phoneNumber);
+                                                        } else {
+                                                          print(
+                                                              'Phone number is not available.');
+                                                        }
+                                                      },
+                                                    ),
+                                                    IconButton(
+                                                      icon: Icon(Icons.check,
+                                                          color: Colors.green),
+                                                      onPressed: () async {
+                                                        await handleNotificationAction(
+                                                            'markAsBought',
+                                                            notification['id']);
+                                                        setDialogState(() {
+                                                          if (index <
+                                                              notifications
+                                                                  .length) {
+                                                            notifications
+                                                                .removeAt(
+                                                                    index);
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                    IconButton(
+                                                      icon: Icon(Icons.close,
+                                                          color: Colors.red),
+                                                      onPressed: () async {
+                                                        await handleNotificationAction(
+                                                            'dismiss',
+                                                            notification['id']);
+                                                        setDialogState(() {
+                                                          if (index <
+                                                              notifications
+                                                                  .length) {
+                                                            notifications
+                                                                .removeAt(
+                                                                    index);
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    : Center(
+                                        child: Text(
+                                          'No notifications available.',
                                           style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            //fontWeight: FontWeight.w500
                                           ),
                                         ),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(Icons.phone,
-                                                  color: Colors.blue),
-                                              onPressed: () async {
-                                                final String phoneNumber =
-                                                    notification['buyerphone'];
-                                                if (phoneNumber.isNotEmpty) {
-                                                  await makePhoneCall(
-                                                      phoneNumber);
-                                                } else {
-                                                  print(
-                                                      'Phone number is not available.');
-                                                }
-                                              },
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.check,
-                                                  color: Colors.green),
-                                              onPressed: () async {
-                                                await handleNotificationAction(
-                                                    'markAsBought',
-                                                    notification['id']);
-                                                setDialogState(() {
-                                                  if (notifications
-                                                          .isNotEmpty &&
-                                                      index <
-                                                          notifications
-                                                              .length) {
-                                                    notifications
-                                                        .removeAt(index);
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.close,
-                                                  color: Colors.red),
-                                              onPressed: () async {
-                                                await handleNotificationAction(
-                                                    'dismiss',
-                                                    notification['id']);
-                                                setDialogState(() {
-                                                  if (notifications
-                                                          .isNotEmpty &&
-                                                      index <
-                                                          notifications
-                                                              .length) {
-                                                    notifications
-                                                        .removeAt(index);
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
                                       ),
-                                    );
-                                  },
-                                ),
                               ),
                             );
                           },

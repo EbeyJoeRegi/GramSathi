@@ -210,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen>
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.47,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.68),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
@@ -300,16 +300,16 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                   if (_errorMessage.isNotEmpty) ...[
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Text(
                       _errorMessage,
                       style: TextStyle(
                         color: Colors.red,
-                        fontSize: 16,
+                        fontSize: 13,
                       ),
                     ),
                   ],
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -321,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen>
                       "Don't have an account? Sign Up",
                       style: TextStyle(
                         color: Color(0xff015F3E),
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
