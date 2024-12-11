@@ -123,7 +123,9 @@ class _ExchangeZoneState extends State<ExchangeZone>
                               ),
                               content: SizedBox(
                                 width: double.maxFinite,
-                                height: 100,
+                                height: notifications.length <= 3
+                                    ? notifications.length * 120.0
+                                    : 340.0, // Adjust based on the number of notifications
                                 child: notifications.isNotEmpty
                                     ? ListView.builder(
                                         itemCount: notifications.length,
@@ -132,7 +134,7 @@ class _ExchangeZoneState extends State<ExchangeZone>
                                               notifications[index];
 
                                           return Padding(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 vertical: 8, horizontal: 12),
                                             child: Column(
                                               crossAxisAlignment:
@@ -223,7 +225,6 @@ class _ExchangeZoneState extends State<ExchangeZone>
                                           'No notifications available.',
                                           style: TextStyle(
                                             fontSize: 18,
-                                            //fontWeight: FontWeight.w500
                                           ),
                                         ),
                                       ),
