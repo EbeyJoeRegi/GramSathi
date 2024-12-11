@@ -38,8 +38,10 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Village Administrator'),
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             icon: Icon(Icons.logout),

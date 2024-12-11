@@ -157,8 +157,17 @@ class _AddVillageScreenState extends State<AddVillageScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Submit'),
-              ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF55947E), // Background color
+                  minimumSize: Size(100, 50), // Set the width and height
+                ),
+                child: Text(
+                  'Submit',
+                  style: TextStyle(
+                    color: Color(0xFF001F14), // Text color
+                  ),
+                ),
+              )
             ],
           ),
         ),
