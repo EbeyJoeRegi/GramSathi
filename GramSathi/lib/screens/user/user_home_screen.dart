@@ -260,8 +260,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               Text(
                 _temperature.isNotEmpty ? _temperature : 'Loading...',
                 style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
+                  fontSize: _temperature.contains('Error')
+                      ? 17
+                      : 18, // Reduced font size for errors
+                  color: _temperature.contains('Error')
+                      ? Colors.white
+                      : Colors.white, // Red for errors
                 ),
               ),
               SizedBox(height: 5),
@@ -274,7 +278,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   color: Colors.white,
                   fontStyle: FontStyle.italic, // Makes the text italic
                 ),
-              )
+              ),
             ],
           ),
           Icon(
