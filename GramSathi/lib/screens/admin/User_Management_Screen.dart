@@ -121,50 +121,52 @@ class _UserManagementPageState extends State<UserManagementPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('User Management'),
-        backgroundColor: Color(0xff015F3E),
+        backgroundColor: Color(0xffE6F4E3),
       ),
-      body: Stack(
-        children: [
-          Opacity(
-            opacity: 0.5, // Adjust the opacity as needed
-            child: Image.asset(
-              'assets/images/admin.png', // Ensure this path is correct
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-          Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: users.length,
-                  itemBuilder: (context, index) {
-                    final user = users[index];
-                    return Card(
-                      color: Colors.white.withOpacity(0.8),
-                      margin:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+      body: Container(
+        color: Color(0xffE6F4E3), // Set the background color
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  final user = users[index];
+                  return Card(
+                    color: Colors.white,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 8, // Add some depth to the card
+                    shadowColor: Color(0xff015F3E), // Set the shadow color
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16.0),
+                      title: Text(
+                        user['name'],
+                        style: TextStyle(
+                            fontWeight:
+                                FontWeight.w500), // Make title a little bold
                       ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16.0),
-                        title: Text(user['name']),
-                        subtitle: Text(user['email']),
-                        onTap: () => _showUserDetailsDialog(user),
-                        trailing: IconButton(
-                          icon: Icon(Icons.remove_circle, color: Colors.red),
-                          onPressed: () => _removeUser(user['id']),
-                        ),
+                      subtitle: Text(
+                        user['email'],
+                        style: TextStyle(
+                            fontWeight:
+                                FontWeight.w300), // Make subtitle a little bold
                       ),
-                    );
-                  },
-                ),
+                      onTap: () => _showUserDetailsDialog(user),
+                      trailing: IconButton(
+                        icon: Icon(Icons.remove_circle, color: Colors.red),
+                        onPressed: () => _removeUser(user['id']),
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

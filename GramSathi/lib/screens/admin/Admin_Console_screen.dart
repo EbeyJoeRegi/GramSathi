@@ -8,9 +8,22 @@ class AdminConsolePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Console'),
-        backgroundColor: Colors.teal,
+        title: Text(
+          'Admin Console',
+          style: TextStyle(
+            fontWeight: FontWeight.w500, // Makes the text bold
+          ),
+        ),
+        backgroundColor: Color(0xffE6F4E3),
         automaticallyImplyLeading: false, // Remove the default back button
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0), // Adjust padding as needed
+          child: Image.asset(
+            'assets/images/icon.png',
+            height: 60.0,
+            width: 59.0,
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.home, color: Colors.black),
@@ -20,116 +33,104 @@ class AdminConsolePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          Opacity(
-            opacity: 0.5, // Adjust the opacity as needed
-            child: Image.asset(
-              'assets/images/admin.png', // Ensure this path is correct
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(8.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
+      body: Container(
+        color: Color(0xffE6F4E3), // Set the background color to white
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff015F3E).withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
                         ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(16.0),
-                          leading: Icon(Icons.store, color: Colors.teal),
-                          title: Text('Market Updates'),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MarketUpdatesScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(8.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(16.0),
-                          leading: Icon(Icons.supervisor_account,
-                              color: Colors.teal),
-                          title: Text('Admins'),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AdminManagementPage(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(8.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(16.0),
-                          leading: Icon(Icons.person, color: Colors.teal),
-                          title: Text('Users'),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserManagementPage(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16.0),
+                      leading: Icon(Icons.store, color: Color(0xff015F3E)),
+                      title: Text('Market Updates'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MarketUpdatesScreen(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(bottom: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff015F3E).withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16.0),
+                      leading: Icon(Icons.supervisor_account,
+                          color: Color(0xff015F3E)),
+                      title: Text('Admins'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AdminManagementPage(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff015F3E).withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16.0),
+                      leading: Icon(Icons.person, color: Color(0xff015F3E)),
+                      title: Text('Users'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserManagementPage(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
