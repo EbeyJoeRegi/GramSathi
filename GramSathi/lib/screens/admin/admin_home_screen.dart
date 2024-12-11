@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '/config.dart';
 
+import 'taluk_announcement_screen.dart';
 import 'admin_announcements_screen.dart';
 import 'feedback_hub.dart';
-import 'admin_suggestion_screen.dart';
-import 'admin_console_screen.dart'; // Import your AdminConsolePage
+import 'admin_console_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   final String username;
@@ -239,7 +239,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       username: widget.username,
                     ),
                     FeedbackHub(username: widget.username),
-                    AdminSuggestionsScreen(username: widget.username),
+                    TalukAnnouncementsScreen(),
                   ],
                 ),
               ),
@@ -262,8 +262,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             label: 'FeedBack Hub',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.speaker_notes),
-            label: 'Suggestions',
+            icon: Icon(Icons.location_city),
+            label: 'Taluk Annoucement',
           ),
         ],
         currentIndex: _selectedIndex,
