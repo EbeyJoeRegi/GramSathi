@@ -236,143 +236,155 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
       extendBodyBehindAppBar: true, // Allow body to extend behind AppBar
       appBar: AppBar(
         title: const Text('Announcements'),
-        backgroundColor: Colors.teal, // Set AppBar color
+        backgroundColor: Colors.white, // Set AppBar color
         elevation: 0, // Remove shadow
       ),
-      body: Stack(
-        children: [
-          // Background image with opacity
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.5,
-              child: Image.asset(
-                'assets/images/admin.png',
-                fit: BoxFit.cover,
+      body: Container(
+        color: Colors.white, // Set background color to white
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Announcements list
+            Expanded(
+              child: ListView.builder(
+                itemCount: _announcements.length,
+                shrinkWrap: true, // Ensure it takes up only the space it needs
+                physics: const BouncingScrollPhysics(), // Enable bounce effect
+                itemBuilder: (context, index) {
+                  final announcement = _announcements[index];
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE6F4E3),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: Color(0xff015F3E)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4.0,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        announcement['title'],
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold, // Makes the title bold
+                          color: Color(
+                              0xFF015F3E), // Sets the title color to #015F3E
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(announcement['content'],
+                              textAlign: TextAlign.justify),
+                          const SizedBox(height: 4),
+                          Text('Posted By: ${announcement['admin']}',
+                              textAlign: TextAlign.justify),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Created at: ${_formatDate(announcement['created_at'])}', // Only date
+                            style: TextStyle(
+                                color: Colors.grey[600], fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () =>
+                            _deleteAnnouncement(announcement['id']),
+                      ),
+                      onTap: () => _showUpdateDialog(
+                        announcement['id'],
+                        announcement['title'],
+                        announcement['content'],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-          ),
-          // Main content
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Announcements list
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _announcements.length,
-                    shrinkWrap:
-                        true, // Ensure it takes up only the space it needs
-                    physics:
-                        const BouncingScrollPhysics(), // Enable bounce effect
-                    itemBuilder: (context, index) {
-                      final announcement = _announcements[index];
-                      return Container(
-                        margin: const EdgeInsets.symmetric(vertical: 8.0),
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border:
-                              Border.all(color: Colors.grey.withOpacity(0.5)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4.0,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          title: Text(announcement['title']),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(announcement['content'],
-                                  textAlign: TextAlign.justify),
-                              const SizedBox(height: 4),
-                              Text('Posted By: ${announcement['admin']}',
-                                  textAlign: TextAlign.justify),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Created at: ${_formatDate(announcement['created_at'])}', // Only date
-                                style: TextStyle(
-                                    color: Colors.grey[600], fontSize: 12),
-                              ),
-                            ],
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () =>
-                                _deleteAnnouncement(announcement['id']),
-                          ),
-                          onTap: () => _showUpdateDialog(
-                            announcement['id'],
-                            announcement['title'],
-                            announcement['content'],
-                          ),
-                        ),
-                      );
-                    },
+            SizedBox(height: 16),
+            // New announcement section
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.9), // Grey shadow
+                    blurRadius: 5.0,
+                    offset: Offset(0, 3),
                   ),
-                ),
-                const SizedBox(height: 16),
-                // New announcement section
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 6.0,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Title',
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(
+                      color: Color(0xFF015F3E), // Set the text color to #C4EDB2
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextField(
-                        controller: _titleController,
-                        decoration: const InputDecoration(
-                          labelText: 'Title',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: _contentController,
-                        decoration: const InputDecoration(
-                          labelText: 'Content',
-                          border: OutlineInputBorder(),
-                        ),
-                        maxLines: 5,
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: _createAnnouncement,
-                        child: const Text('Create Announcement'),
-                      ),
-                      if (_message.isNotEmpty)
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              _message,
-                              style: const TextStyle(
-                                  color: Colors.green, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                    ],
+                  SizedBox(height: 16),
+                  TextField(
+                    controller: _contentController,
+                    decoration: InputDecoration(
+                      labelText: 'Content',
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(
+                      color: Color(0xFF015F3E), // Set the text color to #C4EDB2
+                    ),
+                    maxLines: 5,
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
+                  SizedBox(height: 16),
+                  Container(
+                    width: 100.0,
+                    height:
+                        50, // Set the desired width for the button (adjust as needed)
+                    child: ElevatedButton(
+                      onPressed: _createAnnouncement,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Color(0xFF015F3E), // Button color to #015F3E
+                      ),
+                      child: Text(
+                        'Create Announcement',
+                        style: TextStyle(
+                          color: Colors.white, // Text color to white
+                          fontWeight: FontWeight.bold, // Bold text
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_message.isNotEmpty)
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          _message,
+                          style: const TextStyle(
+                              color: Colors.green, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
