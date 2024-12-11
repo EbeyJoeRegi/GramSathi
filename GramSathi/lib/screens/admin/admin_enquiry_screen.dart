@@ -57,11 +57,11 @@ class _AdminEnquiryScreenState extends State<AdminEnquiryScreen> {
       );
 
       if (res.statusCode == 200) {
-        _responseController.clear();
         setState(() {
+          _responseController.clear();
           final index = _queries.indexWhere((query) => query['id'] == id);
           if (index != -1) {
-            _queries[index]['response'] = responseText;
+            _queries[index]['admin_response'] = responseText; // Update response
           }
         });
         Navigator.of(context).pop(); // Close the dialog after successful update

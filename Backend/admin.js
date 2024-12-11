@@ -154,14 +154,14 @@ router.get('/pending-users', async (req, res) => {
 // Get all queries
 router.get('/admin/queries', async (req, res) => {
   try {
-      const { username } = req.query; // Get username from request query
+      const { username,type } = req.query; // Get username from request query
 
       if (!username) {
           return res.status(400).json({ error: 'Username is required' });
       }
 
       // Step 1: Get the address of the user with the given username
-      const adminUser = await User.findOne({ username });
+      const adminUser = await User.findOne({ username});
 
       if (!adminUser || !adminUser.address) {
           return res.status(404).json({ error: 'Admin user or address not found' });
@@ -184,7 +184,7 @@ router.get('/admin/queries', async (req, res) => {
       // Step 3: Get all queries of type=1 for the retrieved usernames
       const queries = await Query.find({ 
           username: { $in: userUsernames }, 
-          type: 1 
+          type: type
       }).sort({ time: -1 });
 
       res.status(200).json(queries);
