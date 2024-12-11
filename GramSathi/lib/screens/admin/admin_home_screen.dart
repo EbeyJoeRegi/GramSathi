@@ -193,6 +193,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // Padding for the image on the left
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6.0),
+                            child: Image.asset(
+                              'assets/images/icon.png',
+                              height: 53.0,
+                              width: 52.0,
+                            ),
+                          ),
+                          // Title text
                           Text('Village Connect Admin'),
                           Row(
                             children: [

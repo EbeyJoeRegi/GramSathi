@@ -32,7 +32,21 @@ class _FeedbackHubState extends State<FeedbackHub>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Feedback Hub'),
+        title: Row(
+          children: [
+            // Padding for the image on the left
+            Padding(
+              padding: const EdgeInsets.only(right: 7.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 54.0,
+                width: 53.0,
+              ),
+            ),
+            // Title text
+            Text('Feedback Hub'),
+          ],
+        ),
         bottom: TabBar(
           controller: _tabController,
           tabs: [

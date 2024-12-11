@@ -175,56 +175,97 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Failed to load crops'));
                   } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        DropdownButton<int>(
-                          value: _selectedPlaceIdForAdd,
-                          hint: Text('Select Place'),
-                          items: _places.map<DropdownMenuItem<int>>((place) {
-                            return DropdownMenuItem<int>(
-                              value: place['id'],
-                              child: Text(place['place_name']),
-                            );
-                          }).toList(),
-                          onChanged: (int? newValue) {
-                            setState(() {
-                              _selectedPlaceIdForAdd = newValue;
-                            });
-                          },
-                        ),
-                        DropdownButton<int>(
-                          value: _selectedCropId,
-                          hint: Text('Select Crop'),
-                          items: _allCrops.map<DropdownMenuItem<int>>((crop) {
-                            return DropdownMenuItem<int>(
-                              value: crop['id'],
-                              child: Text(crop['crop_name']),
-                            );
-                          }).toList(),
-                          onChanged: (int? newValue) {
-                            setState(() {
-                              _selectedCropId = newValue;
-                            });
-                          },
-                        ),
-                        TextField(
-                          controller: _priceController,
-                          decoration: InputDecoration(labelText: 'Price'),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ],
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Place Dropdown
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: DropdownButton<int>(
+                              value: _selectedPlaceIdForAdd,
+                              hint: Text('Select Place'),
+                              items:
+                                  _places.map<DropdownMenuItem<int>>((place) {
+                                return DropdownMenuItem<int>(
+                                  value: place['id'],
+                                  child: Text(place['place_name']),
+                                );
+                              }).toList(),
+                              onChanged: (int? newValue) {
+                                setState(() {
+                                  _selectedPlaceIdForAdd = newValue;
+                                });
+                              },
+                            ),
+                          ),
+
+                          // Crop Dropdown
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // Rounded corners
+                                border: Border.all(
+                                  color: Colors.grey, // Border color
+                                  width: 1.0, // Border width
+                                ),
+                              ),
+                              child: DropdownButton<int>(
+                                value: _selectedCropId,
+                                hint: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('Select Crop'),
+                                ),
+                                items: _allCrops
+                                    .map<DropdownMenuItem<int>>((crop) {
+                                  return DropdownMenuItem<int>(
+                                    value: crop['id'],
+                                    child: Text(crop['crop_name']),
+                                  );
+                                }).toList(),
+                                onChanged: (int? newValue) {
+                                  setState(() {
+                                    _selectedCropId = newValue;
+                                  });
+                                },
+                                isExpanded:
+                                    true, // Ensures the dropdown takes up the full width of the container
+                                underline:
+                                    SizedBox(), // Hides the default underline of the dropdown button
+                              ),
+                            ),
+                          ),
+
+                          // Price Input Field
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextField(
+                              controller: _priceController,
+                              decoration: InputDecoration(
+                                labelText: 'Price',
+                                border: OutlineInputBorder(),
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
                 },
               ),
               actions: [
+                // Cancel Button
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: Text('Cancel'),
                 ),
+
+                // Save Button
                 ElevatedButton(
                   onPressed: () {
                     if (_selectedCropId != null &&
@@ -525,18 +566,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Market Place'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xffE6F4E3),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/admin.png'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
-                BlendMode.lighten),
-          ),
-        ),
+        color: Color(0xffE6F4E3),
         child: _isLoading
             ? Center(child: CircularProgressIndicator())
             : _errorMessage.isNotEmpty
@@ -562,7 +595,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                           },
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.white.withOpacity(0.8),
+                            fillColor: Colors.white,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -575,14 +608,29 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                             return Container(
                               margin: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(8.0),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                    16.0), // Circular border
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF015F3E)
+                                        .withOpacity(0.5), // Shadow color
+                                    blurRadius: 8.0, // Blur effect
+                                    offset: Offset(0, 4), // Shadow offset
+                                  ),
+                                ],
                                 border: Border.all(
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    width: 1.0),
+                                  color: Colors.white,
+                                  width: 1.0,
+                                ),
                               ),
                               child: ListTile(
-                                title: Text(crop['crop_name']),
+                                title: Text(
+                                  crop['crop_name'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight
+                                          .w500), // Makes the text bold
+                                ),
                                 subtitle: Text(
                                     'Price: ${crop['price']}\nAverage Price: ${crop['avg_price']}'),
                                 trailing: IconButton(
@@ -605,13 +653,23 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
           FloatingActionButton(
             heroTag: 'updateAverage',
             onPressed: _showPopupMenu,
-            child: Icon(Icons.more_vert),
+            child: Icon(
+              Icons.more_vert,
+              color: Color(0xFF001F14),
+            ),
+            backgroundColor:
+                Color(0xFF55947E).withOpacity(0.9), // Set background color
           ),
           SizedBox(height: 10),
           FloatingActionButton(
             heroTag: 'addCropPrice',
             onPressed: _showAddPriceDialog,
-            child: Icon(Icons.add),
+            child: Icon(
+              Icons.add,
+              color: Color(0xFF001F14),
+            ),
+            backgroundColor:
+                Color(0xFF55947E).withOpacity(0.9), // Set background color
           ),
         ],
       ),

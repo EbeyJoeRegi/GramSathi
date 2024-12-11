@@ -139,7 +139,7 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
                         onPressed: _addAdmin,
                         child: Text('Add Admin'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal,
+                          backgroundColor: Color(0xff015F3E),
                           foregroundColor: Colors.white,
                         ),
                       ),
@@ -178,54 +178,57 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Admin Management'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xffE6F4E3),
       ),
-      body: Stack(
-        children: [
-          Opacity(
-            opacity: 0.5, // Adjust the opacity as needed
-            child: Image.asset(
-              'assets/images/admin.png', // Ensure this path is correct
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-          Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: adminUsers.length,
-                  itemBuilder: (context, index) {
-                    final admin = adminUsers[index];
-                    return Card(
-                      color: Colors.white.withOpacity(0.8),
-                      margin:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+      body: Container(
+        color: Color(0xffE6F4E3), // Set the background color
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: adminUsers.length,
+                itemBuilder: (context, index) {
+                  final admin = adminUsers[index];
+                  return Card(
+                    color: Colors.white,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    // Added shadow with the color 0xff015F3E
+                    elevation: 8, // This adds some depth to the card
+                    shadowColor: Color(0xff015F3E), // Set shadow color
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16.0),
+                      title: Text(
+                        admin['name'],
+                        style: TextStyle(
+                            fontWeight:
+                                FontWeight.w500), // Make title a little bold
                       ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16.0),
-                        title: Text(admin['name']),
-                        subtitle: Text(admin['email']),
-                        trailing: IconButton(
-                          icon: Icon(Icons.remove_circle, color: Colors.red),
-                          onPressed: () => _removeAdmin(admin['id']),
-                        ),
+                      subtitle: Text(
+                        admin['email'],
+                        style: TextStyle(
+                            fontWeight:
+                                FontWeight.w400), // Make subtitle a little bold
                       ),
-                    );
-                  },
-                ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.remove_circle, color: Colors.red),
+                        onPressed: () => _removeAdmin(admin['id']),
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddAdminDialog,
-        child: Icon(Icons.add),
-        backgroundColor: Colors.teal,
+        child: Icon(Icons.add, color: Color(0xff001F14)),
+        backgroundColor: Color(0xff55947E),
       ),
     );
   }

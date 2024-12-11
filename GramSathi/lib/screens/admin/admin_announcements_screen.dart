@@ -235,10 +235,26 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
     return Scaffold(
       extendBodyBehindAppBar: true, // Allow body to extend behind AppBar
       appBar: AppBar(
-        title: const Text('Announcements'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start, // Aligning to the left
+          children: [
+            // Padding for the image on the left
+            Padding(
+              padding: const EdgeInsets.only(right: 7.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 54.0,
+                width: 53.0,
+              ),
+            ),
+            // Title text
+            const Text('Announcements'),
+          ],
+        ),
         backgroundColor: Colors.white, // Set AppBar color
         elevation: 0, // Remove shadow
       ),
+
       body: Container(
         color: Colors.white, // Set background color to white
         padding: const EdgeInsets.all(16.0),
