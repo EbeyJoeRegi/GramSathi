@@ -684,6 +684,7 @@ router.post('/notify', async (req, res) => {
       buyername,
       sellername,
       sell_id: numericSellId,
+      buy: false,
     });
 
     if (existingNotification) {

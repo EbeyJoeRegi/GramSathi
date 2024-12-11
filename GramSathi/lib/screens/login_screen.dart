@@ -86,12 +86,12 @@ class _LoginScreenState extends State<LoginScreen>
         } else {
           if (responseBody['message'] == 'Account not activated') {
             _showActivationPopup();
-          } else {
-            setState(() {
-              _errorMessage = 'Invalid credentials. Please try again.';
-            });
           }
         }
+      } else if (response.statusCode == 401) {
+        setState(() {
+          _errorMessage = 'Invalid credentials. Please try again.';
+        });
       } else {
         setState(() {
           _errorMessage = 'Server error. Please try again later.';
