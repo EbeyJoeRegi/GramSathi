@@ -109,6 +109,7 @@ flutter:
     - assets/vegetables/rice.jpg
     - assets/vegetables/tomato.jpg
     - assets/images/verifyotp.png
+    - assets/images/village.jpg
     - assets/vegetables/wheat.jpg
 
   fonts:
