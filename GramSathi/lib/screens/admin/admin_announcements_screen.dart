@@ -349,25 +349,37 @@ class _AdminAnnouncementPageState extends State<AdminAnnouncementPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextField(
-                    controller: _titleController,
-                    decoration: InputDecoration(
-                      labelText: 'Title',
-                      border: OutlineInputBorder(),
-                    ),
-                    style: TextStyle(
-                      color: Color(0xFF015F3E), // Set the text color to #C4EDB2
-                    ),
-                  ),
+                      controller: _titleController,
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                        labelStyle: TextStyle(color: Color(0xff015F3E)),
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF015F3E)),
+                          // Focused border color
+                        ),
+                      ),
+                      style: TextStyle(
+                        color:
+                            Color(0xFF015F3E), // Set the text color to #C4EDB2
+                      ),
+                      cursorColor: Color(0xFF015F3E)),
                   SizedBox(height: 16),
                   TextField(
                     controller: _contentController,
                     decoration: InputDecoration(
                       labelText: 'Content',
+                      labelStyle: TextStyle(color: Color(0xff015F3E)),
                       border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color(0xFF015F3E)), // Focused border color
+                      ),
                     ),
                     style: TextStyle(
                       color: Color(0xFF015F3E), // Set the text color to #C4EDB2
                     ),
+                    cursorColor: Color(0xFF015F3E),
                     maxLines: 5,
                   ),
                   SizedBox(height: 16),

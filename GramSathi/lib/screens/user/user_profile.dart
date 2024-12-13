@@ -230,15 +230,31 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Profile', style: TextStyle(color: Colors.black)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 6.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 53.0,
+                width: 52.0,
+              ),
+            ),
+            Text(
+              'Profile',
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.white,
         leading: null, // Removes the back arrow button
         automaticallyImplyLeading: false, // Ensures no back button is added
         actions: [
           IconButton(
-            icon:
-                Icon(_isEditing ? Icons.save : Icons.edit, color: Colors.black),
+            icon: Icon(_isEditing ? Icons.save : Icons.edit,
+                color: Color(0xff015F3E)),
             onPressed: () {
               if (_isEditing) {
                 _updateUserData();
@@ -250,7 +266,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.home, color: const Color.fromARGB(255, 0, 0, 0)),
+            icon: Icon(Icons.home, color: Color(0xff015F3E)),
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -283,9 +299,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   AssetImage('assets/images/user.jpg'),
                             ),
                             IconButton(
-                              icon: Icon(Icons.camera_alt,
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255)),
+                              icon: Icon(
+                                Icons.camera_alt,
+                                color: Color(0xff015F3E),
+                                size: 30,
+                              ),
                               onPressed: _pickAndUploadImage,
                             ),
                           ],

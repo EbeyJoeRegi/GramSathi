@@ -97,17 +97,31 @@ class _VillageDetailsScreenState extends State<VillageDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${widget.placeName} Details')),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      appBar: AppBar(
+          backgroundColor: Color(0xffE6F4E3),
+          title: Text(
+            '${widget.placeName} Details',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          )),
+      body: Container(
+        color: Color(0xFFE6F4E3), // Background color for the body
+        padding: const EdgeInsets.all(16.0), // Padding for the body
         child: ListView(
           children: [
             // Display number of residents
-            Text('Number of Residents: $residentCount',
-                style: TextStyle(fontSize: 20)),
+            Text(
+              'Number of Residents: $residentCount',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            ),
             SizedBox(height: 20),
-            Text('Admins',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(
+              'Admins',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff015F3E)),
+            ),
+            SizedBox(height: 10),
 
             // List of admins
             ListView.builder(
@@ -119,33 +133,46 @@ class _VillageDetailsScreenState extends State<VillageDetailsScreen> {
                   future: _fetchProfileImage(admin['photo_id']),
                   builder: (context, snapshot) {
                     return Card(
-                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 4, // Add subtle shadow to the card
+                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            15.0), // Rounded corners for the card
+                      ),
                       child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 16.0),
                         leading:
                             snapshot.connectionState == ConnectionState.waiting
                                 ? const Icon(Icons.person,
-                                    color: Color(0xff015F3E),
-                                    size: 40) // Loading icon
+                                    color: Color(0xff015F3E), size: 40)
                                 : snapshot.hasError || snapshot.data == null
                                     ? const Icon(Icons.person,
-                                        color: Color(0xff015F3E),
-                                        size: 40) // Error fallback icon
+                                        color: Color(0xff015F3E), size: 40)
                                     : CircleAvatar(
                                         backgroundImage: snapshot.data!.image,
                                       ),
-                        title: Text(admin['name']),
-                        subtitle: Text(admin['job_title']),
+                        title: Text(
+                          admin['name'],
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text(
+                          admin['job_title'],
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.grey[700]),
+                        ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.phone),
+                              icon: Icon(Icons.phone, color: Color(0xff015F3E)),
                               onPressed: () {
                                 _makeCall(admin['phone']);
                               },
                             ),
                             IconButton(
-                              icon: Icon(Icons.email),
+                              icon: Icon(Icons.email, color: Color(0xff015F3E)),
                               onPressed: () {
                                 _sendEmail(admin['email']);
                               },

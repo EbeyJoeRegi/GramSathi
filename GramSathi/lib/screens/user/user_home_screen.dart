@@ -469,6 +469,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             return Card(
                               elevation: 2,
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              color: Color(
+                                  0xFFE6F4E3), // Set background color of Card
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
@@ -477,9 +479,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     Text(
                                       title,
                                       style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xff015F3E)),
                                     ),
                                     SizedBox(height: 8.0),
                                     Text(
@@ -492,7 +494,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     Text(
                                       'Posted by: $admin',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                       ),
                                     ),
                                     SizedBox(height: 8.0),
@@ -509,7 +511,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             );
                           },
                         ),
-            ),
+            )
           ],
         ),
       ),

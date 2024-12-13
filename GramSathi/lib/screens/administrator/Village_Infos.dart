@@ -77,6 +77,7 @@ class _VillagePageState extends State<VillagePage> {
                     future: _fetchProfileImage(village['photo_id']!),
                     builder: (context, snapshot) {
                       return Card(
+                        color: Color(0xffE6F4E3),
                         margin: EdgeInsets.symmetric(vertical: 8.0),
                         child: ListTile(
                           leading: CircleAvatar(
@@ -103,8 +104,20 @@ class _VillagePageState extends State<VillagePage> {
                                       )
                                     : null,
                           ),
-                          title: Text(village['place_name']),
-                          subtitle: Text(village['president_name']),
+                          title: Text(
+                            village['place_name'],
+                            style: TextStyle(
+                              color: Color(0xff015F3E),
+                              fontWeight: FontWeight.w700, // Make the text bold
+                            ),
+                          ),
+                          subtitle: Text(
+                            village['president_name'],
+                            style: TextStyle(
+                              color: Colors.black,
+                              //fontWeight: FontWeight.w700, // Make the text bold
+                            ),
+                          ),
                           onTap: () =>
                               _navigateToVillageDetails(village['place_name']),
                         ),

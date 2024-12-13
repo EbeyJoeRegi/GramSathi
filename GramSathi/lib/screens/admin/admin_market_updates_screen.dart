@@ -111,7 +111,26 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
           title: Text('Edit Price'),
           content: TextField(
             controller: _priceController,
-            decoration: InputDecoration(labelText: 'Price'),
+            decoration: InputDecoration(
+              labelText: 'Price',
+              labelStyle: TextStyle(color: Color(0xff015F3E)),
+              border: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Color(0xff015F3E)), // Border color
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Color(0xff015F3E)), // Border color
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Color(0xff015F3E)), // Border color
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            cursorColor: Color(0xff015F3E), // Cursor color
             keyboardType: TextInputType.number,
           ),
           actions: [
@@ -119,7 +138,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: Text('Cancel', style: TextStyle(color: Color(0xff015F3E))),
             ),
             ElevatedButton(
               onPressed: () {
@@ -127,7 +146,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                     crop['id'], double.parse(_priceController.text));
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: Text(
+                'Save',
+                style: TextStyle(color: Color(0xff015F3E)),
+              ),
             ),
           ],
         );
@@ -208,7 +230,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                                 borderRadius: BorderRadius.circular(
                                     8.0), // Rounded corners
                                 border: Border.all(
-                                  color: Colors.grey, // Border color
+                                  color: Color(0xff015F3E), // Border color
                                   width: 1.0, // Border width
                                 ),
                               ),
@@ -243,9 +265,31 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: TextField(
                               controller: _priceController,
+                              cursorColor:
+                                  Color(0xff015F3E), // Set cursor color
                               decoration: InputDecoration(
                                 labelText: 'Price',
-                                border: OutlineInputBorder(),
+                                labelStyle: TextStyle(color: Colors.black),
+                                //filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: BorderSide(
+                                      color: Color(0xff015F3E),
+                                      width: 1.2), // Default border color
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: BorderSide(
+                                      color: Color(0xff015F3E),
+                                      width: 1.2), // Border when enabled
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: BorderSide(
+                                      color: Color(0xff015F3E),
+                                      width: 1.2), // Border when focused
+                                ),
                               ),
                               keyboardType: TextInputType.number,
                             ),
@@ -262,7 +306,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Color(0xff015F3E)),
+                  ),
                 ),
 
                 // Save Button
@@ -279,7 +326,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                       Navigator.pop(context);
                     }
                   },
-                  child: Text('Save'),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(color: Color(0xff015F3E)),
+                  ),
                 ),
               ],
             );
@@ -391,6 +441,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        // Dropdown Field
                         DropdownButtonFormField<int>(
                           value: _selectedCropId,
                           hint: Text('Select Crop'),
@@ -408,17 +459,62 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white.withOpacity(0.8),
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color:
+                                    Color(0xff015F3E), // Default border color
+                                width: 1.5,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Color(0xff015F3E), // Enabled border
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Color(0xff015F3E), // Focused border
+                                width: 2.0,
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(height: 8),
+                        // Text Field
                         TextField(
                           controller: _averagePriceController,
+                          cursorColor: Color(0xff015F3E), // Set cursor color
                           decoration: InputDecoration(
                             labelText: 'Average Price',
+                            labelStyle: TextStyle(color: Color(0xff015F3E)),
                             filled: true,
                             fillColor: Colors.white.withOpacity(0.8),
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color:
+                                    Color(0xff015F3E), // Default border color
+                                width: 1.5,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Color(0xff015F3E), // Enabled border
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Color(0xff015F3E), // Focused border
+                                width: 2.0,
+                              ),
+                            ),
                           ),
                           keyboardType: TextInputType.number,
                         ),
@@ -432,7 +528,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Color(0xff015F3E)),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -445,7 +544,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                       Navigator.pop(context);
                     }
                   },
-                  child: Text('Save'),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(color: Color(0xff015F3E)),
+                  ),
                 ),
               ],
             );
@@ -489,21 +591,49 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
             children: [
               TextField(
                 controller: _cropNameController,
+                cursorColor: Color(0xff015F3E), // Cursor color
                 decoration: InputDecoration(
                   labelText: 'Crop Name',
+                  labelStyle: TextStyle(color: Colors.black),
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xff015F3E)), // Border color
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(0xff015F3E)), // Border when not focused
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(0xff015F3E),
+                        width: 2.0), // Border when focused
+                  ),
                 ),
               ),
               SizedBox(height: 8),
               TextField(
                 controller: _averagePriceController,
+                cursorColor: Color(0xff015F3E), // Cursor color
                 decoration: InputDecoration(
                   labelText: 'Average Price',
+                  labelStyle: TextStyle(color: Colors.black),
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xff015F3E)), // Border color
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(0xff015F3E)), // Border when not focused
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(0xff015F3E),
+                        width: 2.0), // Border when focused
+                  ),
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -514,7 +644,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Color(0xff015F3E)),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -527,7 +660,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Save'),
+              child: Text(
+                'Save',
+                style: TextStyle(color: Color(0xff015F3E)),
+              ),
             ),
           ],
         );

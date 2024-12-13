@@ -179,8 +179,15 @@ class _SellScreenState extends State<SellScreen> {
                       controller: quantityController,
                       decoration: InputDecoration(
                         labelText: "Quantity",
+                        labelStyle: TextStyle(color: Colors.black),
                         prefixIcon: Icon(Icons.bar_chart),
                         border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color(0xff015F3E),
+                              width: 2), // Focused border color
                           borderRadius: BorderRadius.circular(10),
                         ),
                         suffixText: "kg",
@@ -194,13 +201,19 @@ class _SellScreenState extends State<SellScreen> {
 
                     SizedBox(height: 10),
 
-                    // Price input
                     TextField(
                       controller: priceController,
                       decoration: InputDecoration(
                         labelText: "Price",
+                        labelStyle: TextStyle(color: Colors.black),
                         prefixIcon: Icon(Icons.currency_rupee),
                         border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 2), // Focused border color
                           borderRadius: BorderRadius.circular(10),
                         ),
                         suffixText: "/kg",
@@ -211,6 +224,7 @@ class _SellScreenState extends State<SellScreen> {
                       ),
                       keyboardType: TextInputType.number,
                     ),
+
                     SizedBox(height: 10),
 
                     // Note at the bottom
@@ -273,7 +287,10 @@ class _SellScreenState extends State<SellScreen> {
                 );
                 Navigator.pop(context);
               },
-              child: Text("Add"),
+              child: Text(
+                "Add",
+                style: TextStyle(color: Color(0xff015F3E)),
+              ),
             ),
           ],
         );
