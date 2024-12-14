@@ -38,11 +38,35 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          Color(0xFFE6F4E3), // Set the background color of the body
       appBar: AppBar(
-        title: Text('Village Administrator'),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 6.0),
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 53.0,
+                width: 52.0,
+              ),
+            ),
+            Text(
+              'Village Administrator',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold, // Make text bold
+              ),
+            ),
+          ],
+        ),
+        backgroundColor:
+            Colors.white, // Use soft green for the AppBar background
+        elevation: 0, // Optional: Remove the shadow to make it cleaner
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: Icon(Icons.logout,
+                color: Colors.black), // Customize logout icon color
             onPressed: () {
               // Add logout functionality here
               showDialog(
@@ -54,7 +78,8 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
                     TextButton(
                       onPressed: () =>
                           Navigator.pop(context), // Close the dialog
-                      child: Text('Cancel'),
+                      child: Text('Cancel',
+                          style: TextStyle(color: Color(0xff015F3E))),
                     ),
                     TextButton(
                       onPressed: () {
@@ -62,7 +87,8 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
                         Navigator.pushReplacementNamed(
                             context, '/login'); // Navigate to login page
                       },
-                      child: Text('Logout'),
+                      child: Text('Logout',
+                          style: TextStyle(color: Color(0xff015F3E))),
                     ),
                   ],
                 ),
@@ -75,6 +101,8 @@ class _VillageAdminPageState extends State<VillageAdminPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onTabSelected,
+        selectedItemColor: Color(0xFF015F3E), // Custom color for selected index
+        unselectedItemColor: Colors.black, // Color for unselected items
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.announcement),

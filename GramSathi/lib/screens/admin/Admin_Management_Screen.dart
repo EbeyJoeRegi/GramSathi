@@ -139,10 +139,13 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
                         onPressed: _addAdmin,
                         child: Text('Add Admin'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff015F3E),
-                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.white,
+                          foregroundColor: Color(0xff015F3E),
+                          elevation: 8, // Add elevation to create a shadow
+                          shadowColor: Color(
+                              0xff015F3E), // Customize shadow color (optional)
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ],
@@ -159,16 +162,45 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
       {bool obscureText = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          prefixIcon: Icon(icon),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
+      child: Container(
+        child: TextField(
+          controller: controller,
+          obscureText: obscureText,
+          cursorColor: Color(0xff015F3E), // Set cursor color
+          decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle: TextStyle(color: Color(0xff015F3E)),
+            filled: true,
+            fillColor: Colors.white, // Background color set to white
+            prefixIcon: Icon(
+              icon,
+              color: Color(0xff015F3E), // Icon color
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Color(0xff015F3E), // Default border color
+                width: 1.0,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color:
+                    Color(0xff015F3E).withOpacity(0.5), // Enabled border color
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color:
+                    Color(0xff015F3E).withOpacity(0.3), // Focused border color
+                width: 1.0,
+              ),
+            ),
           ),
         ),
-        obscureText: obscureText,
       ),
     );
   }
