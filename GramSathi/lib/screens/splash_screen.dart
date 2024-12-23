@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen>
                 FadeTransition(
                   opacity: _animation,
                   child: Text(
-                    'Village Connect',
+                    'Gram Sathi',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 SizedBox(height: 10),
                 AnimatedTagline(
-                  text: 'A platform serving essential services',
+                  text: 'Building communication with technology',
                   animation: _animation,
                 ),
                 SizedBox(height: 30),
