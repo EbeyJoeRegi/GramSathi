@@ -238,4 +238,30 @@
     "$date": "2024-12-11T05:31:35.137Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67598a2c4618adf14fb70aeb"
+  },
+  "id": 39,
+  "admin": "Admin Name",
+  "title": "check dec",
+  "content": "dwe",
+  "created_at": {
+    "$date": "2024-12-11T12:48:44.365Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67598cac4618adf14fb70b88"
+  },
+  "id": 40,
+  "admin": "Aju Thomas",
+  "title": "fsdfsd",
+  "content": "asddfgdsgsd",
+  "created_at": {
+    "$date": "2024-12-11T12:59:24.059Z"
+  },
+  "__v": 0
 }]

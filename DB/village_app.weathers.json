@@ -4,10 +4,10 @@
   },
   "id": 11,
   "username": "user",
-  "temperature": "30.4°C",
-  "weatherCondition": "Haze",
+  "temperature": "27.4°C",
+  "weatherCondition": "Clouds",
   "lastUpdated": {
-    "$date": "2024-12-11T12:22:47.668Z"
+    "$date": "2024-12-11T15:09:33.977Z"
   },
   "__v": 0,
   "city": "Mangalore"
@@ -18,11 +18,11 @@
   },
   "id": 19,
   "username": "ebeyjoeregi",
-  "temperature": "30.4°C",
-  "weatherCondition": "Clouds",
+  "temperature": "28.4°C",
+  "weatherCondition": "Haze",
   "city": "Mangalore",
   "lastUpdated": {
-    "$date": "2024-12-11T06:12:52.247Z"
+    "$date": "2024-12-11T13:05:22.129Z"
   },
   "__v": 0
 },

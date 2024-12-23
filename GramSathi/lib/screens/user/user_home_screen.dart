@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import '/config.dart';
@@ -23,6 +24,8 @@ class UserHomeScreen extends StatefulWidget {
 }
 
 class _UserHomeScreenState extends State<UserHomeScreen> {
+  final Uri chatbotUrl = Uri.parse(
+      'https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/10/17/14/20241017142921-2XCQF05J.json');
   int _selectedIndex = 0;
   PageController _pageController = PageController();
   List<Map<String, dynamic>> _announcements = [];
@@ -93,6 +96,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         _errorMessage = 'An error occurred. Please try again later.';
         _isLoading = false;
       });
+    }
+  }
+
+  void _openChatbot() async {
+    if (await canLaunchUrl(chatbotUrl)) {
+      await launchUrl(chatbotUrl);
+    } else {
+      throw 'Could not launch $chatbotUrl';
     }
   }
 
@@ -311,16 +322,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color:
-              Color(0xFF5B4C2E), // Background color of the BottomNavigationBar
+          color: Color(0xFF5B4C2E),
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(50.0), // Rounded corners on the top
+            top: Radius.circular(50.0),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26, // Subtle shadow
+              color: Colors.black26,
               blurRadius: 8.0,
-              offset: Offset(0, -2), // Shadow positioned slightly above the bar
+              offset: Offset(0, -2),
             ),
           ],
         ),
@@ -350,8 +360,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           currentIndex: _selectedIndex,
           selectedItemColor: Color(0xff005F3D),
           unselectedItemColor: Colors.grey,
-          backgroundColor: Colors
-              .transparent, // Set to transparent since Container already has a color
+          backgroundColor: Colors.transparent,
           onTap: _onItemTapped,
         ),
       ),
@@ -379,7 +388,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   textStyle: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black, // Set to black
+                    color: Colors.black,
                   ),
                   speed: Duration(milliseconds: 100),
                 ),
@@ -388,7 +397,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             ),
           ],
         ),
-        backgroundColor: Colors.white, // Set AppBar color to white
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             icon: Icon(Icons.person),
@@ -410,110 +419,125 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           ),
         ],
       ),
-      body: Container(
-        color: Colors.white, // Set the entire background to white
-        child: Column(
-          children: [
-            SizedBox(height: 18.0), // Gap between AppBar and container
-            Center(
-              child: Container(
-                width: 385,
-                height: 145, // Set the desired width here
-                decoration: BoxDecoration(
-                  color: Color(0xff015F3E)
-                      .withOpacity(0.8), // Teal background with opacity
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(25.0),
-                    bottom: Radius.circular(25.0),
-                  ), // Rounded borders
+      body: Stack(
+        children: [
+          Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                SizedBox(height: 18.0),
+                Center(
+                  child: Container(
+                    width: 385,
+                    height: 145,
+                    decoration: BoxDecoration(
+                      color: Color(0xff015F3E).withOpacity(0.8),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(25.0),
+                        bottom: Radius.circular(25.0),
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(17.0),
+                    child: _buildWeatherWidget(),
+                  ),
                 ),
-                padding: const EdgeInsets.all(17.0),
-                child: _buildWeatherWidget(),
-              ),
-            ),
-            SizedBox(height: 26.0), // Space before the heading
-            Padding(
-              padding: const EdgeInsets.only(right: 180),
-              child: Text(
-                'Announcements',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                SizedBox(height: 26.0),
+                Padding(
+                  padding: const EdgeInsets.only(right: 180),
+                  child: Text(
+                    'Announcements',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(height: 5),
+                Expanded(
+                  child: _isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : _errorMessage.isNotEmpty
+                          ? Center(child: Text(_errorMessage))
+                          : ListView.builder(
+                              padding: EdgeInsets.all(16.0),
+                              itemCount: _announcements.length,
+                              itemBuilder: (context, index) {
+                                final announcement = _announcements[index];
+                                final dateTimeUtc =
+                                    DateTime.parse(announcement['created_at']);
+                                final dateTimeIst =
+                                    convertUtcToIst(dateTimeUtc);
+                                final formattedDate =
+                                    DateFormat('dd MMM yyyy, hh:mm a')
+                                        .format(dateTimeIst);
+                                final title =
+                                    announcement['title'] ?? 'No Title';
+                                final description =
+                                    announcement['content'] ?? 'No Description';
+                                final admin =
+                                    announcement['admin'] ?? 'UnKnown';
+
+                                return Card(
+                                  elevation: 2,
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  color: Color(0xFFE6F4E3),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          title,
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xff015F3E)),
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Text(
+                                          description,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Text(
+                                          'Posted by: $admin',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Text(
+                                          'Posted on: $formattedDate',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                )
+              ],
             ),
-            SizedBox(height: 5), // Space before announcements list
-            Expanded(
-              child: _isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : _errorMessage.isNotEmpty
-                      ? Center(child: Text(_errorMessage))
-                      : ListView.builder(
-                          padding: EdgeInsets.all(16.0),
-                          itemCount: _announcements.length,
-                          itemBuilder: (context, index) {
-                            final announcement = _announcements[index];
-                            final dateTimeUtc =
-                                DateTime.parse(announcement['created_at']);
-                            final dateTimeIst = convertUtcToIst(dateTimeUtc);
-                            final formattedDate =
-                                DateFormat('dd MMM yyyy, hh:mm a')
-                                    .format(dateTimeIst);
-
-                            // Safely access announcement fields
-                            final title = announcement['title'] ?? 'No Title';
-                            final description =
-                                announcement['content'] ?? 'No Description';
-                            final admin = announcement['admin'] ?? 'UnKnown';
-
-                            return Card(
-                              elevation: 2,
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              color: Color(
-                                  0xFFE6F4E3), // Set background color of Card
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      title,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xff015F3E)),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      description,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      'Posted by: $admin',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      'Posted on: $formattedDate',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-            )
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 20.0,
+            right: 20.0,
+            child: IconButton(
+              onPressed: _openChatbot,
+              icon: Icon(Icons.support_agent_sharp, color: Color(0xff005F3D)),
+              splashRadius: 24.0, // Adjust splash radius if needed
+              iconSize: 40.0,
+            ),
+          )
+        ],
       ),
     );
   }

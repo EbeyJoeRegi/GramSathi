@@ -107,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen>
         });
       }
     } catch (e) {
+      print(e);
       setState(() {
         _errorMessage = 'An error occurred. Please try again later.';
       });

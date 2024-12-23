@@ -18,7 +18,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/village_app')
+mongoose.connect('mongodb://localhost:27017/village_app') //Local DB
+//mongoose.connect(process.env.MONGODB_CONNECT_URI) //Online DB
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Database connection error:', err));
 
