@@ -34,7 +34,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     try {
       final response = await http.get(
         Uri.parse(
-            '${AppConfig.baseUrl}/pending-users'), // Replace with your IP address
+            '${AppConfig.baseUrl}/pending-users?username=${widget.username}'),
       );
 
       if (response.statusCode == 200) {
@@ -61,12 +61,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     final endpoint = activate ? 'activate-user' : 'deactivate-user';
     try {
       final response = await http.post(
-        Uri.parse(
-            '${AppConfig.baseUrl}/$endpoint'), // Replace with your IP address
+        Uri.parse('${AppConfig.baseUrl}/$endpoint'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, int>{'user_id': userId}),
+        body: jsonEncode(<String, dynamic>{
+          'admin': widget.username,
+          'user_id': userId,
+        }),
       );
 
       if (response.statusCode == 200) {

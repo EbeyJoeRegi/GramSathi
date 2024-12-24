@@ -55,7 +55,7 @@ class _TalukAnnouncementsScreenState extends State<TalukAnnouncementsScreen> {
               ),
             ),
             Text(
-              'Taluk Announcements',
+              'Admin Updates',
               style: TextStyle(
                 fontWeight: FontWeight.bold, // Makes the text bold
               ),

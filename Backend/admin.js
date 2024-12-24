@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
 const { User, Announcement, Suggestion, Query, Place, Crop, Price, Counter } = require('./models');
 
 // Auto increment helper function
@@ -106,19 +108,72 @@ router.put('/updateAnnouncement/:id', async (req, res) => {
 
 // Activate user endpoint
 router.post('/activate-user', async (req, res) => {
-  const { user_id } = req.body;
+  const { user_id, admin } = req.body; // Admin is assumed to be the admin's username
 
   try {
+    // Retrieve details of the activated user
+    const user = await User.findOne({ id: user_id });
+    if (!user) {
+      return res.status(404).json({ error: 'User details not found' });
+    }
+
+    // Retrieve details of the admin user
+    const adminDetails = await User.findOne({ username: admin });
+    if (!adminDetails) {
+      return res.status(404).json({ error: 'Admin not found' });
+    }
+
+    // Email data
+    const emailSubject = 'Your Account Has Been Activated';
+    const emailText = `
+      Hi ${user.name},
+
+      Your account has been activated for the village ${user.address}. 
+      You can now log in using the credentials you provided during signup.
+
+      Username: ${user.username}
+
+      Welcome to GramSathi!
+
+      With warm regards,
+      ${adminDetails.name} 
+      ${user.address}
+    `;
+
+    // Create a transporter using your SMTP server credentials (you may want to use environment variables for this)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail', // You can use any SMTP service here (Gmail, SendGrid, etc.)
+      auth: {
+        user: process.env.EMAIL_USER, // Set your email ID (should be in .env)
+        pass: process.env.EMAIL_PASS, // Set your email password (should be in .env)
+      },
+    });
+
+    // Define email options
+    const mailOptions = {
+      from: process.env.EMAIL_ID, // The email ID you want to send from
+      to: user.email, // The recipient's email address
+      subject: emailSubject,
+      text: emailText, // The plain text content of the email
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+    
+    // Update the user activation status
     const result = await User.updateOne({ id: user_id }, { activation: 1 }); // Use the custom 'id' field
     if (result.nModified === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
+
     res.status(200).json({ message: 'User activated successfully' });
+
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 // Deactivate user endpoint
@@ -138,10 +193,26 @@ router.post('/deactivate-user', async (req, res) => {
 // Endpoint to get pending users
 router.get('/pending-users', async (req, res) => {
   try {
-    const users = await User.find({ activation: 0 });
+    const { username } = req.query; // Get username from query parameters
+
+    if (!username) {
+      return res.status(400).json({ message: 'Username is required' });
+    }
+
+    // Find the user with the given username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const userAddress = user.address; // Get the address of the user
+
+    // Find pending users from the same address
+    const users = await User.find({ activation: 0, address: userAddress });
 
     if (users.length === 0) {
-      return res.status(404).json({ message: 'No pending users found' });
+      return res.status(404).json({ message: 'No pending users found from this address' });
     }
 
     res.status(200).json(users);
