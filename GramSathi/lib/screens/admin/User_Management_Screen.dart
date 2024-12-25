@@ -4,6 +4,9 @@ import 'dart:convert';
 import '/config.dart';
 
 class UserManagementPage extends StatefulWidget {
+  final String username;
+
+  UserManagementPage({required this.username});
   @override
   _UserManagementPageState createState() => _UserManagementPageState();
 }

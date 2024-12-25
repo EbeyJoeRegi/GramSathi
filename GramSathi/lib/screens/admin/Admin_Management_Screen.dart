@@ -4,6 +4,9 @@ import 'dart:convert';
 import '/config.dart';
 
 class AdminManagementPage extends StatefulWidget {
+  final String username;
+
+  AdminManagementPage({required this.username});
   @override
   _AdminManagementPageState createState() => _AdminManagementPageState();
 }
@@ -25,8 +28,8 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
   }
 
   Future<void> _fetchAdmins() async {
-    final response =
-        await http.get(Uri.parse('${AppConfig.baseUrl}/admin/users'));
+    final response = await http.get(Uri.parse(
+        '${AppConfig.baseUrl}/admin-users?username=${widget.username}'));
 
     if (response.statusCode == 200) {
       setState(() {

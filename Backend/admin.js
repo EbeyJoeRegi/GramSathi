@@ -480,22 +480,32 @@ router.post('/add-crop', async (req, res) => {
 });
 
 // Get all admin users
-router.get('/admin/users', async (req, res) => {
+router.get('/admin-users', async (req, res) => {
   try {
-    const excludedId = 19; // Use a number if your custom `id` field is a number
+    const { username } = req.query;
 
+    // Find the current user by username
+    const currentUser = await User.findOne({ username: username });
+    if (!currentUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Get the address of the current user
+    const userAddress = currentUser.address;
+
+    // Find admin users with the same address, excluding the current user
     const admins = await User.find({
       user_type: 'admin',
-      id: { $ne: excludedId } // Exclude the user with id 19
+      address: userAddress, // Match address
+      username: { $ne: username }, // Exclude current user
     });
 
-    res.status(200).json(admins);
+    res.status(200).json(admins); // Send the list of admins
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 // Remove an admin user
 router.post('/remove-admin', async (req, res) => {

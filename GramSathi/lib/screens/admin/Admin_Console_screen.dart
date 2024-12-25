@@ -101,7 +101,8 @@ class _AdminConsolePage extends State<AdminConsolePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AdminManagementPage(),
+                            builder: (context) =>
+                                AdminManagementPage(username: widget.username),
                           ),
                         );
                       },
@@ -129,7 +130,8 @@ class _AdminConsolePage extends State<AdminConsolePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserManagementPage(),
+                            builder: (context) =>
+                                UserManagementPage(username: widget.username),
                           ),
                         );
                       },
