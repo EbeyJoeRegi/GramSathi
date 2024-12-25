@@ -3,7 +3,15 @@ import 'admin_market_updates_screen.dart'; // Ensure this import is correct
 import 'Admin_Management_Screen.dart'; // Ensure this import is correct
 import 'User_Management_Screen.dart'; // Ensure this import is correct
 
-class AdminConsolePage extends StatelessWidget {
+class AdminConsolePage extends StatefulWidget {
+  final String username;
+
+  AdminConsolePage({required this.username});
+  @override
+  _AdminConsolePage createState() => _AdminConsolePage();
+}
+
+class _AdminConsolePage extends State<AdminConsolePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +71,8 @@ class AdminConsolePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MarketUpdatesScreen(),
+                            builder: (context) =>
+                                MarketUpdatesScreen(username: widget.username),
                           ),
                         );
                       },

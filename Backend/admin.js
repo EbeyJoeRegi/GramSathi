@@ -137,6 +137,7 @@ router.post('/activate-user', async (req, res) => {
 
       With warm regards,
       ${adminDetails.name} 
+      ${adminDetails.email}
       ${user.address}
     `;
 
@@ -159,7 +160,7 @@ router.post('/activate-user', async (req, res) => {
 
     // Send the email
     await transporter.sendMail(mailOptions);
-    
+
     // Update the user activation status
     const result = await User.updateOne({ id: user_id }, { activation: 1 }); // Use the custom 'id' field
     if (result.nModified === 0) {
@@ -178,11 +179,61 @@ router.post('/activate-user', async (req, res) => {
 
 // Deactivate user endpoint
 router.post('/deactivate-user', async (req, res) => {
-  const { user_id } = req.body;
+  const { user_id, admin } = req.body;
 
   try {
+    const user = await User.findOne({ id: user_id });
+    if (!user) {
+      return res.status(404).json({ error: 'User details not found' });
+    }
+
+    // Retrieve details of the admin user
+    const adminDetails = await User.findOne({ username: admin });
+    if (!adminDetails) {
+      return res.status(404).json({ error: 'Admin not found' });
+    }
+
+    // Email data
+    const emailSubject = 'Your Account Activation Request Rejected';
+    const emailText = `
+      Hi ${user.name},
+
+      Your request to Sign Up to the village ${user.address} has been rejected. 
+      Please contact the administrator for further details.
+
+      Username: ${user.username}
+      Details associated with the above username has been removed from Database.
+
+      If you have any questions, feel free to reach out to us.
+
+      Best regards,
+      ${adminDetails.name}
+      ${adminDetails.email}
+      ${user.address}
+    `;
+
+    // Create a transporter using your SMTP server credentials
+    const transporter = nodemailer.createTransport({
+      service: 'gmail', // You can use any SMTP service here (Gmail, SendGrid, etc.)
+      auth: {
+        user: process.env.EMAIL_USER, // Set your email ID (should be in .env)
+        pass: process.env.EMAIL_PASS, // Set your email password (should be in .env)
+      },
+    });
+
+    // Define email options
+    const mailOptions = {
+      from: process.env.EMAIL_ID, // The email ID you want to send from
+      to: user.email, // The recipient's email address
+      subject: emailSubject,
+      text: emailText, // The plain text content of the email
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+
     await User.deleteOne({ id: user_id }); // Use the custom 'id' field
-    res.status(200).json({ message: 'User deactivated successfully' });
+    res.status(200).json({ message: 'User Delete successfully' });
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -467,6 +518,34 @@ router.post('/remove-admin', async (req, res) => {
   }
 });
 
+
+// API to get the address of a user by username
+router.get('/address', async (req, res) => {
+  try {
+      const { username } = req.query;
+
+      // Find the user by username
+      const user = await User.findOne({ username: username });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Find the place using the address from the user schema
+      const place = await Place.findOne({ place_name: user.address });
+      if (!place) {
+          return res.status(404).json({ message: 'Address not found' });
+      }
+
+      // Send the address and id
+      res.status(200).json({
+          id: place.id,
+          address: place.place_name,
+      });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 // Add an admin user
 router.post('/add-admin', async (req, res) => {

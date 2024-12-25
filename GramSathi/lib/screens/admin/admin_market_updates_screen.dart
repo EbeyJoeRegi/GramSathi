@@ -5,6 +5,9 @@ import 'dart:convert';
 import '/config.dart';
 
 class MarketUpdatesScreen extends StatefulWidget {
+  final String username;
+
+  MarketUpdatesScreen({required this.username});
   @override
   _MarketUpdatesScreenState createState() => _MarketUpdatesScreenState();
 }
@@ -31,18 +34,31 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
     });
 
     try {
-      final response =
-          await http.get(Uri.parse('${AppConfig.baseUrl}/locations'));
+      // Fetch user address and ID based on username
+      final response = await http.get(
+        Uri.parse('${AppConfig.baseUrl}/address?username=${widget.username}'),
+      );
+
       if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
+        final Map<String, dynamic> data = json.decode(response.body);
+
         setState(() {
-          _places = List<Map<String, dynamic>>.from(data);
-          _selectedPlaceId = _places.isNotEmpty ? _places.first['id'] ?? 0 : 0;
+          // Update places with the response data
+          _places = [
+            {
+              'id': data['id'],
+              'place_name': data['address'],
+            }
+          ];
+          // Select the place ID
+          _selectedPlaceId = data['id'] ?? 0;
+
+          // Fetch crops related to the selected place
           _fetchCropsByPlace(_selectedPlaceId);
         });
       } else {
         setState(() {
-          _errorMessage = 'Failed to load places';
+          _errorMessage = 'Failed to load address';
           _isLoading = false;
         });
       }

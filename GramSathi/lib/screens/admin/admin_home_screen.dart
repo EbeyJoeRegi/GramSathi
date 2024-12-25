@@ -6,7 +6,7 @@ import '/config.dart';
 import 'taluk_announcement_screen.dart';
 import 'admin_announcements_screen.dart';
 import 'feedback_hub.dart';
-import 'admin_console_screen.dart';
+import 'Admin_Console_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   final String username;
@@ -205,8 +205,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          AdminConsolePage(), // Navigate to the Admin Console Page
+                                      builder: (context) => AdminConsolePage(
+                                          username: widget
+                                              .username), // Navigate to the Admin Console Page
                                     ),
                                   );
                                 },
