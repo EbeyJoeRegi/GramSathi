@@ -219,25 +219,40 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                         children: [
                           // Place Dropdown
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: DropdownButton<int>(
-                              value: _selectedPlaceIdForAdd,
-                              hint: Text('Select Place'),
-                              items:
-                                  _places.map<DropdownMenuItem<int>>((place) {
-                                return DropdownMenuItem<int>(
-                                  value: place['id'],
-                                  child: Text(place['place_name']),
-                                );
-                              }).toList(),
-                              onChanged: (int? newValue) {
-                                setState(() {
-                                  _selectedPlaceIdForAdd = newValue;
-                                });
-                              },
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 700,
+                              padding: const EdgeInsets.all(
+                                  12.0), // Padding inside the rectangle
+                              decoration: BoxDecoration(
+                                color: Colors
+                                    .white, // Background color of the rectangle
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1.0), // Border for the rectangle
+                                borderRadius: BorderRadius.circular(
+                                    6.0), // Slightly rounded corners
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.3), // Shadow color
+                                    blurRadius: 4.0, // Shadow blur
+                                    offset: Offset(2, 2), // Shadow position
+                                  ),
+                                ],
+                              ),
+                              child: Text(
+                                _places.firstWhere((place) =>
+                                    place['id'] ==
+                                    _selectedPlaceId)['place_name'],
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black, // Text color
+                                ),
+                              ),
                             ),
                           ),
-
                           // Crop Dropdown
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -730,25 +745,33 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField<int>(
-                          value: _selectedPlaceId,
-                          hint: Text('Select Location'),
-                          items: _places.map<DropdownMenuItem<int>>((place) {
-                            return DropdownMenuItem<int>(
-                              value: place['id'],
-                              child: Text(place['place_name']),
-                            );
-                          }).toList(),
-                          onChanged: (int? newValue) {
-                            setState(() {
-                              _selectedPlaceId = newValue!;
-                              _fetchCropsByPlace(_selectedPlaceId);
-                            });
-                          },
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(),
+                        child: Container(
+                          width: double
+                              .infinity, // Set the width to take full available space
+                          padding: const EdgeInsets.all(
+                              15.0), // Padding inside the box
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Background color of the box
+                            borderRadius:
+                                BorderRadius.circular(10.0), // Rounded corners
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey
+                                    .withOpacity(0.5), // Shadow color
+                                blurRadius: 6.0, // Shadow blur radius
+                                offset: Offset(2, 2), // Shadow offset
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            _places.firstWhere((place) =>
+                                place['id'] == _selectedPlaceId)['place_name'],
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  Color(0xff015F3E), // Text color for contrast
+                            ),
                           ),
                         ),
                       ),
