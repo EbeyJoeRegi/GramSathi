@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 SizedBox(height: 10),
                 AnimatedTagline(
-                  text: 'Building communication with technology',
+                  text: 'Bridging communication with technology',
                   animation: _animation,
                 ),
                 SizedBox(height: 30),
