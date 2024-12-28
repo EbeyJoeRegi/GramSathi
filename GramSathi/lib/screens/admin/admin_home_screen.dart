@@ -190,7 +190,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           ),
                           // Title text
                           Text(
-                            'Village Connect Admin',
+                            'Gram Sathi Admin',
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500, // Make the text bold

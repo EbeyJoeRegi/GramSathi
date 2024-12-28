@@ -74,6 +74,7 @@ router.get('/count-users/:place_name', async (req, res) => {
             {
                 $match: {
                     user_type: 'user',
+                    activation: 1,
                 },
             },
             {

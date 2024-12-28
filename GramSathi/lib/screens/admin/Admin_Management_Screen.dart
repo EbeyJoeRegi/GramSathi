@@ -13,13 +13,12 @@ class AdminManagementPage extends StatefulWidget {
 
 class _AdminManagementPageState extends State<AdminManagementPage> {
   List<dynamic> adminUsers = [];
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _jobTitleController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _raidController = TextEditingController();
 
   @override
   void initState() {
@@ -61,40 +60,71 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
   }
 
   Future<void> _addAdmin() async {
-    final response = await http.post(
-      Uri.parse('${AppConfig.baseUrl}/add-admin'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'username': _usernameController.text,
-        'password': _passwordController.text,
-        'name': _nameController.text,
-        'phone': _phoneController.text,
-        'address': _addressController.text,
-        'job_title': _jobTitleController.text,
-        'email': _emailController.text,
-      }),
-    );
+    if (_passwordController.text.length < 8) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password must be at least 8 characters long.')),
+      );
+      return;
+    }
 
-    if (response.statusCode == 200) {
-      _fetchAdmins();
-      Navigator.pop(context); // Close the dialog on success
-      _clearForm();
-    } else {
-      // Handle the error
-      print('Failed to add admin');
+    final phoneRegex = RegExp(r'^\d{10}$');
+    if (!phoneRegex.hasMatch(_phoneController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Phone number must be 10 digits.')),
+      );
+      return;
+    }
+
+    final emailRegex =
+        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    if (!emailRegex.hasMatch(_emailController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Enter a valid email address.')),
+      );
+      return;
+    }
+    try {
+      final response = await http.post(
+        Uri.parse('${AppConfig.baseUrl}/add-admin'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'password': _passwordController.text,
+          'name': _nameController.text,
+          'phone': _phoneController.text,
+          'job_title': _jobTitleController.text,
+          'email': _emailController.text,
+          'raID': _raidController.text,
+          'admin_name': widget.username,
+        }),
+      );
+      if (response.statusCode == 200) {
+        _fetchAdmins();
+        Navigator.pop(context);
+        _clearForm();
+      } else if (response.statusCode == 404) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Ration Card Number already exists.')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add admin')),
+        );
+        print('Failed to add admin');
+      }
+    } catch (e) {
+      print('Error adding admin: $e');
     }
   }
 
   void _clearForm() {
-    _usernameController.clear();
     _passwordController.clear();
     _nameController.clear();
     _phoneController.clear();
-    _addressController.clear();
     _jobTitleController.clear();
     _emailController.clear();
+    _raidController.clear();
   }
 
   void _showAddAdminDialog() {
@@ -118,15 +148,14 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Add New Admin', style: TextStyle(fontSize: 24)),
-                  _buildTextField(
-                      _usernameController, 'Username', Icons.person),
+                  _buildTextField(_nameController, 'Name', Icons.badge),
                   _buildTextField(_passwordController, 'Password', Icons.lock,
                       obscureText: true),
-                  _buildTextField(_nameController, 'Name', Icons.badge),
                   _buildTextField(_phoneController, 'Phone', Icons.phone),
-                  _buildTextField(_addressController, 'Address', Icons.home),
                   _buildTextField(_jobTitleController, 'Job Title', Icons.work),
                   _buildTextField(_emailController, 'Email', Icons.email),
+                  _buildTextField(
+                      _raidController, 'Ration Card Number ', Icons.villa),
                   SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

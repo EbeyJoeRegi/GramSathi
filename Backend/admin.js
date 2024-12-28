@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 const { User, Announcement, Suggestion, Query, Place, Crop, Price, Counter } = require('./models');
+
+const saltRounds = 10;
 
 // Auto increment helper function
 const getNextSequenceValue = async (sequenceName) => {
@@ -123,23 +126,31 @@ router.post('/activate-user', async (req, res) => {
       return res.status(404).json({ error: 'Admin not found' });
     }
 
+    // Update the user activation status
+    const result = await User.updateOne({ id: user_id }, { activation: 1 }); // Use the custom 'id' field
+    if (result.nModified === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ message: 'User activated successfully' });
+
     // Email data
-    const emailSubject = 'Your Account Has Been Activated';
+    const emailSubject = 'Welcome to GramSathi!';
     const emailText = `
-      Hi ${user.name},
+    Dear ${user.name},
 
-      Your account has been activated for the village ${user.address}. 
-      You can now log in using the credentials you provided during signup.
+    We are pleased to inform you that your account has been successfully activated for the village of ${user.address}. 
+    You can now log in using the credentials you provided during the sign-up process.
 
-      Username: ${user.username}
+    Username: ${user.username}
 
-      Welcome to GramSathi!
+    If you have any questions or need further assistance, please feel free to contact us:
 
-      With warm regards,
-      ${adminDetails.name} 
-      ${adminDetails.email}
-      ${user.address}
-    `;
+    Admin: ${adminDetails.name}
+    Email: ${adminDetails.email}
+
+    Warm regards,
+    Gram Sathi Team`
+      ;
 
     // Create a transporter using your SMTP server credentials (you may want to use environment variables for this)
     const transporter = nodemailer.createTransport({
@@ -160,14 +171,6 @@ router.post('/activate-user', async (req, res) => {
 
     // Send the email
     await transporter.sendMail(mailOptions);
-
-    // Update the user activation status
-    const result = await User.updateOne({ id: user_id }, { activation: 1 }); // Use the custom 'id' field
-    if (result.nModified === 0) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    res.status(200).json({ message: 'User activated successfully' });
 
   } catch (err) {
     console.error('Error:', err);
@@ -192,24 +195,29 @@ router.post('/deactivate-user', async (req, res) => {
     if (!adminDetails) {
       return res.status(404).json({ error: 'Admin not found' });
     }
+    
+    await User.deleteOne({ id: user_id }); // Use the custom 'id' field
+    res.status(200).json({ message: 'User Delete successfully' });
 
     // Email data
-    const emailSubject = 'Your Account Activation Request Rejected';
+    const emailSubject = 'Request to Sign Up to the Village Rejected';
     const emailText = `
-      Hi ${user.name},
+    Dear ${user.name},
 
-      Your request to Sign Up to the village ${user.address} has been rejected. 
-      Please contact the administrator for further details.
+      We regret to inform you that your request to sign up for the village ${user.address} has been rejected. 
+      Please reach out to the administrator for further details or clarification.
 
       Username: ${user.username}
-      Details associated with the above username has been removed from Database.
+      Please note that all details associated with the above username have been removed from our database.
 
-      If you have any questions, feel free to reach out to us.
+      If you have any questions or require additional information, do not hesitate to contact us.
 
-      Best regards,
+      For any inquiries:
       ${adminDetails.name}
       ${adminDetails.email}
-      ${user.address}
+
+      Best regards,
+      The Gram Sathi Team
     `;
 
     // Create a transporter using your SMTP server credentials
@@ -232,8 +240,6 @@ router.post('/deactivate-user', async (req, res) => {
     // Send the email
     await transporter.sendMail(mailOptions);
 
-    await User.deleteOne({ id: user_id }); // Use the custom 'id' field
-    res.status(200).json({ message: 'User Delete successfully' });
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -532,46 +538,56 @@ router.post('/remove-admin', async (req, res) => {
 // API to get the address of a user by username
 router.get('/address', async (req, res) => {
   try {
-      const { username } = req.query;
+    const { username } = req.query;
 
-      // Find the user by username
-      const user = await User.findOne({ username: username });
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
+    // Find the user by username
+    const user = await User.findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-      // Find the place using the address from the user schema
-      const place = await Place.findOne({ place_name: user.address });
-      if (!place) {
-          return res.status(404).json({ message: 'Address not found' });
-      }
+    // Find the place using the address from the user schema
+    const place = await Place.findOne({ place_name: user.address });
+    if (!place) {
+      return res.status(404).json({ message: 'Address not found' });
+    }
 
-      // Send the address and id
-      res.status(200).json({
-          id: place.id,
-          address: place.place_name,
-      });
+    // Send the address and id
+    res.status(200).json({
+      id: place.id,
+      address: place.place_name,
+    });
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Internal Server Error' });
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
 // Add an admin user
 router.post('/add-admin', async (req, res) => {
-  const { username, password, name, phone, address, job_title, email } = req.body;
+  const { password, name, phone, job_title, email, raID, admin_name } = req.body;
   const activation = 1; // Activation status for new admins
   const userType = 'admin'; // User type for new admins
 
   try {
-    // Check if the username already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({ error: 'Username already exists' });
+    // Fetch admin details (email, address) based on admin username
+    const admin = await User.findOne({ username: admin_name });
+
+    if (!admin) {
+      return res.status(400).json({ error: 'Admin user not found' });
     }
 
     // Get the next sequence number for the ID
     const usersId = await getNextSequenceValue('users');
+
+    // Generate the username for the new user by converting the name to lowercase
+    let username = name.toLowerCase().replace(/\s+/g, ''); // Remove spaces entirely
+
+    // Check if the generated username already exists
+    let existingUser = await User.findOne({ username });
+    if (existingUser) {
+      username = `${username}${usersId}`;
+    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -583,19 +599,52 @@ router.post('/add-admin', async (req, res) => {
       password: hashedPassword,
       name,
       phone,
-      address,
+      address: admin.address, // Set the same address as admin
       job_title,
       email,
       activation,
-      user_type: userType
+      user_type: userType,
+      raID,
     });
-
+    
     // Save the new user to the database
     await newUser.save();
 
-    res.status(200).json({ message: 'Admin added successfully' });
+    res.status(200).json({ message: 'Admin added successfully and email sent' });
+
+    // Send an email to the new user
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email, // New user's email
+      subject: 'Welcome to GramSathi',
+      text: `Dear ${name},
+      
+      You have been successfully added as an admin in GramSathi. 
+      username : ${username}
+      password : ${password}
+      Feel free to change password using Forget password.
+
+      We are excited to have you on board.
+      
+      Best regards,
+      GramSathi Team`,
+    };
+
+    await transporter.sendMail(mailOptions);
   } catch (err) {
-    console.error('Error:', err);
+    if(err.code==11000)
+    {
+      res.status(404).json({ error: 'Raion Card Number Exists' });
+    }
+    else
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -610,7 +659,7 @@ router.get('/users', async (req, res) => {
 
     res.status(200).json(users);
   } catch (err) {
-    console.error('Error:', err);
+    console.log('Errorss:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

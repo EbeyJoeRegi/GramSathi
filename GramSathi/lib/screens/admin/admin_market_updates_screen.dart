@@ -347,11 +347,10 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_selectedCropId != null &&
-                        _selectedPlaceIdForAdd != null &&
                         _priceController.text.isNotEmpty) {
                       _addCropPrice(
                         _selectedCropId!,
-                        _selectedPlaceIdForAdd!,
+                        _selectedPlaceIdForAdd,
                         double.parse(_priceController.text),
                       );
                       Navigator.pop(context);
