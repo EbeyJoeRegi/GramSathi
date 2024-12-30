@@ -424,97 +424,103 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Admin Management'),
         backgroundColor: Color(0xffE6F4E3),
       ),
-      body: Container(
-        color: Color(0xffE6F4E3), // Set the background color
-        child: Column(
-          children: [
-            // User details section
-            userDetails != null
-                ? Container(
-                    margin: EdgeInsets.all(16),
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 5.0,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: [
-                        // Column containing user image and details
-                        Column(
-                          children: [
-                            // User Image with edit icon overlay
-                            GestureDetector(
-                              onTap: _pickImage, // Trigger image selection
-                              child: CircleAvatar(
-                                radius: 70,
-                                backgroundImage: _imageBytes.isNotEmpty
-                                    ? MemoryImage(_imageBytes)
-                                    : null,
-                                child: _imageBytes.isEmpty
-                                    ? Icon(Icons.person, size: 80)
-                                    : null,
-                              ),
-                            ),
-                            SizedBox(
-                                height:
-                                    5), // Space between image and details section
-
-                            // User details section with editable text fields
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildEditableField(
-                                    'Name', _adminNameController, isEditable),
-                                _buildEditableField(
-                                    'Phone', _adminPhoneController, isEditable),
-                                _buildEditableField(
-                                    'Email', _adminEmailController, isEditable),
-                                _buildEditableField('Ration Card ID',
-                                    _adminRaidController, isEditable),
-                                _buildEditableField('Job Title',
-                                    _adminjobTitleController, isEditable),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        // Save Button in the top-right corner
-                        Positioned(
-                          top: -10,
-                          right: -10,
-                          child: IconButton(
-                            icon: Icon(isEditable ? Icons.save : Icons.edit),
-                            onPressed: () {
-                              setState(() {
-                                if (isEditable) {
-                                  _saveUserDetails(); // Call your save method here
-                                }
-                                isEditable = !isEditable; // Toggle editability
-                              });
-                            },
+      body: SingleChildScrollView(
+        // Wrap the entire body with SingleChildScrollView
+        child: Container(
+          color: Color(0xffE6F4E3), // Set the background color
+          child: Column(
+            children: [
+              // User details section
+              userDetails != null
+                  ? Container(
+                      margin: EdgeInsets.all(16),
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 5.0,
+                            offset: Offset(0, 3),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                : CircularProgressIndicator(),
+                        ],
+                      ),
+                      child: Stack(
+                        children: [
+                          // Column containing user image and details
+                          Column(
+                            children: [
+                              // User Image with edit icon overlay
+                              GestureDetector(
+                                onTap: _pickImage, // Trigger image selection
+                                child: CircleAvatar(
+                                  radius: 70,
+                                  backgroundImage: _imageBytes.isNotEmpty
+                                      ? MemoryImage(_imageBytes)
+                                      : null,
+                                  child: _imageBytes.isEmpty
+                                      ? Icon(Icons.person, size: 80)
+                                      : null,
+                                ),
+                              ),
+                              SizedBox(
+                                  height:
+                                      5), // Space between image and details section
 
-            //admin Details
-            Expanded(
-              child: ListView.builder(
+                              // User details section with editable text fields
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildEditableField(
+                                      'Name', _adminNameController, isEditable),
+                                  _buildEditableField('Phone',
+                                      _adminPhoneController, isEditable),
+                                  _buildEditableField('Email',
+                                      _adminEmailController, isEditable),
+                                  _buildEditableField('Ration Card ID',
+                                      _adminRaidController, isEditable),
+                                  _buildEditableField('Job Title',
+                                      _adminjobTitleController, isEditable),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          // Save Button in the top-right corner
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: IconButton(
+                              icon: Icon(isEditable ? Icons.save : Icons.edit),
+                              onPressed: () {
+                                setState(() {
+                                  if (isEditable) {
+                                    _saveUserDetails(); // Call your save method here
+                                  }
+                                  isEditable =
+                                      !isEditable; // Toggle editability
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : CircularProgressIndicator(),
+
+              // admin Details
+              ListView.builder(
+                shrinkWrap: true,
+                physics:
+                    NeverScrollableScrollPhysics(), // Avoid inner scrolling
                 itemCount: adminUsers.length,
                 itemBuilder: (context, index) {
                   final admin = adminUsers[index];
@@ -550,8 +556,8 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
