@@ -582,6 +582,32 @@ router.get('/address', async (req, res) => {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
   }
+
+});
+// Update user details by id 
+router.put('/update-user', async (req, res) => {
+  const { id, name, phone, email, raID, job_title } = req.body; 
+  try {
+      const user = await User.findOne({ id });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Update the user details
+      user.name = name;
+      user.phone = phone;
+      user.email = email;
+      user.raID = raID;
+      user.job_title = job_title;
+
+      // Save the updated user
+      await user.save();
+
+      return res.status(200).json({ message: 'User details updated successfully', user });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Server error' });
+  }
 });
 
 // Add an admin user
@@ -626,6 +652,7 @@ router.post('/add-admin', async (req, res) => {
       activation,
       user_type: userType,
       raID,
+      photoID:2,
     });
     
     // Save the new user to the database

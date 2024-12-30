@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 import 'dart:convert';
 import '/config.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AdminManagementPage extends StatefulWidget {
   final String username;
@@ -14,6 +15,7 @@ class AdminManagementPage extends StatefulWidget {
 
 class _AdminManagementPageState extends State<AdminManagementPage> {
   List<dynamic> adminUsers = [];
+  bool isEditable = false; // Track whether the fields are editable
   dynamic userDetails;
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -21,6 +23,11 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
   final TextEditingController _jobTitleController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _raidController = TextEditingController();
+  late TextEditingController _adminNameController = TextEditingController();
+  late TextEditingController _adminPhoneController = TextEditingController();
+  late TextEditingController _adminjobTitleController = TextEditingController();
+  late TextEditingController _adminEmailController = TextEditingController();
+  late TextEditingController _adminRaidController = TextEditingController();
   final TextEditingController _photoIDController = TextEditingController();
   late Uint8List _imageBytes = Uint8List(0);
 
@@ -38,11 +45,11 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
     if (response.statusCode == 200) {
       setState(() {
         userDetails = json.decode(response.body);
-        _nameController.text = userDetails['name'];
-        _phoneController.text = userDetails['phone'];
-        _emailController.text = userDetails['email'];
-        _raidController.text = userDetails['raID'];
-        _jobTitleController.text = userDetails['job_title'];
+        _adminNameController.text = userDetails['name'];
+        _adminPhoneController.text = userDetails['phone'];
+        _adminEmailController.text = userDetails['email'];
+        _adminRaidController.text = userDetails['raID'];
+        _adminjobTitleController.text = userDetails['job_title'];
         _photoIDController.text = userDetails['photoID'].toString();
       });
 
@@ -162,51 +169,104 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
     }
   }
 
-  Future<void> _uploadImageAndSave() async {
-    // Upload new image
-    final imageResponse = await http.post(
-      Uri.parse('${AppConfig.baseUrl}/upload'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode({
-        'image': base64Encode(_imageBytes),
-      }),
-    );
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final imageBytes = await pickedFile.readAsBytes();
+      setState(() {
+        _imageBytes = imageBytes; // Update the image preview
+      });
+      await _uploadImage(pickedFile);
+    }
+  }
 
-    if (imageResponse.statusCode == 200) {
-      final imageData = json.decode(imageResponse.body);
-      final newPhotoID = imageData['imageID'];
+  Future<void> _uploadImage(XFile file) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse('${AppConfig.baseUrl}/upload'));
+    request.files.add(await http.MultipartFile.fromPath('image', file.path));
 
-      // Save updated details with new photoID
-      final response = await http.post(
-        Uri.parse('${AppConfig.baseUrl}/update-user'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({
+    try {
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        final respData = await response.stream.bytesToString();
+        final jsonData = json.decode(respData);
+        final imageId = jsonData['imageId'].toString();
+
+        // Update user profile photo
+        await _updateUserProfilePhoto(imageId);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Image upload failed! Try again.')));
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  Future<void> _updateUserProfilePhoto(String imageId) async {
+    try {
+      final response = await http.put(
+        Uri.parse('${AppConfig.baseUrl}/user/profile/photo'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
           'username': widget.username,
-          'name': _nameController.text,
-          'phone': _phoneController.text,
-          'email': _emailController.text,
-          'raID': _raidController.text,
-          'job_title': _jobTitleController.text,
-          'photoID': newPhotoID,
+          'newImageID': imageId,
         }),
       );
 
       if (response.statusCode == 200) {
-        _fetchUserDetails(); // Reload the details
-        Navigator.pop(context); // Close dialog
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Details updated successfully')));
+            SnackBar(content: Text('Profile picture updated successfully')));
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to update user')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to update profile picture.')));
       }
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Failed to upload image')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error updating profile picture.')));
+    }
+  }
+
+  void _saveUserDetails() async {
+    Map<String, dynamic> updatedDetails = {
+      'id': userDetails['id'],
+      'name': _adminNameController.text,
+      'phone': _adminPhoneController.text,
+      'email': _adminEmailController.text,
+      'raID': _adminRaidController.text,
+      'job_title': _adminjobTitleController.text,
+    };
+    try {
+      final url = '${AppConfig.baseUrl}/update-user';
+
+      // Send the POST request to the backend
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(updatedDetails),
+      );
+
+      if (response.statusCode == 200) {
+        print('User details updated successfully!');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User details updated successfully!')),
+        );
+      } else {
+        print('Failed to update user details.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content:
+                  Text('Failed to update user details. Please try again.')),
+        );
+      }
+    } catch (e) {
+      print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred. Please try again.')),
+      );
     }
   }
 
@@ -281,69 +341,6 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
     );
   }
 
-  void _showEditUserDetailsDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.8),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Edit User Details', style: TextStyle(fontSize: 24)),
-                  _buildTextField(_nameController, 'Name', Icons.badge),
-                  _buildTextField(_phoneController, 'Phone', Icons.phone),
-                  _buildTextField(_emailController, 'Email', Icons.email),
-                  _buildTextField(
-                      _raidController, 'Ration Card Number', Icons.villa),
-                  _buildTextField(_jobTitleController, 'Job Title', Icons.work),
-                  // Image section
-                  _imageBytes.isNotEmpty
-                      ? Image.memory(_imageBytes, height: 150)
-                      : Container(height: 150, color: Colors.grey),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Pick image logic here
-                    },
-                    child: Text('Change Image'),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context); // Close the dialog
-                        },
-                        child:
-                            Text('Cancel', style: TextStyle(color: Colors.red)),
-                      ),
-                      ElevatedButton(
-                        onPressed: _uploadImageAndSave,
-                        child: Text('Save Changes'),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildTextField(
       TextEditingController controller, String labelText, IconData icon,
       {bool obscureText = false}) {
@@ -392,43 +389,36 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
     );
   }
 
-  Widget _buildDetailBox(String label, String value) {
+  Widget _buildEditableField(
+      String label, TextEditingController controller, bool isEditable) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12), // Space between boxes
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12), // Rounded corners
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 5.0, // Soft shadow blur
-            offset: Offset(0, 2), // Slight shadow offset for depth
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      width: double.infinity,
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            color: Color(0xff015F3E),
           ),
-        ],
-      ),
-      width: double.infinity, // Ensure it takes the full width of the container
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Label section
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: Color(0xff015F3E), // Label text color
-            ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
           ),
-          // Value section
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.black, // Value text color
-            ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
           ),
-        ],
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Color(0xff015F3E), width: 2.0),
+          ),
+        ),
+        style: TextStyle(fontSize: 15, color: Colors.black),
+        readOnly:
+            !isEditable, // Make fields editable only when isEditable is true
       ),
     );
   }
@@ -465,44 +455,56 @@ class _AdminManagementPageState extends State<AdminManagementPage> {
                         // Column containing user image and details
                         Column(
                           children: [
-                            // User Image
-                            CircleAvatar(
-                              radius: 70, // Adjust the size of the image
-                              backgroundImage: _imageBytes.isNotEmpty
-                                  ? MemoryImage(_imageBytes)
-                                  : null,
-                              child: _imageBytes.isEmpty
-                                  ? Icon(Icons.person, size: 80)
-                                  : null,
+                            // User Image with edit icon overlay
+                            GestureDetector(
+                              onTap: _pickImage, // Trigger image selection
+                              child: CircleAvatar(
+                                radius: 70,
+                                backgroundImage: _imageBytes.isNotEmpty
+                                    ? MemoryImage(_imageBytes)
+                                    : null,
+                                child: _imageBytes.isEmpty
+                                    ? Icon(Icons.person, size: 80)
+                                    : null,
+                              ),
                             ),
                             SizedBox(
                                 height:
-                                    20), // Space between image and details section
+                                    5), // Space between image and details section
 
-                            // User details section with separate boxes
+                            // User details section with editable text fields
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildDetailBox('Name', userDetails['name']),
-                                _buildDetailBox('Phone', userDetails['phone']),
-                                _buildDetailBox('Email', userDetails['email']),
-                                _buildDetailBox(
-                                    'Ration Card ID', userDetails['raID']),
-                                _buildDetailBox(
-                                    'Job Title', userDetails['job_title']),
+                                _buildEditableField(
+                                    'Name', _adminNameController, isEditable),
+                                _buildEditableField(
+                                    'Phone', _adminPhoneController, isEditable),
+                                _buildEditableField(
+                                    'Email', _adminEmailController, isEditable),
+                                _buildEditableField('Ration Card ID',
+                                    _adminRaidController, isEditable),
+                                _buildEditableField('Job Title',
+                                    _adminjobTitleController, isEditable),
                               ],
                             ),
                           ],
                         ),
 
-                        // Edit Button in the top-right corner
+                        // Save Button in the top-right corner
                         Positioned(
                           top: -10,
                           right: -10,
                           child: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed:
-                                _showEditUserDetailsDialog, // or save logic here
+                            icon: Icon(isEditable ? Icons.save : Icons.edit),
+                            onPressed: () {
+                              setState(() {
+                                if (isEditable) {
+                                  _saveUserDetails(); // Call your save method here
+                                }
+                                isEditable = !isEditable; // Toggle editability
+                              });
+                            },
                           ),
                         ),
                       ],
