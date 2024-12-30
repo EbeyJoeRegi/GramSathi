@@ -245,25 +245,10 @@ class _LoginScreenState extends State<LoginScreen>
                   SizedBox(height: 13),
                   TextField(
                     controller: _passwordController,
-                    obscureText: !_isPasswordVisible, // Toggle visibility
-                    enableSuggestions: false,
-                    autocorrect: false,
+                    obscureText: true, // Always obscure the text (dots only)
                     decoration: InputDecoration(
                       hintText: 'Password',
                       prefixIcon: Icon(Icons.lock, color: Color(0xff015F3E)),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Color(0xff015F3E),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
-                      ),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xFFE0E3E7), width: 2),
