@@ -21,7 +21,8 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<void> _fetchUsers() async {
-    final response = await http.get(Uri.parse('${AppConfig.baseUrl}/users'));
+    final response = await http.get(
+        Uri.parse('${AppConfig.baseUrl}/users?username=${widget.username}'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -39,8 +40,9 @@ class _UserManagementPageState extends State<UserManagementPage> {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, int>{
+      body: jsonEncode(<String, dynamic>{
         'user_id': userId,
+        'admin_username': widget.username,
       }),
     );
 
@@ -76,9 +78,9 @@ class _UserManagementPageState extends State<UserManagementPage> {
                   _buildDetailRow('Username', user['username']),
                   _buildDetailRow('Name', user['name']),
                   _buildDetailRow('Phone', user['phone']),
-                  _buildDetailRow('Address', user['address']),
-                  _buildDetailRow('Job Title', user['job_title']),
+                  _buildDetailRow('Job', user['job_title']),
                   _buildDetailRow('Email', user['email']),
+                  _buildDetailRow('Ration card Number', user['raID']),
                   SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -109,11 +111,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
         children: [
           Text(
             '$label: ',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Expanded(
-            child: Text(value),
-          ),
+          Text(value,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
         ],
       ),
     );

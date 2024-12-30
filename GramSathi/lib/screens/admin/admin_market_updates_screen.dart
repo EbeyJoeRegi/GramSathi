@@ -204,6 +204,7 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              backgroundColor: Colors.white,
               title: Text('Add New Price'),
               content: FutureBuilder(
                 future: _fetchAllCrops(),
@@ -217,30 +218,22 @@ class _MarketUpdatesScreenState extends State<MarketUpdatesScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Place Dropdown
+                          // Place Name
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Container(
-                              width: 700,
-                              padding: const EdgeInsets.all(
-                                  12.0), // Padding inside the rectangle
                               decoration: BoxDecoration(
-                                color: Colors
-                                    .white, // Background color of the rectangle
-                                border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1.0), // Border for the rectangle
                                 borderRadius: BorderRadius.circular(
-                                    6.0), // Slightly rounded corners
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.3), // Shadow color
-                                    blurRadius: 4.0, // Shadow blur
-                                    offset: Offset(2, 2), // Shadow position
-                                  ),
-                                ],
+                                    8.0), // Same as dropdown
+                                border: Border.all(
+                                  color: Color(0xff015F3E), // Same border color
+                                  width: 1.0, // Same border width
+                                ),
                               ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                  vertical: 16.0), // Adjust padding
+                              width: double.infinity, // Match dropdown width
                               child: Text(
                                 _places.firstWhere((place) =>
                                     place['id'] ==

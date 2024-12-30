@@ -28,6 +28,14 @@ const getNextSequenceValue = async (sequenceName) => {
   }
 };
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
 // Retrieve announcements endpoint
 //retrival from /user/announcements
 
@@ -138,28 +146,19 @@ router.post('/activate-user', async (req, res) => {
     const emailText = `
     Dear ${user.name},
 
-    We are pleased to inform you that your account has been successfully activated for the village of ${user.address}. 
-    You can now log in using the credentials you provided during the sign-up process.
+      We are pleased to inform you that your account has been successfully activated for the village of ${user.address}. 
+      You can now log in using the credentials you provided during the sign-up process.
 
-    Username: ${user.username}
+      Username: ${user.username}
 
-    If you have any questions or need further assistance, please feel free to contact us:
+      If you have any questions or need further assistance, please feel free to contact us:
 
-    Admin: ${adminDetails.name}
-    Email: ${adminDetails.email}
+      Admin: ${adminDetails.name}
+      Email: ${adminDetails.email}
 
-    Warm regards,
-    Gram Sathi Team`
+      Warm regards,
+      Gram Sathi Team`
       ;
-
-    // Create a transporter using your SMTP server credentials (you may want to use environment variables for this)
-    const transporter = nodemailer.createTransport({
-      service: 'gmail', // You can use any SMTP service here (Gmail, SendGrid, etc.)
-      auth: {
-        user: process.env.EMAIL_USER, // Set your email ID (should be in .env)
-        pass: process.env.EMAIL_PASS, // Set your email password (should be in .env)
-      },
-    });
 
     // Define email options
     const mailOptions = {
@@ -219,15 +218,6 @@ router.post('/deactivate-user', async (req, res) => {
       Best regards,
       The Gram Sathi Team
     `;
-
-    // Create a transporter using your SMTP server credentials
-    const transporter = nodemailer.createTransport({
-      service: 'gmail', // You can use any SMTP service here (Gmail, SendGrid, etc.)
-      auth: {
-        user: process.env.EMAIL_USER, // Set your email ID (should be in .env)
-        pass: process.env.EMAIL_PASS, // Set your email password (should be in .env)
-      },
-    });
 
     // Define email options
     const mailOptions = {
@@ -518,22 +508,53 @@ router.post('/remove-admin', async (req, res) => {
   const { user_id } = req.body;
 
   try {
+    // Find the user to get their details
+    const user = await User.findOne({ id: user_id, user_type: 'admin' });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Admin not found or not an admin' });
+    }
+
+    // Extract user details
+    const { email, job_title, address } = user;
+
     // Delete the user with the specified id and user_type 'admin'
     const result = await User.deleteOne({ id: user_id, user_type: 'admin' });
 
     if (result.deletedCount === 0) {
-      // No document was deleted
-      res.status(404).json({ message: 'Admin not found or not an admin' });
-    } else {
-      // Successfully deleted
-      res.status(200).json({ message: 'Admin removed successfully' });
+      return res.status(404).json({ message: 'Admin not found or not an admin' });
     }
-  } catch (err) {
-    console.error('Database query error:', err);
-    res.status(500).json({ error: 'Database error' });
+    else{
+      // Successfully deleted and email sent
+      res.status(200).json({ message: 'Admin removed successfully and email sent.' });      
+    }
+
+    // Send an email to the removed admin
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Thank You for Your Service',
+      text:`
+      Dear ${user.name},
+
+        On behalf of the GramSathi team, we would like to express our sincere gratitude for your dedicated service as the ${job_title} of ${address}. Your cooperation and support have been invaluable, and we wish you all the best in your future endeavors.
+
+        Please note that, as your tenure with the village has concluded, you will no longer have access to the application moving forward.
+
+        Thank you once again for your contributions, and we wish you success in all your future endeavors.  
+
+        With warm regards,
+        GramSathi Team
+    `};
+
+    await transporter.sendMail(mailOptions);
+
+  } 
+  catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 // API to get the address of a user by username
 router.get('/address', async (req, res) => {
@@ -613,14 +634,6 @@ router.post('/add-admin', async (req, res) => {
     res.status(200).json({ message: 'Admin added successfully and email sent' });
 
     // Send an email to the new user
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email, // New user's email
@@ -651,28 +664,79 @@ router.post('/add-admin', async (req, res) => {
 
 // Get all users
 router.get('/users', async (req, res) => {
+  const { username } = req.query;
+
   try {
+    // Find the user by username to get the address
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const { address } = user;
+
+    // Find all users with the same address
     const users = await User.find({
       user_type: 'user',
-      activation: true
-    }).select('id username name phone address job_title email');
+      activation: 1,
+      address: address
+    }).select('id username name phone raID job_title email');
 
     res.status(200).json(users);
   } catch (err) {
-    console.log('Errorss:', err);
+    console.log('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+
 // Remove an user
 router.post('/remove-user', async (req, res) => {
-  const { user_id } = req.body;
+  const { user_id, admin_username } = req.body;
 
   try {
+    // Find the user by ID and type
+    const user = await User.findOne({ id: user_id, user_type: 'user' });
+    const admin = await User.findOne({ username : admin_username });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found or not a user' });
+    }
+
+    // Extract user details
+    const { email, name, address } = user;
+
+    // Delete the user
     const result = await User.deleteOne({ id: user_id, user_type: 'user' });
 
     if (result.deletedCount > 0) {
-      res.status(200).json({ message: 'User removed successfully' });
+      res.status(200).json({ message: 'User removed successfully and email sent' });
+
+      // Send email notification
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Farewell from GramSathi',
+        text: `Dear ${name},
+
+          We would like to take a moment to express our heartfelt gratitude for being a part of the vibrant community at ${address}. 
+          Your presence and contribution have been valuable to us, and we truly appreciate the cooperation and support you've extended during your time here.
+
+          As you move forward towards new horizons, we wish you all the very best in achieving your future goals and aspirations. May your journey ahead be filled with success and happiness.
+
+          Please note that your access to ${address} will be concluded. Should you require any further assistance or support, feel free to reach out to us.
+          ${admin.email}
+
+          Thank you once again for being part of our village. We hope to stay in touch and wish you all the best in your future endeavors.
+
+          With warm regards,
+          GramSathi Team`
+      };
+
+      await transporter.sendMail(mailOptions);
+
     } else {
       res.status(404).json({ message: 'User not found or not a user' });
     }
@@ -681,6 +745,7 @@ router.post('/remove-user', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // Get all announcements posted by administrators
 router.get('/announcement-administrator', async (req, res) => {
