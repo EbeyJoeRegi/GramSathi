@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'village_announcements_screen.dart';
-import 'Village_Infos.dart';
+import 'All_Village_Infos.dart';
 
 class VillageAdminPage extends StatefulWidget {
   final String username;
