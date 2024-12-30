@@ -180,4 +180,20 @@
   "id": 34,
   "place_name": "Kannur",
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772b5100a116b308a4a3b2f"
+  },
+  "id": 35,
+  "place_name": "Palavayal",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772b81d8f088cc00700c9a0"
+  },
+  "id": 36,
+  "place_name": "Kuthuparamba",
+  "__v": 0
 }]

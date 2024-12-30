@@ -60,44 +60,6 @@
 },
 {
   "_id": {
-    "$oid": "66eaef6ab4ae03588e228fc3"
-  },
-  "id": 24,
-  "title": "Test",
-  "content": "test announcemnts",
-  "created_at": {
-    "$date": "2024-07-30T04:17:30.000Z"
-  },
-  "admin": "Admin Name"
-},
-{
-  "_id": {
-    "$oid": "66ebd5ad86ae358a62000c6b"
-  },
-  "id": 10,
-  "title": "dsggds",
-  "content": "test",
-  "created_at": {
-    "$date": "2024-09-19T07:41:33.813Z"
-  },
-  "__v": 0,
-  "admin": "Admin Name"
-},
-{
-  "_id": {
-    "$oid": "66ebd893d798c4ab39bb6437"
-  },
-  "id": 27,
-  "title": "testing on wednesday",
-  "content": "test 1",
-  "created_at": {
-    "$date": "2024-09-19T07:53:55.747Z"
-  },
-  "__v": 0,
-  "admin": "Admin Name"
-},
-{
-  "_id": {
     "$oid": "66ec221a0479206675453361"
   },
   "id": 28,
@@ -111,157 +73,27 @@
 },
 {
   "_id": {
-    "$oid": "66f1354beb3282900169f87c"
+    "$oid": "676cfe248531a509a64645cf"
   },
-  "id": 29,
-  "title": "test geolocator",
-  "content": "geoloacator",
+  "id": 41,
+  "admin": "Alexander",
+  "title": "Power Cut",
+  "content": "From 26-12-24 to 28-12-24 electricity won't be available from 9.00 am to 12.00 pm",
   "created_at": {
-    "$date": "2024-09-23T09:30:51.362Z"
-  },
-  "__v": 0,
-  "admin": "Admin Name"
-},
-{
-  "_id": {
-    "$oid": "6714eb573c4baa9d905e4cca"
-  },
-  "id": 30,
-  "title": "test notification",
-  "content": "again wow",
-  "created_at": {
-    "$date": "2024-10-20T11:36:55.584Z"
-  },
-  "__v": 0,
-  "admin": "Admin Name"
-},
-{
-  "_id": {
-    "$oid": "6714ed333c4baa9d905e4cd9"
-  },
-  "id": 31,
-  "title": "check",
-  "content": "working or not",
-  "created_at": {
-    "$date": "2024-10-20T11:44:51.999Z"
-  },
-  "__v": 0,
-  "admin": "Admin Name"
-},
-{
-  "_id": {
-    "$oid": "6725b78f586faf21c2e3a8e3"
-  },
-  "id": 32,
-  "admin": "Admin Name",
-  "title": "posted today",
-  "content": "nrg",
-  "created_at": {
-    "$date": "2024-11-02T05:24:31.776Z"
+    "$date": "2024-12-26T06:56:36.847Z"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6730e03767dac8b9a99a8cf1"
+    "$oid": "676cff648531a509a646462e"
   },
-  "id": 33,
-  "admin": "Admin Name",
-  "title": "sdsad",
-  "content": "ADASAA",
-  "created_at": {
-    "$date": "2024-11-10T16:32:55.088Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "673342c0643c488b122864c3"
-  },
-  "id": 34,
-  "admin": "Admin Name",
-  "title": "sfsa",
-  "content": "dasdas",
-  "created_at": {
-    "$date": "2024-11-12T11:57:52.550Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "67409ff1b1c84fad5a978109"
-  },
-  "id": 35,
-  "admin": "Admin Name",
-  "title": "check from kze",
-  "content": "updated kze",
-  "created_at": {
-    "$date": "2024-11-22T15:14:57.906Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "674607e55afd0dbb4df17e6c"
-  },
-  "id": 36,
-  "admin": "Admin Name",
-  "title": "weather check",
-  "content": "snkjfbh",
-  "created_at": {
-    "$date": "2024-11-26T17:39:49.190Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "674c267b8518db7028370ad0"
-  },
-  "id": 37,
-  "admin": "Admin Name",
-  "title": "tosay check",
-  "content": "adDA",
-  "created_at": {
-    "$date": "2024-12-01T09:03:55.550Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "675923b7599896fb02d27e88"
-  },
-  "id": 38,
+  "id": 42,
   "admin": "Aju Thomas",
-  "title": "check villager admin",
-  "content": "admin check",
+  "title": "Taluk Meeting",
+  "content": "Meeting regarding M-Pox Spreading",
   "created_at": {
-    "$date": "2024-12-11T05:31:35.137Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "67598a2c4618adf14fb70aeb"
-  },
-  "id": 39,
-  "admin": "Admin Name",
-  "title": "check dec",
-  "content": "dwe",
-  "created_at": {
-    "$date": "2024-12-11T12:48:44.365Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "67598cac4618adf14fb70b88"
-  },
-  "id": 40,
-  "admin": "Aju Thomas",
-  "title": "fsdfsd",
-  "content": "asddfgdsgsd",
-  "created_at": {
-    "$date": "2024-12-11T12:59:24.059Z"
+    "$date": "2024-12-26T07:01:56.507Z"
   },
   "__v": 0
 }]

@@ -5,8 +5,8 @@
   "id": 6,
   "crop_id": 1,
   "place_id": 2,
-  "price": 0,
-  "month_year": "July 2024"
+  "price": 12.2,
+  "month_year": "December 2024"
 },
 {
   "_id": {
@@ -145,8 +145,8 @@
   "id": 26,
   "crop_id": 2,
   "place_id": 2,
-  "price": 0,
-  "month_year": "July 2024"
+  "price": 36.5,
+  "month_year": "December 2024"
 },
 {
   "_id": {
@@ -185,8 +185,8 @@
   },
   "place_id": 17,
   "crop_id": 3,
-  "price": 0,
-  "month_year": "September 2024",
+  "price": 10,
+  "month_year": "December 2024",
   "__v": 0,
   "id": 30
 },

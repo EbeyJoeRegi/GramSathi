@@ -60,21 +60,6 @@
 },
 {
   "_id": {
-    "$oid": "674ae77b05c586fbc1e9c3fa"
-  },
-  "id": 25,
-  "sellername": "user",
-  "cropname": "Corriander",
-  "quantity": 0,
-  "price": 6,
-  "sold": false,
-  "date_updated": {
-    "$date": "2024-11-30T10:22:51.062Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
     "$oid": "674ae7c8f08d98e217741685"
   },
   "id": 26,
@@ -115,51 +100,6 @@
   "sold": false,
   "date_updated": {
     "$date": "2024-12-06T08:15:57.941Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6752b81e3eabe1236f9ab908"
-  },
-  "id": 34,
-  "sellername": "ebeyjoeregi",
-  "cropname": "Arecanut",
-  "quantity": 10,
-  "price": 25,
-  "sold": true,
-  "date_updated": {
-    "$date": "2024-12-06T08:38:54.474Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6752bd073eabe1236f9ab948"
-  },
-  "id": 35,
-  "sellername": "ebeyjoeregi",
-  "cropname": "Pumpkin",
-  "quantity": 10,
-  "price": 56,
-  "sold": false,
-  "date_updated": {
-    "$date": "2024-12-06T08:59:51.416Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6752bd853eabe1236f9ab953"
-  },
-  "id": 36,
-  "sellername": "ebeyjoeregi",
-  "cropname": "Lemon",
-  "quantity": 58,
-  "price": 35,
-  "sold": false,
-  "date_updated": {
-    "$date": "2024-12-06T09:01:57.697Z"
   },
   "__v": 0
 },

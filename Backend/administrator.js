@@ -246,8 +246,8 @@ router.post('/send-email', async (req, res) => {
         const { name, email, place, username, password } = req.body;
         if (!name || !email || !place || !username || !password) {
             return res.status(400).send('All fields are required: name, email, place, username, and password.');
-        }
-
+        }        
+        res.status(200).send('Email sent successfully.');
         // Create transporter for sending the email
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
@@ -262,28 +262,26 @@ router.post('/send-email', async (req, res) => {
             from: process.env.EMAIL_USER,
             to: email,
             subject: 'Welcome to Gramsathi',
-            text: `Hi ${name},
+            text: `
+            Dear ${name},
 
-Panchayath ${place} has been added to the Gramsathi application. 
-Welcome onboard as the President.
+                We are pleased to inform you that Panchayath ${place} has been successfully added to the Gramsathi application. We extend a warm welcome to you as the President of this newly onboarded village.
 
-Login Credentials:
-Username: ${username}
-Password: ${password}
+                Below are your login credentials for the Gramsathi platform:
 
-Do not share your credentials. Change the password using the forgot password option.
+                Username: ${username}
+                Password: ${password}
+                Please ensure that you keep these credentials confidential. For your security, we recommend changing your password as soon as possible. You can do so using the "Forgot Password" option on the login page.
 
-With warm regards,
-Gramsathi Administrator`
+                With warm regards,
+                Gramsathi Administrator`
         };
 
         // Send the email
         const info = await transporter.sendMail(mailOptions);
 
         // Check if the email was successfully sent
-        if (info.accepted.length > 0) {
-            res.status(200).send('Email sent successfully.');
-        } else {
+        if (info.accepted.length == 0) {
             res.status(500).send('Error sending email: Email was not accepted.');
         }
     } catch (err) {

@@ -5,7 +5,7 @@
   "username": "alexander",
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
   "user_type": "admin",
-  "name": "Alexander",
+  "name": "Lexi Laven",
   "phone": "9874563210",
   "address": "Bangalore",
   "job_title": "President",
@@ -13,7 +13,7 @@
   "email": "president@villageapp.com",
   "id": 1,
   "raID": "mglr8520",
-  "photoID": 2
+  "photoID": 14
 },
 {
   "_id": {
@@ -34,29 +34,12 @@
 },
 {
   "_id": {
-    "$oid": "66eaf112b4ae03588e228fe9"
-  },
-  "username": "user",
-  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
-  "user_type": "user",
-  "name": "User",
-  "phone": "1234567891",
-  "address": "Mangalore (Dakshin Kannada)",
-  "job_title": "User World",
-  "activation": 1,
-  "email": "user@user.co.in",
-  "id": 4,
-  "raID": "mglr7410",
-  "photoID": 5
-},
-{
-  "_id": {
     "$oid": "66eaf112b4ae03588e228fea"
   },
   "username": "admin",
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
   "user_type": "admin",
-  "name": "Admin Name",
+  "name": "Irine Jacob",
   "phone": "1234567890",
   "address": "Mangalore (Dakshin Kannada)",
   "job_title": "President",
@@ -64,7 +47,7 @@
   "email": "admin@example.com",
   "id": 5,
   "raID": "mglr7309",
-  "photoID": 2
+  "photoID": 15
 },
 {
   "_id": {
@@ -81,7 +64,7 @@
   "email": "ebeyjoeregi@gmail.com",
   "id": 6,
   "raID": "mglr1234",
-  "photoID": 12
+  "photoID": 2
 },
 {
   "_id": {
@@ -107,7 +90,7 @@
   "username": "veena",
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
   "user_type": "admin",
-  "name": "Veena Vijayan",
+  "name": "Maria Susan",
   "phone": "9874563210",
   "address": "Shimoga",
   "job_title": "President",
@@ -115,7 +98,7 @@
   "email": "secretary@villageapp.com",
   "id": 8,
   "raID": "mglr6541",
-  "photoID": 12
+  "photoID": 16
 },
 {
   "_id": {
@@ -124,7 +107,7 @@
   "username": "sara",
   "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
   "user_type": "admin",
-  "name": "Sara Blonda",
+  "name": "Sara Isac",
   "phone": "9874563210",
   "address": "Surathkal",
   "job_title": "President",
@@ -132,7 +115,7 @@
   "email": "treasurer@villageapp.com",
   "id": 9,
   "raID": "mglr6001",
-  "photoID": 12
+  "photoID": 22
 },
 {
   "_id": {
@@ -158,7 +141,7 @@
   "username": "Chinmayee",
   "name": "Chinmayee N",
   "phone": "7889654123",
-  "address": "Bangalore",
+  "address": "Mangalore (Dakshin Kannada)",
   "job_title": "Student",
   "email": "chinmayee@sjec.ac.in",
   "password": "$2b$10$Pak3ELin5RJfJHW2NYgYfuGV.Te2TsItlMBblL/EI6ypK4rmUtQdS",
@@ -207,24 +190,6 @@
 },
 {
   "_id": {
-    "$oid": "66fad00a18206ea4e1d1d3f8"
-  },
-  "id": 18,
-  "username": "aju18",
-  "name": "Aju",
-  "phone": "9874563201",
-  "address": "Mangalore (Dakshin Kannada)",
-  "job_title": "Student",
-  "email": "aju@mail.com",
-  "password": "$2b$10$VP7EYkjc3Aw1pv4LjU7BMucCPgq8g31JCDdLOp5f5G71up7IRORf.",
-  "activation": 0,
-  "user_type": "user",
-  "raID": "mglr9870",
-  "__v": 0,
-  "photoID": 1
-},
-{
-  "_id": {
     "$oid": "66fcf8dea935c891854144a0"
   },
   "id": 19,
@@ -234,7 +199,7 @@
   "address": "Mangalore (Dakshin Kannada)",
   "job_title": "Farmer",
   "email": "ebeyjoeregi@gmail.com",
-  "password": "$2b$10$P9/QY1K/ULdwKwXnc/WXVOhTMGVEFigDAIskCcw6Q4YtPe6CfBc6G",
+  "password": "$2b$10$5FXk911oxSh0x5fbZBgb8eqaXSVa.btanxZR30.VlzjJEMtLCu/rG",
   "activation": 0,
   "user_type": "user",
   "raID": "mglr9860",
@@ -248,7 +213,7 @@
   "username": "john_bagalkot",
   "password": "$2b$10$OxZbLPOt1p9azJdpXGhJCOwH5lQymrJGiIhJ6h/Ul6bJgdqzvxYfC",
   "user_type": "admin",
-  "name": "John Bagalkot",
+  "name": "John David",
   "phone": "9345678910",
   "address": "Bagalkot",
   "job_title": "President",
@@ -256,7 +221,7 @@
   "email": "john_bagalkot@villageapp.com",
   "id": 20,
   "raID": "bagl2001",
-  "photoID": 2
+  "photoID": 17
 },
 {
   "_id": {
@@ -265,7 +230,7 @@
   "username": "david_belgaum",
   "password": "$2b$10$ZwtF7O0YvQz7IVlB4s1iU5jcvDJ8jUkFniUItYpnHoOVahTCUkm22",
   "user_type": "admin",
-  "name": "David Belgaum",
+  "name": "Devilia Gaum",
   "phone": "9823456789",
   "address": "Belgaum",
   "job_title": "President",
@@ -273,7 +238,7 @@
   "email": "david_belgaum@villageapp.com",
   "id": 21,
   "raID": "blgm2002",
-  "photoID": 2
+  "photoID": 18
 },
 {
   "_id": {
@@ -282,7 +247,7 @@
   "username": "emily_bellary",
   "password": "$2b$10$2lfIVqQ6jWpu93spKoER0oXwVYJ2zX1kvUnfKVA0FcN67wv2jWjpS",
   "user_type": "admin",
-  "name": "Emily Bellary",
+  "name": "Emily Lamel",
   "phone": "9712345678",
   "address": "Bellary",
   "job_title": "President",
@@ -290,7 +255,7 @@
   "email": "emily_bellary@villageapp.com",
   "id": 22,
   "raID": "blry2003",
-  "photoID": 2
+  "photoID": 19
 },
 {
   "_id": {
@@ -307,7 +272,7 @@
   "email": "michael_bijapur@villageapp.com",
   "id": 23,
   "raID": "bjpr2004",
-  "photoID": 2
+  "photoID": 20
 },
 {
   "_id": {
@@ -613,6 +578,166 @@
   "activation": 1,
   "user_type": "admin",
   "raID": "knr1973",
+  "photoID": 2,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676b9ab79f2ef249b64f1bcc"
+  },
+  "id": 18,
+  "username": "aju18",
+  "name": "Aju",
+  "phone": "9874563201",
+  "address": "Mangalore (Dakshin Kannada)",
+  "job_title": "Student",
+  "email": "aju@mail.com",
+  "password": "$2b$10$VP7EYkjc3Aw1pv4LjU7BMucCPgq8g31JCDdLOp5f5G71up7IRORf.",
+  "activation": 0,
+  "user_type": "user",
+  "raID": "mglr9870",
+  "__v": 0,
+  "photoID": 1
+},
+{
+  "_id": {
+    "$oid": "676d16a29593e7f59d091177"
+  },
+  "username": "sophia",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "admin",
+  "name": "Sophia Paul",
+  "phone": "9874563210",
+  "address": "Bangalore",
+  "job_title": "PDO",
+  "activation": 1,
+  "email": "vikram_karwar@villageapp.co.in",
+  "id": 44,
+  "raID": "bglr1927",
+  "photoID": 28
+},
+{
+  "_id": {
+    "$oid": "676fa5241e753592984ae23f"
+  },
+  "id": 50,
+  "username": "viashnav",
+  "name": "Viashnav",
+  "phone": "9874563210",
+  "address": "Mangalore (Dakshin Kannada)",
+  "job_title": "PDO",
+  "email": "pdo@village.app",
+  "password": "$2b$10$DG735VJFV5IgXi9345ctt.pxPa3YGWIcyrWB59MUuDqT3hnoiKz/m",
+  "activation": 1,
+  "user_type": "admin",
+  "raID": "mglr1973",
+  "__v": 0,
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "676fb0695f9b4b2bf1cd273b"
+  },
+  "id": 52,
+  "username": "viashnav52",
+  "name": "Viashnav",
+  "phone": "987456310",
+  "address": "Bangalore",
+  "job_title": "PDO",
+  "email": "pdo@mglr.in",
+  "password": "$2b$10$nwOopTR7Wl1rroHJZHyVYOTYoZgei0/Gcwcw9s8OifA2x4Mqp6Rhq",
+  "activation": 1,
+  "user_type": "admin",
+  "raID": "mglr19738",
+  "__v": 0,
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "66eaf112b4ae03588e228fe9"
+  },
+  "username": "user",
+  "password": "$2b$10$fykowCYgWtFT7dI34CvK0OPt1oKj7addl2lJQlTmK4iIrmtg5xmzy",
+  "user_type": "user",
+  "name": "User",
+  "phone": "1234567891",
+  "address": "Mangalore (Dakshin Kannada)",
+  "job_title": "User World",
+  "activation": 1,
+  "email": "user@user.co.in",
+  "id": 4,
+  "raID": "mglr7410",
+  "photoID": 5
+},
+{
+  "_id": {
+    "$oid": "677232b6f124841937fe6047"
+  },
+  "id": 13,
+  "username": "mishalv",
+  "name": "Mishal V S",
+  "phone": "+918138928744",
+  "address": "Bangalore",
+  "job_title": "Farmer",
+  "email": "ebeyjoeregi@gmail.com",
+  "password": "$2b$10$5FXk911oxSh0x5fbZBgb8eqaXSVa.btanxZR30.VlzjJEMtLCu/rG",
+  "activation": 1,
+  "user_type": "user",
+  "raID": "mglr9861",
+  "__v": 0,
+  "photoID": 1
+},
+{
+  "_id": {
+    "$oid": "67725eafd9b9ff9782d64063"
+  },
+  "id": 15,
+  "username": "viashnav15",
+  "name": "Viashnav",
+  "phone": "987456310",
+  "address": "Bangalore",
+  "job_title": "PDO",
+  "email": "pdo@mglr.in",
+  "password": "$2b$10$nwOopTR7Wl1rroHJZHyVYOTYoZgei0/Gcwcw9s8OifA2x4Mqp6Rhq",
+  "activation": 1,
+  "user_type": "admin",
+  "raID": "mglr19739",
+  "__v": 0,
+  "photoID": 2
+},
+{
+  "_id": {
+    "$oid": "6772b5100a116b308a4a3b34"
+  },
+  "id": 83,
+  "username": "deepu",
+  "name": "Deepu",
+  "phone": "1973197356",
+  "address": "Palavayal",
+  "job_title": "President",
+  "email": "deepu@palavatala.in",
+  "password": "$2b$10$vMhMHiqjqZ0MFk6QkRcgqe1hCZT8ZYBVcovcwuSEhiYLZpIcV2Kr2",
+  "activation": 1,
+  "user_type": "admin",
+  "raID": "plvyl1973",
+  "photoID": 2,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772b81d8f088cc00700c9a5"
+  },
+  "id": 84,
+  "username": "alan",
+  "name": "Alan",
+  "phone": "987456321",
+  "address": "Kuthuparamba",
+  "job_title": "President",
+  "email": "alan@mail.co.in",
+  "password": "$2b$10$R2ttM1YGmMbxmS3oQ2RFs.mVe7cgZZ4N9seQgdL8mQfzND081KKmS",
+  "activation": 1,
+  "user_type": "admin",
+  "raID": "ktpmb1973",
   "photoID": 2,
   "__v": 0
 }]

@@ -48,7 +48,7 @@
   "buyername": "ebeyjoeregi",
   "sell_id": 1,
   "sellername": "user",
-  "buy": false,
+  "buy": true,
   "date": {
     "$date": "2024-12-11T05:28:55.920Z"
   },
@@ -93,6 +93,20 @@
   "buy": false,
   "date": {
     "$date": "2024-12-11T05:29:03.785Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676d1ae7b4622c897c262f59"
+  },
+  "id": 17,
+  "buyername": "ebeyjoeregi",
+  "sell_id": 1,
+  "sellername": "user",
+  "buy": false,
+  "date": {
+    "$date": "2024-12-26T08:59:19.619Z"
   },
   "__v": 0
 }]
