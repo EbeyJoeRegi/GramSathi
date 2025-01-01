@@ -1,0 +1,17 @@
+# Node.js
+Backend/node_modules/
+
+# Environment Files
+Backend/.env
+
+# Dependency Files
+Backend/package-lock.json
+Backend/package.json
+
+# Cache
+Backend/.cache/
+
+#GramSathi Cache
+GramSathi/.dart_tool
+GramSathi/.idea
+GramSathi.vscode
