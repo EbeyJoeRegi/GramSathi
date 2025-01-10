@@ -1,16 +1,10 @@
-# gramsathi
+# Gram Sathi
 
-A new Flutter project.
+![SignUp Page](./../Images/SignUp%20Screen.png)
+![Forget Password Page](./../Images/Forget%20Password%20Scrren.png)
+![User Home Screen]./..(/Images/User%20DashBoard.png)
+![Admin Home Screen](./../Images/Admin%20Home%20Screen.png)
+![Adminstrator Home Screen](./../Images/Adminstrator%20DashBoard.png)
+![Exchange Zone](./../Images/Exchange%20Zone.png)
+![Feedback Hub](./../Images/FeedBack%20Hub.png)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
