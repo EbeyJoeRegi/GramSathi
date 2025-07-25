@@ -45,7 +45,7 @@ Fork this repository by clicking on the "Fork" button at the top right of this p
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/EbeyJoeRegi/Rural-Nexus
+git clone https://github.com/EbeyJoeRegi/GramSathi
 ```
 
 ### 3. Navigate to the Project Directory
